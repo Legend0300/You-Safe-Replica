@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
 
-
-const dcaSchema = new mongoose.Schema({
-  formName: {
-    type: String,
-    required: true
-  },
-  status: {
-    type: String,
-    enum: ['Enalbed', 'Disabled'],
-    default: 'Enalbed'
-  },
+const questionSchema = new mongoose.Schema({
   questionHeading: {
     type: String,
     required: true
@@ -19,6 +9,19 @@ const dcaSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+});
+
+const dcaSchema = new mongoose.Schema({
+  formName: {
+    type: String,
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['Enabled', 'Disabled'],
+    default: 'Enabled'
+  },
+  questions: [questionSchema]
 });
 
 const DCA = mongoose.model('DCA', dcaSchema);
