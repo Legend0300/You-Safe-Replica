@@ -45,6 +45,7 @@ const IncidentReporting = () => {
               name="department"
               value={formState.department}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -56,6 +57,7 @@ const IncidentReporting = () => {
               name="area"
               value={formState.area}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -67,6 +69,7 @@ const IncidentReporting = () => {
               name="incidentType"
               value={formState.incidentType}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -77,6 +80,7 @@ const IncidentReporting = () => {
               name="description"
               value={formState.description}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -88,6 +92,9 @@ const IncidentReporting = () => {
               name="date"
               value={formState.date}
               onChange={handleInputChange}
+              max={new Date().toISOString().split('T')[0]}
+              validationMessage="Report date cannot be in the future"
+              required
             />
           </label>
         </div>
@@ -99,6 +106,7 @@ const IncidentReporting = () => {
               name="time"
               value={formState.time}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -110,13 +118,19 @@ const IncidentReporting = () => {
               name="action"
               value={formState.action}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
         <div>
           <label>
             Add Photo:
-            <input type="file" name="photo" onChange={handleInputChange} />
+            <input
+              type="file"
+              name="photo"
+              onChange={handleInputChange}
+              required
+            />
           </label>
         </div>
         <div>
@@ -127,6 +141,7 @@ const IncidentReporting = () => {
               name="eventType"
               value={formState.eventType}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -138,6 +153,7 @@ const IncidentReporting = () => {
               name="eventSubTypes"
               value={formState.eventSubTypes}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -148,6 +164,7 @@ const IncidentReporting = () => {
               name="reason"
               value={formState.reason}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
