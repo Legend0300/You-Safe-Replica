@@ -12,21 +12,21 @@ const IncidentReporting = () => {
     photo: null,
     eventType: '',
     eventSubTypes: '',
-    reason: ''
+    reason: '',
   });
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     const target = event.target;
     const value = target.type === 'file' ? target.files[0] : target.value;
     const name = target.name;
 
     setFormState({
       ...formState,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     // Do something with formState, like submit to a server
@@ -116,11 +116,7 @@ const IncidentReporting = () => {
         <div>
           <label>
             Add Photo:
-            <input
-              type="file"
-              name="photo"
-              onChange={handleInputChange}
-            />
+            <input type="file" name="photo" onChange={handleInputChange} />
           </label>
         </div>
         <div>
@@ -158,7 +154,7 @@ const IncidentReporting = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
-    );
+  );
 };
 
 export default IncidentReporting;
