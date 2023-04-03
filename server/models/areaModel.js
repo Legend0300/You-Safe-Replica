@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const areaSchema = new mongoose.Schema({
+const areaModel = new mongoose.Schema({
   site: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Site',
@@ -13,9 +13,9 @@ const areaSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Enalbed', 'Disabled'],
-    default: 'Enalbed'
+    enum: ['Enabled', 'Disabled'],
+    default: 'Enabled'
   } 
 });
 
-module.exports = mongoose.model('Area', departmentSchema);
+module.exports = mongoose.model('Area', areaModel);

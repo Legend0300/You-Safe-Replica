@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const employeeSchema = new mongoose.Schema({
+const employeeModel = new mongoose.Schema({
   fullName: {
     type: String,
     required: true
@@ -31,11 +31,11 @@ const employeeSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Enalbed', 'Disabled'],
-    default: 'Enalbed'
+    enum: ['Enabled', 'Disabled'],
+    default: 'Enabled'
   }
 });
 
-const Employee = mongoose.model('Employee', employeeSchema);
+const Employee = mongoose.model('Employee', employeeModel);
 
 module.exports = Employee;

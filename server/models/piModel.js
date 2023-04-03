@@ -8,8 +8,8 @@ const piSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Enalbed', 'Disabled'],
-    default: 'Enalbed'
+    enum: ['Enabled', 'Disabled'],
+    default: 'Enabled'
   },
   questionHeading: {
     type: String,
