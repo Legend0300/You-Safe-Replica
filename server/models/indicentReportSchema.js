@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
 
-const hazardReportSchema = new mongoose.Schema({
+// Define Incident Report Schema
+const incidentReportSchema = new mongoose.Schema({
   site: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Site',
     required: true
   },
   department: {
+    ref: 'Department',
     type: mongoose.Schema.Types.ObjectId,
-    ref : 'Department',
     required: true
   },
   area: {
@@ -16,14 +17,20 @@ const hazardReportSchema = new mongoose.Schema({
     ref: 'Area',
     required: true
   },
+  eventType: {
+    type: String,
+    required: true
+  },
+  eventSubType: {
+    type: String,
+    required: true
+  },
   userType: {
     type: String,
-    enum: ['Employee', 'Manager' , 'Area Manager' , 'Visitor'],
     required: true
   },
   reportedStatus: {
     type: String,
-    enum: ['In Progress', 'Pending', 'Completed' , 'All'],
     required: true
   },
   reportDate: {
@@ -40,6 +47,7 @@ const hazardReportSchema = new mongoose.Schema({
   }
 });
 
-const HazardReport = mongoose.model('HazardReport', hazardReportSchema);
+// Create Incident Report model
+const IncidentReport = mongoose.model('IncidentReport', incidentReportSchema);
 
-module.exports = HazardReport;
+module.exports = IncidentReport;

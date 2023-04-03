@@ -21,6 +21,6 @@ const piSchema = new mongoose.Schema({
   }
 });
 
-const PI = mongoose.model('pi', piSchema);
+const PI = mongoose.model('PI', piSchema);
 
 module.exports = PI;

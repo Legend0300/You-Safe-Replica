@@ -21,6 +21,6 @@ const dcaSchema = new mongoose.Schema({
   }
 });
 
-const DCA = mongoose.model('dca', dcaSchema);
+const DCA = mongoose.model('DCA', dcaSchema);
 
 module.exports = DCA;

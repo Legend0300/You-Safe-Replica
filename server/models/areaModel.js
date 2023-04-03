@@ -8,6 +8,7 @@ const areaSchema = new mongoose.Schema({
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,
+    ref : 'Department',
     required: true
   },
   status: {
@@ -17,4 +18,4 @@ const areaSchema = new mongoose.Schema({
   } 
 });
 
-module.exports = mongoose.model('area', departmentSchema);
+module.exports = mongoose.model('Area', departmentSchema);

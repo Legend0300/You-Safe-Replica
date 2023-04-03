@@ -12,6 +12,7 @@ const employeeSchema = new mongoose.Schema({
   },
   site: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Site',
     required: true
   },
   contact: {
@@ -20,10 +21,12 @@ const employeeSchema = new mongoose.Schema({
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Department',
     required: true
   },
   area: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Area',
     required: true
   },
   status: {
