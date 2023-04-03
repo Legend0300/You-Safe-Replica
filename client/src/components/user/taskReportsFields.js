@@ -45,7 +45,7 @@ function TaskReportsForm(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Call a function from the parent component to handle the form submission
-    props.onSubmit({
+    const obj = ({
       site,
       type,
       assignedBy,
