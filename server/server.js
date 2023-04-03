@@ -1,6 +1,11 @@
 express = require('express');
 app = express();
 const connect = require('./config/dbconnection');
+const site = require('./routes/forms/siteRoute');
+
+app.use(express.json());
+
+app.use('/api/site', site);
 
 
 connect();

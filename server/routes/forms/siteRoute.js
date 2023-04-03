@@ -1,30 +1,26 @@
-express = require('express');
-router = express.Router();
+const express = require('express');
+const router = express.Router();
+const {  getAllSites, getSiteById ,createNewSite ,updateSiteById ,deleteSiteById , getSite} = require('../../controllers/siteController');
 
-router.get('/', (req, res) => {
-    res.send("works!");
-    }
-);
+// GET all sites
+router.get('/', getAllSites);
 
+// GET one site by ID
+router.get('/:id', getSiteById);
 
-router.post('/', (req, res) => {
-    res.send("works!");
-    }
-);
+// CREATE a new site
+router.post('/', createNewSite);
 
-router.delete('/', (req, res) => {
-    res.send("works!");
-    }
-);
+// UPDATE one site by ID
+router.put('/:id', updateSiteById);
 
-router.put('/', (req, res) => {
-    res.send("works!");
-    }
-);
+// DELETE one site by ID
+router.delete('/:id', deleteSiteById);
 
+// GET one site by ID
 
+router.get('/getSite/:id', getSite);
 
 
 
 module.exports = router;
-
