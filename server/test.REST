@@ -34,7 +34,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:4000/api/site
+GET http://localhost:4000/api/site
 Content-Type: application/json
 
 {
@@ -57,4 +57,10 @@ GET http://localhost:4000/api/site/642aee4752d148b9de95d4ce
 
 ###
 
-GET http://localhost:4000/api/site/642aee4752d148b9de95d4ce
+POST http://localhost:4000/api/department
+Content-Type: application/json
+
+{
+    "department": "New Department2",
+    "status" : "Enabled"
+}

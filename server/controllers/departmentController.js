@@ -32,9 +32,13 @@ const getDepartmentById = async (req, res) => {
 
 const createNewDepartment = async (req, res) => {
   const department = new Department({
+
+    
+    site: req.body.site,
+
     departmentName: req.body.departmentName,
 
-    managerInformation: req.body.managerInformation,
+    status: req.body.status,
   });
 
   try {
