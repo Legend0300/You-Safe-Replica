@@ -8,7 +8,6 @@ const employee = require('./routes/forms/employeeRoute');
 const visitor = require('./routes/forms/visitorRoute');
 const areaManager = require('./routes/forms/areaManagerRoute');
 const dca = require('./routes/form management/dcaRoute');
-const safeUnsafeReport = require('./routes/reports/safeUnsafeReportRoute');
 
 
 app.use(express.json());
@@ -20,7 +19,6 @@ app.use('/api/employee', employee)
 app.use('/api/visitor', visitor)
 app.use('/api/areaManager', areaManager)
 app.use('/api/dca', dca)
-app.use('/api/safeUnsafeReport', safeUnsafeReport)
 
 
 
