@@ -12,6 +12,7 @@ const visitor = require('./routes/forms/visitorRoute');
 const areaManager = require('./routes/forms/areaManagerRoute');
 const dca = require('./routes/form management/dcaRoute');
 const user = require('./routes/roles/userRoute');
+const manager = require('./routes/roles/managerRoute');
 
 
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use('/api/visitor', visitor)
 app.use('/api/areaManager', areaManager)
 app.use('/api/dca', dca)
 app.use('/api/user', user)
+app.use('/api/manager', manager)
 
 
 
