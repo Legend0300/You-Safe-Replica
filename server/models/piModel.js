@@ -1,6 +1,17 @@
 const mongoose = require('mongoose');
 
 
+const questionSchema = new mongoose.Schema({
+  questionHeading: {
+    type: String,
+    required: true
+  },
+  question: {
+    type: String,
+    required: true
+  }
+});
+
 const piSchema = new mongoose.Schema({
   formName: {
     type: String,
@@ -11,14 +22,7 @@ const piSchema = new mongoose.Schema({
     enum: ['Enabled', 'Disabled'],
     default: 'Enabled'
   },
-  questionHeading: {
-    type: String,
-    required: true
-  },
-  question: {
-    type: String,
-    required: true
-  }
+  questions: [questionSchema]
 });
 
 const PI = mongoose.model('PI', piSchema);
