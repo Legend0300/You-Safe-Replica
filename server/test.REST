@@ -15,6 +15,13 @@ Content-Type: application/json
 }
 ###
 
+
+
+
+
+
+###
+
 PUT http://localhost:4000/api/site/642af31e887a5060fd5ab048
 Content-Type: application/json
 
@@ -34,7 +41,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:4000/api/site
+GET http://localhost:4000/api/site/642af32a887a5060fd5ab04a
 Content-Type: application/json
 
 {
@@ -61,6 +68,7 @@ POST http://localhost:4000/api/department
 Content-Type: application/json
 
 {
+    "site" : "642aee4752d148b9de95d4ce",
     "department": "New Department2",
     "status" : "Enabled"
 }
