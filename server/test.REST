@@ -131,3 +131,37 @@ POST http://localhost:4000/api/manager/logout
 
 GET http://localhost:4000/api/manager
 
+
+###
+
+POST http://localhost:4000/api/admin/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "mypassword",
+  "picture": "https://example.com/profile.jpg",
+  "role": "Admin"
+}
+
+###
+
+POST http://localhost:4000/api/admin/login
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "mypassword"
+
+}
+
+###
+
+POST http://localhost:4000/api/admin/logout
+
+###
+
+GET http://localhost:4000/api/admin
+
+
