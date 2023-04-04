@@ -101,4 +101,33 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:4000/api/user
+POST http://localhost:4000/api/manager/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "password123",
+    "picture": "https://example.com/johndoe.png",
+    "role": "Manager"
+}
+
+###
+
+POST http://localhost:4000/api/manager/login
+Content-Type: application/json
+
+{
+    "email": "johndoe@example.com" ,
+    "password": "password123"
+}
+
+
+###
+
+POST http://localhost:4000/api/manager/logout
+
+###
+
+GET http://localhost:4000/api/manager
+
