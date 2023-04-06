@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const areaModel = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
   site: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Site',
@@ -17,5 +21,5 @@ const areaModel = new mongoose.Schema({
     default: 'Enabled'
   } 
 });
-
-module.exports = mongoose.model('Area', areaModel);
+const Area = mongoose.model('Area', areaModel);
+module.exports = Area;

@@ -50,10 +50,10 @@ const loginUser = async (req, res) => {
         user : {
           name: user.name,
           email: user.email ,
-          usertype: user.AccountTypeEnum,
           id: user._id,
           userId: user.employeeId
-        }
+        } ,
+        role: user.AccountTypeEnum
     
       }, process.env.JWT_SECRET);
 
@@ -102,7 +102,7 @@ const registerUser = async (req, res) => {
 const logoutUser = (req, res) => {
   try {
     // Clear token from session
-    req.session.userjwt = null;
+    res.clearCookie('userjwt');
 
     // Return success message
     res.json({ message: 'Logged out successfully' });

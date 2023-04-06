@@ -21,8 +21,8 @@ const loginManager = async (req, res) => {
                 name: manager.name,
                 email: manager.email,
                 id: manager._id,
-                role: manager.role ,
-            }
+            } ,
+            role: manager.role
         };
     
         const token = jwt.sign(
@@ -48,7 +48,7 @@ const loginManager = async (req, res) => {
 
 const getManager = async (req, res) => {
     try {
-        const manager = await Manager.findById(req.manager.id).select('-password');
+        const manager = await Manager.findById(req.user.id).select('-password');
         res.json(manager);
     } catch (err) {
         console.error(err.message);
