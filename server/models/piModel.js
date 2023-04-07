@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-
 const questionSchema = new mongoose.Schema({
-  questionHeading: {
+  Heading: {
     type: String,
     required: true
   },
-  question: {
+  Question: {
     type: String,
     required: true
   }
@@ -15,6 +14,12 @@ const questionSchema = new mongoose.Schema({
 const piSchema = new mongoose.Schema({
   formName: {
     type: String,
+    required: true
+  },
+  type : {
+    type: String,
+    enum: ['PI'],
+    default: 'PI',
     required: true
   },
   status: {

@@ -38,4 +38,5 @@ const siteSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Site', siteSchema);
+const Site = mongoose.model('Site', siteSchema);
+module.exports = Site;

@@ -11,10 +11,12 @@ const employee = require('./routes/forms/employeeRoute');
 const visitor = require('./routes/forms/visitorRoute');
 const areaManager = require('./routes/forms/areaManagerRoute');
 const dca = require('./routes/form management/dcaRoute');
+const pi = require('./routes/form management/piRoute');
 const user = require('./routes/roles/userRoute');
 const manager = require('./routes/roles/managerRoute');
 const admin = require('./routes/roles/adminRoute');
-
+const pireport = require('./routes/reports/piReport');
+const dcareport = require('./routes/reports/dcaReport');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
@@ -27,9 +29,14 @@ app.use('/api/employee', employee)
 app.use('/api/visitor', visitor)
 app.use('/api/areaManager', areaManager)
 app.use('/api/dca', dca)
+app.use('/api/pi', pi)
 app.use('/api/user', user)
 app.use('/api/manager', manager)
 app.use('/api/admin', admin)
+app.use('/api/pireport', pireport)
+app.use('/api/dcareport', dcareport)
+
+
 
 
 

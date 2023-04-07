@@ -15,6 +15,7 @@ Content-Type: application/json
 }
 ###
 
+GET http://localhost:4000/api/site
 
 
 
@@ -187,5 +188,69 @@ POST http://localhost:4000/api/admin/logout
 ###
 
 GET http://localhost:4000/api/admin
+
+###
+
+POST http://localhost:4000/api/dca
+content-type: application/json
+
+{
+  "formName": "Conveyor Safety",
+  "status" : "Enabled",
+  "questions" : 
+  [
+    {
+    "Heading" : "Conveyor Safety",
+    "Question"  : "Is the conveyor belt in good condition?"
+    },
+    {
+    "Heading" : "Conveyor Safety :p",
+    "Question"  : "Is the conveyor belt in good condition? 0w0"
+    }
+  ] 
+}
+
+###
+POST http://localhost:4000/api/pi
+content-type: application/json
+
+{
+  "formName": "Conveyor Safety PI",
+  "status" : "Enabled",
+  "questions" : 
+  [
+    {
+    "Heading" : "Conveyor Safety PI1",
+    "Question"  : "Is the conveyor belt in good condition?"
+    },
+    {
+    "Heading" : "Conveyor Safety :p",
+    "Question"  : "Is the conveyor belt in good condition? 0w0"
+    }
+  ] 
+}
+
+
+###
+
+POST http://localhost:4000/api/pireport
+Content-Type: application/json
+
+{
+  "site": "642aecb8a39fec51ca4b076f",
+  "pi": "64304e557116f10670dc1c3a",
+  "formCompliant": "Compliant",
+  "userType": "Employee",
+  "reportedStatus": "Completed",
+  "reportDate": "2023-04-07",
+  "startDate": "2023-04-01",
+  "endDate": "2023-04-06"
+}
+
+
+###
+
+GET http://localhost:4000/api/pireport/64305721b3ee2e695862536d
+
 
 

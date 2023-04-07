@@ -7,17 +7,17 @@ const dcReportSchema = new mongoose.Schema({
     required: true
   },
   formCompliant: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
   userType: {
     type: String,
     required: true
   },
-  reportedStatus: {
+  Status: {
     type: String,
-    enum: ['Open', 'Closed'],
-    default: 'Open'
+    enum: ['Enabled', 'Disabled'],
+    default: 'Enabled'
   },
   reportDate: {
     type: Date,
@@ -33,4 +33,8 @@ const dcReportSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('DCReport', dcReportSchema);
+
+const DCAReport = mongoose.model('DCAReport', dcReportSchema);
+
+module.exports = DCAReport;
+

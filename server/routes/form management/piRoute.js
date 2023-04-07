@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const accessAuth = require('../../middleware/accessAuth');
 
 const {   getAllPIs , getPIById , createNewPI , updatePIById , deletePIById , getPI} = require('../../controllers/piController');
 
