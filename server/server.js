@@ -18,6 +18,10 @@ const manager = require('./routes/roles/managerRoute');
 const admin = require('./routes/roles/adminRoute');
 const pireport = require('./routes/reports/piReport');
 const dcareport = require('./routes/reports/dcaReport');
+const hazardreport = require('./routes/reports/hazardReport');
+const incidentreport = require('./routes/reports/incidentReport');
+const taskreport = require('./routes/reports/taskReports');
+const safeunsafereport = require('./routes/reports/safeUnsafeReport');
 
 dotenv.config();
 app.use(express.json());
@@ -37,6 +41,11 @@ app.use('/api/manager', manager)
 app.use('/api/admin', admin)
 app.use('/api/pireport', pireport)
 app.use('/api/dcareport', dcareport)
+app.use('/api/hazardreport', hazardreport)
+app.use('/api/incidentreport', incidentreport)
+app.use('/api/taskreport', taskreport)
+app.use('/api/safeunsafereport', safeunsafereport)
+
 
 
 
