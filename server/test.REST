@@ -252,5 +252,22 @@ Content-Type: application/json
 
 GET http://localhost:4000/api/pireport/64305721b3ee2e695862536d
 
+###
+POST http://localhost:4000/api/safeunsafereport
+Content-Type: application/json
+
+{
+    "siteName" : "New Site",
+    "department": "New Department",
+    "area": "New Area",
+    "actType": "some_type",
+    "userType": "some_type",
+    "reportedStatus": "reported",
+    "reportDate": "2023-04-09T10:20:30Z",
+    "startDate": "2023-04-09T10:20:30Z",
+    "endDate": "2023-04-09T10:20:30Z"
+}
+
+
 
 

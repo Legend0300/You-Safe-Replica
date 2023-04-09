@@ -1,5 +1,5 @@
-import TaskReport from '../models/taskReportSchema';
-import Site from '../models/siteModel';
+const Site = require('../models/siteModel');
+const TaskReport = require('../models/taskReportSchema');
 
 
 // GET all sites
