@@ -13,7 +13,7 @@ const getAllPIs = async (req, res) => {
     }
 
 // GET one site by ID
-
+// testing
 const getPIById = async (req, res) => {
     try {
         const pi = await PI.findById(req.params.id);
