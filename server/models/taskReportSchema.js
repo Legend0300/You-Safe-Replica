@@ -38,5 +38,5 @@ const taskReportSchema = new mongoose.Schema({
     required: true
   }
 });
-
-module.exports = mongoose.model('TaskReport', taskReportSchema);
+const taskReport = mongoose.model('TaskReport', taskReportSchema); 
+module.exports = taskReport
