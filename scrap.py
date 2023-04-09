@@ -101,48 +101,48 @@ print(json_data)
 
 
 
-# for i in range(24, 98):
-#     url = f'https://www.usafepk.com/power-user/dca-form-details/{i}'
-#     response = requests.get(url, cookies=cookies, headers=headers)
-#     # Send a request to the page and get the HTML content
-#     html_content = response.content
+for i in range(24, 98):
+    url = f'https://www.usafepk.com/power-user/dca-form-details/{i}'
+    response = requests.get(url, cookies=cookies, headers=headers)
+    # Send a request to the page and get the HTML content
+    html_content = response.content
 
-#     # Create a BeautifulSoup object to parse the HTML content
-#     soup = BeautifulSoup(html_content, 'html.parser')
+    # Create a BeautifulSoup object to parse the HTML content
+    soup = BeautifulSoup(html_content, 'html.parser')
 
-#     # Find the table element on the page
-#     table = soup.find('table')
+    # Find the table element on the page
+    table = soup.find('table')
 
-#     # Create empty lists to store the table headers and data
-#     heads = []
-#     data = []
+    # Create empty lists to store the table headers and data
+    heads = []
+    data = []
 
-#     # Find all rows in the table
-#     rows = table.find_all('tr')
+    # Find all rows in the table
+    rows = table.find_all('tr')
 
-#     # Loop through each row and extract the data
-#     for i, row in enumerate(rows):
-#         # For the first row, extract the headers (TH)
-#         if i == 0:
-#             header_cells = row.find_all('th')
-#             for header_cell in header_cells:
-#                 heads.append(header_cell.text.strip())
-#         else:
-#             # For other rows, extract the data (TD)
-#             data_cells = row.find_all('td')
-#             # Create a dictionary to store the row data
-#             row_data = {}
-#             for j, data_cell in enumerate(data_cells):
-#                 row_data[heads[j]] = data_cell.text.strip()
-#             # Add the row data to the list of data
-#             data.append(row_data)
+    # Loop through each row and extract the data
+    for i, row in enumerate(rows):
+        # For the first row, extract the headers (TH)
+        if i == 0:
+            header_cells = row.find_all('th')
+            for header_cell in header_cells:
+                heads.append(header_cell.text.strip())
+        else:
+            # For other rows, extract the data (TD)
+            data_cells = row.find_all('td')
+            # Create a dictionary to store the row data
+            row_data = {}
+            for j, data_cell in enumerate(data_cells):
+                row_data[heads[j]] = data_cell.text.strip()
+            # Add the row data to the list of data
+            data.append(row_data)
 
-#     # Convert the data to JSON format
-#     json_data = json.dumps(data)
+    # Convert the data to JSON format
+    json_data = json.dumps(data)
 
-#     # Write the JSON data to the file
-#     with open("data.json", "w") as file:
-#         json.dump(json_data, file)
+    # Write the JSON data to the file
+    with open("data.json", "w") as file:
+        json.dump(json_data, file)
 
-#     # Print the JSON data
-#     print(json_data)
+    # Print the JSON data
+    print(json_data)

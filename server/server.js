@@ -1,8 +1,9 @@
 express = require('express');
 app = express();
 const cookieParser = require('cookie-parser');
-const env = require('dotenv');
 
+
+const dotenv = require('dotenv');
 const connect = require('./config/dbconnection');
 const site = require('./routes/forms/siteRoute');
 const department = require('./routes/forms/departmentRoute');
@@ -18,6 +19,7 @@ const admin = require('./routes/roles/adminRoute');
 const pireport = require('./routes/reports/piReport');
 const dcareport = require('./routes/reports/dcaReport');
 
+dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());

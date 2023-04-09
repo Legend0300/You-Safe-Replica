@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
 const express = require('express');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+
 
 const validateToken = (allowedUsers) => {
     return async (req, res, next) => {
