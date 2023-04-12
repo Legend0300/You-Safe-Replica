@@ -25,6 +25,7 @@ const safeunsafereport = require('./routes/reports/safeUnsafeReport');
 const dcachecklist = require('./routes/checklists/dcaChecklist');
 const pichecklist = require('./routes/checklists/piChecklist');
 const sam = require('./routes/Meetings/samReport');
+const reportingDetails = require('./routes/reports/reportingDetails');
 
 dotenv.config();
 app.use(express.json());
@@ -51,6 +52,7 @@ app.use('/api/safeunsafereport', safeunsafereport)
 app.use('/api/dcachecklist', dcachecklist)
 app.use('/api/pichecklist', pichecklist)
 app.use('/api/sam', sam)
+app.use('/api/reportingDetails', reportingDetails)
 
 
 
