@@ -23,7 +23,7 @@ const hazardReportSchema = new mongoose.Schema({
   },
   reportedStatus: {
     type: String,
-    enum: ['In Progress', 'Pending', 'Completed' , 'All'],
+    enum: ['In Progress', 'Pending', 'Completed'],
     required: true
   },
   reportDate: {
