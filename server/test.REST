@@ -289,3 +289,43 @@ Content-Type: application/json
     "email": "texashouse003@gmail.com" ,
     "password": "pass"
 }
+
+###
+POST http://localhost:4000/api/user/register
+Content-Type: application/json
+
+{
+  "picture": "https://example.com/user123.jpgs",
+  "email": "ahmed.mansur.bhatti@gmail.com",
+  "accountType": "Employee",
+  "employeeId": "123456s12",
+  "password": "pass"
+}
+
+###
+POST http://localhost:4000/api/user/login
+Content-Type: application/json
+
+{
+    "email": "ahmed.mansur.bhatti@gmail.com" ,
+    "password": "pass2"
+}
+
+###
+
+POST http://localhost:4000/api/user/forgot-password
+Content-Type: application/json
+
+{
+    "email": "ahmed.mansur.bhatti@gmail.com"
+}
+
+###
+
+POST http://localhost:4000/api/user/reset-password/1m9rw5judsh
+Content-Type: application/json
+
+{
+  "password": "pass2"
+}
+
