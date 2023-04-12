@@ -268,6 +268,24 @@ Content-Type: application/json
     "endDate": "2023-04-09T10:20:30Z"
 }
 
+###
+POST http://localhost:4000/api/user/register
+Content-Type: application/json
 
+{
+  "picture": "https://example.com/user123.jpgs",
+  "email": "texashouse003@gmail.com",
+  "accountType": "Employee",
+  "employeeId": "123456s1",
+  "password": "pass"
+}
 
+###
 
+POST http://localhost:4000/api/user/login
+Content-Type: application/json
+
+{
+    "email": "texashouse003@gmail.com" ,
+    "password": "pass"
+}
