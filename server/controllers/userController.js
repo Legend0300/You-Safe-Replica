@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/usertypeModel');
-
+const nodemailer = require('nodemailer');
 
 
 
@@ -112,9 +112,76 @@ const logoutUser = (req, res) => {
 };
 
 
+// Forgot password
+const ForgotPassword = async (req, res) => {
+  try {
+    // Get user data from request body
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const token = Math.random().toString(36).substring(2);
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // expire in 1 hour
+    await user.save();
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'ahmed.mansur.bhatti@gmail.com',
+        pass: 'tferrjrffsyrloga'
+      }
+    });
+    const mailOptions = {
+      from: 'ahmed.mansur.bhatti@gmail.com',
+      to: email,
+      subject: 'Reset Password',
+      text: `Please click the following link to reset your password: http://${req.headers.host}/api/user/reset-password/${token}`
+    };
+    await transporter.sendMail(mailOptions);
+
+    res.json({ message: 'Email sent' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const ResetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    // find the user by reset password token and check if it's still valid
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    // update the user's password
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({ message: 'Password reset successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 module.exports = {
     getUser,
     loginUser,
     registerUser,
-    logoutUser
+    logoutUser,
+    ForgotPassword ,
+    ResetPassword
 };
