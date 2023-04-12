@@ -1,5 +1,7 @@
 const SafeUnsafeReport = require('../models/safeUnsafeModel');
 const Site = require('../models/siteModel');
+const Department = require('../models/departmentModel');
+const Area = require('../models/areaModel');
 //const SafeUnsafe = require('../models/SafeUnsafeModel');
 
 
@@ -18,6 +20,9 @@ const getAllSafeUnsafeReports = async (req, res) => {
 // GET one site by ID
 const getSafeUnsafeReportById = async (req, res) => {
     try {
+
+
+
         const safeUnsafeReport = await SafeUnsafeReport.findById(req.params.id);
         const site = await Site.findById(safeUnsafeReport.site)
         //const safeUnsafe = await SafeUnsafe.findById(SafeUnsafeReport.SafeUnsafe)
@@ -34,14 +39,20 @@ const getSafeUnsafeReportById = async (req, res) => {
 
 // CREATE a new site
 const createNewSafeUnsafeReport = async (req, res) => {
-    const sites = await Site.findOne(req.body.siteName);
+    const sites = await Site.findOne({siteName: req.body.siteName});
+    const department = await Department.findOne({department: req.body.department});
+    const area = await Area.findOne({name: req.body.area});
+
+    console.log(area._id);
+    console.log(area.name);
+
     //const safeUnsafeReports = await SafeUnsafeReport.findOne(req.body.safeUnsafeName);
 
 
     const safeUnsafeReport = new SafeUnsafeReport({
         site: sites._id,
-        department: req.body.department,
-        area: req.body.area,
+        department: department._id,
+        area: area._id,
         actType: req.body.actType,
         userType: req.body.userType,
         reportedStatus: req.body.reportedStatus,

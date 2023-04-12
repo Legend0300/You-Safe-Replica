@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {  getAllAreaManagers, getAreaManagerById ,createNewAreaManager ,updateAreaManagerById ,deleteAreaManagerById , getAreaManager} = require('../../controllers/areaManagerController');
+
 const accessAuth = require('../../middleware/accessAuth');
 // GET all sites
 router.get('/', accessAuth(["Admin" , "Manager"]), getAllAreaManagers);

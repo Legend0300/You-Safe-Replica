@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {   getAllSafeUnsafeReports, getSafeUnsafeReportById, createNewSafeUnsafeReport, updateSafeUnsafeReport ,deleteSafeUnsafeReport } = require('../../controllers/safeUnsafeReportController');
+const {   getAllSafeUnsafeReports, getSafeUnsafeReportById, createNewSafeUnsafeReport, updateSafeUnsafeReport ,deleteSafeUnsafeReport } = require('../../controllers/safeUnsafeController');
 
 router.get('/' , getAllSafeUnsafeReports);
 
