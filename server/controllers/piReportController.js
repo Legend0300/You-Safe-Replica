@@ -1,4 +1,4 @@
-const PIReport = require('../models/piResportSchema');
+const PIReport = require('../models/piReportSchema');
 const Site  = require('../models/siteModel');
 const PI = require('../models/piModel');
 
