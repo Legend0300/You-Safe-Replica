@@ -6,18 +6,25 @@ const piReportSchema = new mongoose.Schema({
     ref: 'Site',
     required: true
   },
+  pi: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PI',
+    required: true
+  } ,
   formCompliant: {
     type: String,
+    enum: ["Compliant", "Non-Compliant"],
     required: true
   },
   userType: {
     type: String,
+    enum: ['Employee', 'Visitor' , 'Manager' , 'Area Manager'],
     required: true
   },
   reportedStatus: {
     type: String,
-    enum: ['Open', 'Closed'],
-    default: 'Open'
+    enum: ['In Progess', 'Completed' , 'Pending'],
+    default: 'In Progess'
   },
   reportDate: {
     type: Date,
@@ -33,4 +40,6 @@ const piReportSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('PIReport', piReportSchema);
+const PIReport = mongoose.model('PIReport', piReportSchema);
+
+module.exports = PIReport;

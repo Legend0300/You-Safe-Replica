@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
     try {
-      let admin = await Admin.findOne({ email });
+      const admin = await Admin.findOne({ email });
       if (!admin) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
       }
@@ -22,8 +22,8 @@ const loginAdmin = async (req, res) => {
                 name: admin.name,
                 email: admin.email,
                 id: admin._id,
-                role: admin.role ,
-            }
+            } ,
+            role: admin.role
         };
     
         const token = jwt.sign(
@@ -49,7 +49,7 @@ const loginAdmin = async (req, res) => {
 
 const getAdmin = async (req, res) => {
     try {
-        const admin = await Admin.findById(req.admin.id).select('-password');
+        const admin = await Admin.findById(req.user.id).select('-password');
         res.json(admin);
     } catch (err) {
         console.error(err.message);

@@ -13,7 +13,7 @@ const getAllPIs = async (req, res) => {
     }
 
 // GET one site by ID
-
+// testing
 const getPIById = async (req, res) => {
     try {
         const pi = await PI.findById(req.params.id);
@@ -33,8 +33,8 @@ const getPIById = async (req, res) => {
 const createNewPI = async (req, res) => {
             
                 const pi = new PI({
-                    piName: req.body.piName,
-                    department: req.body.department,
+                    formName: req.body.formName,
+                    questions: req.body.questions,
                     status: req.body.status,
                 });
             

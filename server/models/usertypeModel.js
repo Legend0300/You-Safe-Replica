@@ -28,8 +28,11 @@ const UserAccountSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
+
 
 const User = mongoose.model('User', UserAccountSchema);
 

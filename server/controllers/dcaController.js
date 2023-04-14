@@ -33,8 +33,8 @@ const getDCAById = async (req, res) => {
 const createNewDCA = async (req, res) => {
         
             const dca = new DCA({
-                dcaName: req.body.dcaName,
-                department: req.body.department,
+                formName: req.body.formName,
+                questions: req.body.questions,
                 status: req.body.status,
             });
         

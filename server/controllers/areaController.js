@@ -33,7 +33,7 @@ const getAreaById = async (req, res) => {
 const createNewArea = async (req, res) => {
 
     const area = new Area({
-        areaName: req.body.areaName,
+        name: req.body.name,
         site: req.body.site,
         department: req.body.department,
         status: req.body.status,
@@ -59,7 +59,7 @@ const updateAreaById = async (req, res) => {
         }
     
         if (req.body.areaName != null) {
-            area.areaName = req.body.areaName;
+            area.name = req.body.areaName;
         }
         if (req.body.managerInformation != null) {
             area.managerInformation = req.body.managerInformation;
@@ -81,7 +81,7 @@ const deleteAreaById = async (req, res) => {
             return res.status(404).json({ message: 'Cannot find site' });
         }
     
-        await area.remove();
+        const deletedarea = await Area.findByIdAndDelete(req.params.id) ;
         res.json({ message: 'Deleted site' });
     } catch (err) {
         res.status(500).json({ message: err.message });

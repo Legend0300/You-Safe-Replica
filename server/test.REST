@@ -15,6 +15,7 @@ Content-Type: application/json
 }
 ###
 
+GET http://localhost:4000/api/site
 
 
 
@@ -40,6 +41,27 @@ Content-Type: application/json
 
 
 ###
+
+POST http://localhost:4000/api/site
+Content-Type: application/json
+
+{
+  "siteName": "New Sites",
+  "location": "Some locations",
+  "country": "Some countrys",
+  "city": "Some city",
+  "managerInformation": {
+    "fullName": "John Doed",
+    "emailAddress": "johndoe@example.com",
+    "contact": "1234567890",
+    "status": "Enabled"
+  }
+}
+
+
+###
+
+
 
 GET http://localhost:4000/api/site/642af32a887a5060fd5ab04a
 Content-Type: application/json
@@ -73,6 +95,26 @@ Content-Type: application/json
     "status" : "Enabled"
 }
 
+###
+
+POST http://localhost:4000/api/area
+Content-Type: application/json
+
+{
+    "site" : "642aee4752d148b9de95d4ce",
+    "department" : "642b0b0c8b9a5f0c0d0d0d0d",
+    "name": "New Area",
+    "status" : "Enabled"
+}
+
+###
+
+DELETE  http://localhost:4000/api/area/642e118f7c93b43a18f6fd8f
+
+
+###
+
+GET http://localhost:4000/api/area/
 
 ###
 
@@ -98,6 +140,10 @@ Content-Type: application/json
 
 }
 
+
+###
+
+GET http://localhost:4000/api/user/logout
 
 ###
 
@@ -164,4 +210,143 @@ POST http://localhost:4000/api/admin/logout
 
 GET http://localhost:4000/api/admin
 
+###
+
+POST http://localhost:4000/api/dca
+content-type: application/json
+
+{
+  "formName": "Conveyor Safety",
+  "status" : "Enabled",
+  "questions" : 
+  [
+    {
+    "Heading" : "Conveyor Safety",
+    "Question"  : "Is the conveyor belt in good condition?"
+    },
+    {
+    "Heading" : "Conveyor Safety :p",
+    "Question"  : "Is the conveyor belt in good condition? 0w0"
+    }
+  ] 
+}
+
+###
+POST http://localhost:4000/api/pi
+content-type: application/json
+
+{
+  "formName": "Conveyor Safety PI",
+  "status" : "Enabled",
+  "questions" : 
+  [
+    {
+    "Heading" : "Conveyor Safety PI1",
+    "Question"  : "Is the conveyor belt in good condition?"
+    },
+    {
+    "Heading" : "Conveyor Safety :p",
+    "Question"  : "Is the conveyor belt in good condition? 0w0"
+    }
+  ] 
+}
+
+
+###
+
+POST http://localhost:4000/api/pireport
+Content-Type: application/json
+
+{
+  "site": "642aecb8a39fec51ca4b076f",
+  "pi": "64304e557116f10670dc1c3a",
+  "formCompliant": "Compliant",
+  "userType": "Employee",
+  "reportedStatus": "Completed",
+  "reportDate": "2023-04-07",
+  "startDate": "2023-04-01",
+  "endDate": "2023-04-06"
+}
+
+
+###
+
+GET http://localhost:4000/api/pireport/64305721b3ee2e695862536d
+
+###
+POST http://localhost:4000/api/safeunsafereport
+Content-Type: application/json
+
+{
+    "siteName" : "New Site",
+    "department": "New Department",
+    "area": "New Area",
+    "actType": "some_type",
+    "userType": "some_type",
+    "reportedStatus": "reported",
+    "reportDate": "2023-04-09T10:20:30Z",
+    "startDate": "2023-04-09T10:20:30Z",
+    "endDate": "2023-04-09T10:20:30Z"
+}
+
+###
+POST http://localhost:4000/api/user/register
+Content-Type: application/json
+
+{
+  "picture": "https://example.com/user123.jpgs",
+  "email": "texashouse003@gmail.com",
+  "accountType": "Employee",
+  "employeeId": "123456s1",
+  "password": "pass"
+}
+
+###
+
+POST http://localhost:4000/api/user/login
+Content-Type: application/json
+
+{
+    "email": "texashouse003@gmail.com" ,
+    "password": "pass"
+}
+
+###
+POST http://localhost:4000/api/user/register
+Content-Type: application/json
+
+{
+  "picture": "https://example.com/user123.jpgs",
+  "email": "ahmed.mansur.bhatti@gmail.com",
+  "accountType": "Employee",
+  "employeeId": "123456s12",
+  "password": "pass"
+}
+
+###
+POST http://localhost:4000/api/user/login
+Content-Type: application/json
+
+{
+    "email": "ahmed.mansur.bhatti@gmail.com" ,
+    "password": "pass2"
+}
+
+###
+
+POST http://localhost:4000/api/user/forgot-password
+Content-Type: application/json
+
+{
+    "email": "ahmed.mansur.bhatti@gmail.com"
+}
+
+###
+
+POST http://localhost:4000/api/user/reset-password/1m9rw5judsh
+Content-Type: application/json
+
+{
+  "password": "pass2"
+}
 
