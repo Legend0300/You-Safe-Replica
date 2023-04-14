@@ -31,6 +31,9 @@ const loginManager = async (req, res) => {
         )
     
         res.cookie('managerjwt', token)
+
+        // localStorage.setItem('managerjwt', token);
+
         res.json({ token });
 
     } 
