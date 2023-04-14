@@ -20,14 +20,17 @@ function Test() {
   const [variant, setVariant] = useState('contained');
   
   const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYW5hZ2VyIjp7Im5hbWUiOiJ0b3kiLCJlbWFpbCI6InRveSIsImlkIjoiNjQzODQzM2FjNDc5MmI4NTc1ZmQ0MDBhIn0sInJvbGUiOiJNYW5hZ2VyIiwiaWF0IjoxNjgxNDQ5Njc5fQ.3Z2aBRgsLOBZWJcYhVloaWNs1KkFuSSHbvPQpWMD1Jo`,
+    'Content-Type': 'application/json'
+    // 'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYW5hZ2VyIjp7Im5hbWUiOiJ0b3kiLCJlbWFpbCI6InRveSIsImlkIjoiNjQzODQzM2FjNDc5MmI4NTc1ZmQ0MDBhIn0sInJvbGUiOiJNYW5hZ2VyIiwiaWF0IjoxNjgxNDQ5Njc5fQ.3Z2aBRgsLOBZWJcYhVloaWNs1KkFuSSHbvPQpWMD1Jo`,
   };
 
+
   const handleSubmit = async (e) => {
+    console.log(headers);
     e.preventDefault();
     setVariant('outlined');
     setLoading(true);
+
 
     axios
       .get('http://localhost:4000/api/site', { headers })
@@ -37,7 +40,7 @@ function Test() {
         setLoading(false);
         setVariant('contained');
         console.log(response.data);
-        setToken(response.data);
+        setToken(response.data)
       })
       .catch((error) => {
         // handle error response

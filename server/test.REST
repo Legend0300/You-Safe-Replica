@@ -111,6 +111,11 @@ DELETE  http://localhost:4000/api/area/642e118f7c93b43a18f6fd8f
 
 ###
 
+GET http://localhost:4000/api/area
+
+
+###
+
 GET http://localhost:4000/api/area/
 
 ###
