@@ -1,11 +1,13 @@
 express = require('express');
 const jwt = require('jsonwebtoken');
+const Cookies = require('js-cookie');
 
 
 const validateToken = async (req, res, next) => {
     // const authHeader = req.headers['authorization'] || req.headers['x-access-token'];
     // const token = authHeader && authHeader.split(' ')[1];
-    const token = req.cookies.managerjwt;
+    // const token = req.cookies.managerjwt;
+    const token = Cookies.get('managerjwt');
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
