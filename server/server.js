@@ -1,7 +1,7 @@
 express = require('express');
 app = express();
 const cookieParser = require('cookie-parser');
-
+const cors = require('cors');
 
 const dotenv = require('dotenv');
 const connect = require('./config/dbconnection');
@@ -53,6 +53,10 @@ app.use('/api/dcachecklist', dcachecklist)
 app.use('/api/pichecklist', pichecklist)
 app.use('/api/sam', sam)
 app.use('/api/reportingDetails', reportingDetails)
+const allowedOrigins = ['http://localhost:3000'];
+app.use(cors({
+    origin: "*",
+}));
 
 
 
