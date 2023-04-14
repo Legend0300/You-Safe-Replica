@@ -55,6 +55,9 @@ function HazardReportForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
+
+<h1>Hazard Reports</h1>
+
       <div>
         <label htmlFor="site">Site:</label>
         <input
@@ -63,6 +66,8 @@ function HazardReportForm(props) {
           name="site"
           value={site}
           onChange={handleSiteChange}
+          required
+          validationMessage="Required"
         />
       </div>
       <div>
@@ -73,6 +78,8 @@ function HazardReportForm(props) {
           name="department"
           value={department}
           onChange={handleDepartmentChange}
+          required
+          validationMessage="Required"
         />
       </div>
       <div>
@@ -83,6 +90,8 @@ function HazardReportForm(props) {
           name="area"
           value={area}
           onChange={handleAreaChange}
+          required
+          validationMessage="Required"
         />
       </div>
       <div>
@@ -93,6 +102,8 @@ function HazardReportForm(props) {
           name="userType"
           value={userType}
           onChange={handleUserTypeChange}
+          required
+          validationMessage="Required"
         />
       </div>
       <div>
@@ -103,6 +114,8 @@ function HazardReportForm(props) {
           name="reportedStatus"
           value={reportedStatus}
           onChange={handleReportedStatusChange}
+          required
+          validationMessage="Required"
         />
       </div>
       <div>
@@ -113,6 +126,8 @@ function HazardReportForm(props) {
           name="reportStartDate"
           value={reportStartDate}
           onChange={handleReportStartDateChange}
+          required
+          validationMessage="Required"
         />
       </div>
       <div>
@@ -123,6 +138,8 @@ function HazardReportForm(props) {
           name="reportEndDate"
           value={reportEndDate}
           onChange={handleReportEndDateChange}
+          required
+          validationMessage="Required"
         />
       </div>
       <button type="submit">Submit</button>
