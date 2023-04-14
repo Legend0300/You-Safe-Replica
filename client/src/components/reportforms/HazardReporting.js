@@ -57,6 +57,7 @@ function HazardReportingForm(props) {
     };
     console.log('Form submitted');
     console.log(obj);
+    const emptyForm = setDesc('') || setDepartment('') || setArea('') || setResp('') || setReportDate('') || setReportTime('') || setPhoto('');
   };
 
   return (

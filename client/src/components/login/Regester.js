@@ -14,11 +14,11 @@ import axios from 'axios';
 
 //Login for managers
 
-function Login() {
+function Regester() {
+    const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [variant, setVariant] = useState('contained');
   const headers = {
@@ -29,19 +29,31 @@ function Login() {
     e.preventDefault();
     setVariant('outlined');
     setLoading(true);
+    if (!username) {
+      setError('Please enter a username');
+      setLoading(false);
+      setVariant('contained');
+      return;
+    }
     const payload = {
-      email: email,
-      password: password,
+       name: username,
+       email: email,
+       password: password,
+      picture: "https://example.com/johndoe.png",
+      "role": "Manager",
     };
 
     axios
-      .post('http://localhost:4000/api/manager/login', payload, { headers })
+      .post('http://localhost:4000/api/manager/register', payload, { headers })
       .then((response) => {
+        console.log(username);
+        console.log(password);
+        console.log(email);
+        setUsername('');
         setPassword('');
         setEmail('');
         setLoading(false);
         setVariant('contained');
-        setToken(response.data.token);
       })
       .catch((error) => {
         // handle error response
@@ -49,10 +61,6 @@ function Login() {
       });
   };
 
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
-  
   return (
     <Box
       sx={{
@@ -80,6 +88,18 @@ function Login() {
             autoComplete="off"
             gap={2}
           >
+            <TextField
+              id="outlined-basic"
+              label="Username"
+              variant="standard"
+              autoComplete="off"
+              error={Boolean(error)}
+              helperText={error}
+              required
+              value={username}
+              color="warning"
+              onChange={(event) => setUsername(event.target.value)}
+            />
             <TextField
               id="outlined-basic"
               label="Email"
@@ -128,7 +148,6 @@ function Login() {
                   'Login'
                 )}
               </Button>
-              <Button href="#text-buttons">Forgot Password</Button>
             </CardActions>
           </Box>
         </CardContent>
@@ -137,4 +156,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Regester;

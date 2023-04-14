@@ -1,19 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
 import './App.css';
-import Login from './components/login/login';
+import Test from './components/login/test';
 import ForgotPass from './components/login/forgotpass';
 import EditPass from './components/login/editpass';
 import HazardReportForm from './components/user/hazardReportForm';
+import HazardReportingForm from './components/reportforms/HazardReporting';
 
-
-function App() {  
-
+function App() {
   return (
-
     <div className="app">
-      {/* <Login /> */}
-      <HazardReportForm />
+       <Test />
     </div>
   );
 }
