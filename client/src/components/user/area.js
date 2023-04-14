@@ -8,23 +8,23 @@ const AreaForm = () => {
   const [areaName, setAreaName] = useState('');
   const [status, setStatus] = useState('');
 
-//   useEffect(() => {
-//     // Fetch sites data from backend API
-//     fetch('https://example.com/api/sites')
-//       .then((response) => response.json())
-//       .then((data) => setSites(data))
-//       .catch((error) => console.error(error));
-//   }, []);
+  //   useEffect(() => {
+  //     // Fetch sites data from backend API
+  //     fetch('https://example.com/api/sites')
+  //       .then((response) => response.json())
+  //       .then((data) => setSites(data))
+  //       .catch((error) => console.error(error));
+  //   }, []);
 
   const handleSiteChange = (event) => {
     setSelectedSite(event.target.value);
 
-//     // Fetch departments data for the selected site from backend API
-//     fetch(`https://example.com/api/departments?site=${event.target.value}`)
-//       .then((response) => response.json())
-//       .then((data) => setDepartments(data))
-//       .catch((error) => console.error(error));
-   };
+    //     // Fetch departments data for the selected site from backend API
+    //     fetch(`https://example.com/api/departments?site=${event.target.value}`)
+    //       .then((response) => response.json())
+    //       .then((data) => setDepartments(data))
+    //       .catch((error) => console.error(error));
+  };
 
   const handleDepartmentChange = (event) => {
     setSelectedDepartment(event.target.value);
@@ -46,7 +46,7 @@ const AreaForm = () => {
       site: selectedSite,
       department: selectedDepartment,
       area: areaName,
-      status: status
+      status: status,
     });
 
     // reset form fields
@@ -65,7 +65,9 @@ const AreaForm = () => {
           <select value={selectedSite} onChange={handleSiteChange}>
             <option value="">Select Site</option>
             {sites.map((site) => (
-              <option key={site.id} value={site.name}>{site.name}</option>
+              <option key={site.id} value={site.name}>
+                {site.name}
+              </option>
             ))}
           </select>
         </label>
@@ -75,7 +77,9 @@ const AreaForm = () => {
           <select value={selectedDepartment} onChange={handleDepartmentChange}>
             <option value="">Select Department</option>
             {departments.map((department) => (
-              <option key={department.id} value={department.name}>{department.name}</option>
+              <option key={department.id} value={department.name}>
+                {department.name}
+              </option>
             ))}
           </select>
         </label>
