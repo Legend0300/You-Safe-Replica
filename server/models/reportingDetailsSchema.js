@@ -6,13 +6,11 @@ Heading: {
     required: true
 },
 department: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref : 'Department',
+    type: String,
     required: true
   },
   area: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Area',
+    type: String,
     required: true
   },
   description: {
@@ -28,7 +26,7 @@ department: {
     required: true
   },
   responsibility: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true
     },
 });

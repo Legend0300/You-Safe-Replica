@@ -1,13 +1,11 @@
 express = require('express');
 const jwt = require('jsonwebtoken');
-const Cookies = require('js-cookie');
 
 
 const validateToken = async (req, res, next) => {
     // const authHeader = req.headers['authorization'] || req.headers['x-access-token'];
     // const token = authHeader && authHeader.split(' ')[1];
-    // const token = req.cookies.managerjwt;
-    const token = Cookies.get('managerjwt');
+    const token = req.cookies.managerjwt;
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
@@ -18,7 +16,7 @@ const validateToken = async (req, res, next) => {
     if (decodedToken.role !== 'user') {
       return res.status(403).json({ message: 'Unauthorized' });
     }
-    req.user = decodedToken.user;
+    req.manager = decodedToken.manager;
     next();
   } catch (error) {
     res.status(401).json({ message: 'Invalid token' });

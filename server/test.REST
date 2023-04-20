@@ -142,6 +142,10 @@ Content-Type: application/json
 
 }
 
+###
+
+GET http://localhost:4000/api/user
+
 
 ###
 
@@ -352,3 +356,18 @@ Content-Type: application/json
   "password": "pass2"
 }
 
+###
+POST http://localhost:4000/api/reportingDetails
+Content-Type: application/json
+
+{
+    "Heading": "Report Heading",
+    "department": "New Department",
+    "area": "New Area",
+    "description": "Report Description",
+    "date": "2023-04-16T10:00:00.000Z",
+    "photos": "https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361514_960_720.png",
+    "responsibility": "John Doe"
+}
+
+###

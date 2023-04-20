@@ -5,22 +5,22 @@ const accessAuth = require('../../middleware/accessAuth');
 const {  getAllVisitors, getVisitorById ,createNewVisitor ,updateVisitorById ,deleteVisitorById , getVisitor} = require('../../controllers/visitorController');
 
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]), getAllVisitors);
+router.get('/', getAllVisitors);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getVisitorById);
+router.get('/:id',  getVisitorById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewVisitor);
+router.post('/', createNewVisitor);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]), updateVisitorById);
+router.put('/:id',  updateVisitorById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]), deleteVisitorById);
+router.delete('/:id',  deleteVisitorById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getVisitor);
+router.get('/getSite/:id',  getVisitor);
 
 module.exports = router;

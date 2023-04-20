@@ -2,17 +2,45 @@ import React, { useState, useEffect } from 'react';
 
 const EditSite = () => {
   const [sites, setSites] = useState([]);
+  const [editingSiteId, setEditingSiteId] = useState(null);
+
+
+  useEffect(() => {
+    // Fetch sites data from backend API
+    fetch('http://localhost:4000/api/site')
+      .then((response) => response.json())
+      .then((data) => setSites(data))
+      .catch((error) => console.error(error));
+  }, []);
 
 
   const handleEdit = (siteId) => {
-    // handle edit functionality here
-    console.log(`Editing site with id ${siteId}`);
+    setEditingSiteId(siteId);
   };
 
   const handleDelete = (siteId) => {
-    // handle delete functionality here
-    console.log(`Deleting site with id ${siteId}`);
+    const updatedSites = sites.filter(site => site.id !== siteId);
+    setSites(updatedSites);
   };
+
+  const handleUpdate = (updatedSite) => {
+    const updatedSites = sites.map(site => {
+      if (site.id === updatedSite.id) {
+        console.log(updatedSite);
+        console.log();
+        return updatedSite;
+      } else {
+        return site;
+      }
+    });
+    setSites(updatedSites);
+    setEditingSiteId(null);
+  };
+
+  useEffect(() => {
+    // fetch sites data here
+    // setSites(data);
+  }, []);
 
   return (
     <table>
@@ -32,17 +60,62 @@ const EditSite = () => {
       <tbody>
         {sites.map((site) => (
           <tr key={site.id}>
-            <td>{site.siteName}</td>
-            <td>{site.location}</td>
+            <td>
+              {editingSiteId === site.id ? (
+                <input
+                  type="text"
+                  value={site.siteName}
+                  onChange={(e) =>
+                    setSites(
+                      sites.map((s) =>
+                        s.id === site.id
+                          ? { ...s, siteName: e.target.value }
+                          : s
+                      )
+                    )
+                  }
+                />
+              ) : (
+                site.siteName
+              )}
+            </td>
+            <td>
+              {editingSiteId === site.id ? (
+                <input
+                  type="text"
+                  value={site.location}
+                  onChange={(e) =>
+                    setSites(
+                      sites.map((s) =>
+                        s.id === site.id
+                          ? { ...s, location: e.target.value }
+                          : s
+                      )
+                    )
+                  }
+                />
+              ) : (
+                site.location
+              )}
+            </td>
             <td>{site.country}</td>
             <td>{site.city}</td>
-            <td>{site.manager.fullName}</td>
-            <td>{site.manager.email}</td>
-            <td>{site.manager.contact}</td>
-            <td>{site.manager.status}</td>
+            <td>{site.managerInformation.fullName}</td>
+            <td>{site.managerInformation.email}</td>
+            <td>{site.managerInformation.contact}</td>
+            <td>{site.managerInformation.status}</td>
             <td>
-              <button onClick={() => handleEdit(site.id)}>Edit</button>
-              <button onClick={() => handleDelete(site.id)}>Delete</button>
+              {editingSiteId === site.id ? (
+                <>
+                  <button onClick={() => handleUpdate(site)}>Save</button>
+                  <button onClick={() => setEditingSiteId(null)}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => handleEdit(site.id)}>Edit</button>
+                  <button onClick={() => handleDelete(site.id)}>Delete</button>
+                </>
+              )}
             </td>
           </tr>
         ))}

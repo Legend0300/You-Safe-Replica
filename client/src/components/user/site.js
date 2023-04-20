@@ -10,11 +10,44 @@ const SiteForm = () => {
   const [contact, setContact] = useState('');
   const [status, setStatus] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // handle form submission here
-    // you can access form data with state variables e.g. siteName, location etc.
+  
+    // Create a data object containing the form fields
+    const data = {
+      siteName,
+      location,
+      country,
+      city,
+      managerInformation: {
+        fullName,
+        emailAddress: email,
+        contact,
+        status,
+      },
+    };
+  
+    try {
+      // Make an HTTP POST request to the server-side API endpoint
+      const response = await fetch('http://localhost:4000/api/site', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      // Check if the request was successful
+      if (response.ok) {
+        // Do something after successful submission
+      } else {
+        // Handle errors
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
 
   return (
     <form onSubmit={handleSubmit}>

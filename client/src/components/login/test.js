@@ -26,31 +26,33 @@ function Test() {
 
 
   const handleSubmit = async (e) => {
-    console.log(headers);
     e.preventDefault();
     setVariant('outlined');
     setLoading(true);
-
-
-    axios
-      .get('http://localhost:4000/api/site', { headers })
-      .then((response) => {
-        setPassword('');
-        setEmail('');
-        setLoading(false);
-        setVariant('contained');
-        console.log(response.data);
-        setToken(response.data)
-      })
-      .catch((error) => {
-        // handle error response
-        console.error(error);
+  
+    try {
+      const res = await axios.post('http://localhost:4000/api/user/login', {
+        email,
+        password,
       });
+  
+      setLoading(false);
+      setVariant('contained');
+      setToken(res.data.token);
+      localStorage.setItem('userjwt', res.data.token);
+    } catch (err) {
+      setLoading(false);
+      setError('Invalid credentials');
+    }
   };
+  
 
   useEffect(() => {
     console.log(token);
   }, [token]);
+
+
+
 
   return (
     <Box

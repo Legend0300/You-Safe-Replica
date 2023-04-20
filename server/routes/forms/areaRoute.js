@@ -5,22 +5,22 @@ const {  getAllAreas , getAreaById ,createNewArea ,updateAreaById ,deleteAreaByI
 const accessAuth = require('../../middleware/accessAuth');
 
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]) ,getAllAreas);
+router.get('/', getAllAreas);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getAreaById);
+router.get('/:id',  getAreaById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewArea);
+router.post('/', createNewArea);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]), updateAreaById);
+router.put('/:id',  updateAreaById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]) , deleteAreaById);
+router.delete('/:id',  deleteAreaById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getArea);
+router.get('/getSite/:id',  getArea);
 
 module.exports = router;

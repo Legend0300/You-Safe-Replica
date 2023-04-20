@@ -5,23 +5,23 @@ const accessAuth = require('../../middleware/accessAuth');
 const {   getAllPIs , getPIById , createNewPI , updatePIById , deletePIById , getPI} = require('../../controllers/piController');
 
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]), getAllPIs);
+router.get('/', getAllPIs);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getPIById);
+router.get('/:id',  getPIById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewPI);
+router.post('/', createNewPI);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]), updatePIById);
+router.put('/:id',  updatePIById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]), deletePIById);
+router.delete('/:id',  deletePIById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getPI);
+router.get('/getSite/:id',  getPI);
 
 
 

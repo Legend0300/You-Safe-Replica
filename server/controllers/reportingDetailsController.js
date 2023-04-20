@@ -1,7 +1,10 @@
 const ReportingDetails = require('../models/reportingDetailsSchema');
+const Department = require('../models/departmentModel');
+const Area = require('../models/areaModel');
+const Manager = require('../models/managerModel');
 
 // GET all sites
-getAllReportingDetails = async (req, res) => {
+const getAllReportingDetails = async (req, res) => {
     try {
         const reportingDetails = await ReportingDetails.find();
 
@@ -12,8 +15,11 @@ getAllReportingDetails = async (req, res) => {
 }
 
 // GET one site by ID
-getReportingDetailsById = async (req, res) => {
+const getReportingDetailsById = async (req, res) => {
     try {
+
+
+
         const reportingDetail = await ReportingDetails.findById(req.params.id);
 
         if (reportingDetail == null) {
@@ -27,18 +33,20 @@ getReportingDetailsById = async (req, res) => {
 }
 
 // CREATE a new site
-createNewReportingDetail = async (req, res) => {
-
+const createNewReportingDetail = async (req, res) => {
+    const department = await Department.findOne( {department: req.body.department}   );
+    const area = await Area.findOne( {name: req.body.area});
+    const manager = await Manager.findOne( {name: req.body.responsibility}   );
     
         const reportingDetail = new ReportingDetails({
             Heading: req.body.Heading,
-            department: req.body.department,
-            area: req.body.area,
+            department: department.department,
+            area: area.name,
             description: req.body.description,
             lastName: req.body.lastName,
             date: req.body.date,
             photos: req.body.photos,
-            responsibility: req.body.responsibility,
+            responsibility: manager.name,
         });
     
         try {
@@ -51,7 +59,7 @@ createNewReportingDetail = async (req, res) => {
     }
 
 // UPDATE one site by ID
-updateReportingDetailById = async (req, res) => {
+const updateReportingDetailById = async (req, res) => {
     try {
         const reportingDetail = await ReportingDetails.findById(req.params.id);
 
@@ -87,7 +95,7 @@ updateReportingDetailById = async (req, res) => {
 }
 
 // DELETE one site by ID
-deleteReportingDetailById = async (req, res) => {
+const deleteReportingDetailById = async (req, res) => {
     try {
         const reportingDetail = await ReportingDetails.findById(req.params.id);
 
