@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 
 // Define Incident Report Schema
 const incidentReportSchema = new mongoose.Schema({
-  site: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Site',
-    required: true
-  },
   department: {
     ref: 'Department',
     type: mongoose.Schema.Types.ObjectId,
@@ -31,10 +26,7 @@ const incidentReportSchema = new mongoose.Schema({
   },
   reportedStatus: {
     type: String,
-    required: true
-  },
-  reportDate: {
-    type: Date,
+    enum: ['In Progress', 'Pending', 'Completed'],
     required: true
   },
   startDate: {

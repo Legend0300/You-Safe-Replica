@@ -1,20 +1,15 @@
 import { useState } from "react";
 
 function IncidentReportForm(props) {
-  const [site, setSite] = useState("");
   const [department, setDepartment] = useState("");
   const [area, setArea] = useState("");
   const [eventType, setEventType] = useState("");
   const [eventSubType, setEventSubType] = useState("");
   const [userType, setUserType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
-  const [reportDate, setReportDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const handleSiteChange = (event) => {
-    setSite(event.target.value);
-  };
 
   const handleDepartmentChange = (event) => {
     setDepartment(event.target.value);
@@ -40,9 +35,6 @@ function IncidentReportForm(props) {
     setReportedStatus(event.target.value);
   };
 
-  const handleReportDateChange = (event) => {
-    setReportDate(event.target.value);
-  };
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -56,14 +48,12 @@ function IncidentReportForm(props) {
     event.preventDefault();
     // Call a function from the parent component to handle the form submission
     props.onSubmit({
-      site,
       department,
       area,
       eventType,
       eventSubType,
       userType,
       reportedStatus,
-      reportDate,
       startDate,
       endDate
     });

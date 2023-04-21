@@ -18,9 +18,12 @@ import AreaManager from './components/user/areaManager';
 import VisitorForm from './components/user/visitor';
 import EmployeeForm from './components/user/employee';
 
+
 function App() {
   return (
     <div className="app">
+      <HazardReportForm />
+      <br />
       <VisitorForm />
       <EmployeeForm />
       <AreaManager />

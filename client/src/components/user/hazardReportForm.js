@@ -1,150 +1,131 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
-function HazardReportForm(props) {
-  const [site, setSite] = useState("");
-  const [department, setDepartment] = useState("");
-  const [area, setArea] = useState("");
-  const [userType, setUserType] = useState("");
-  const [reportedStatus, setReportedStatus] = useState("");
-  const [reportStartDate, setReportStartDate] = useState("");
-  const [reportEndDate, setReportEndDate] = useState("");
+const HazardReportingForm = () => {
+  const [reportedStatus, setReportedStatus] = useState('');
+  const [reportDate, setReportDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [photos, setPhotos] = useState('');
+  const [responsibility, setResponsibility] = useState('');
+  const [areas, setAreas] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
 
-  const handleSiteChange = (event) => {
-    setSite(event.target.value);
-  };
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/department`)
+      .then((response) => response.json())
+      .then((data) => setDepartments(data))
+      .catch((error) => console.error(error));
+  }, []);
 
-  const handleDepartmentChange = (event) => {
-    setDepartment(event.target.value);
-  };
-
-  const handleAreaChange = (event) => {
-    setArea(event.target.value);
-  };
-
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-  };
-
-  const handleReportedStatusChange = (event) => {
-    setReportedStatus(event.target.value);
-  };
-
-  const handleReportStartDateChange = (event) => {
-    setReportStartDate(event.target.value);
-  };
-
-  const handleReportEndDateChange = (event) => {
-    setReportEndDate(event.target.value);
-  };
+  useEffect(() => {
+    // Fetch areas data for the selected department from backend API
+    fetch(`http://localhost:4000/api/area`)
+      .then((response) => response.json())
+      .then((data) => setAreas(data))
+      .catch((error) => console.error(error));
+  }, [selectedDepartment]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Call a function from the parent component to handle form submission
-    const obj = ({
-      site,
-      department,
-      area,
-      userType,
+    // perform submission logic here, e.g. make API call to save data
+
+    console.log({
+      departments,
+      areas,
       reportedStatus,
-      reportStartDate,
-      reportEndDate,
+      reportDate,
+      description,
+      photos,
+      responsibility,
+      selectedDepartment,
+      selectedArea,
     });
-    console.log("Form submitted");
-    console.log(obj);
+
+    // reset form
+    setDepartments([]);
+    setAreas([]);
+    setReportedStatus('');
+    setReportDate('');
+    setDescription('');
+    setPhotos('');
+    setResponsibility('');
+    setSelectedDepartment('');
+    setSelectedArea('');
+  };
+
+  const handleDepartmentChange = (event) => {
+    const selectedDepartmentData = departments.find(department => department._id === event.target.value);
+    console.log(selectedDepartmentData);
+    setSelectedDepartment({ department: selectedDepartmentData.department });
+  };
+
+  const handleAreaChange = (event) => {
+    const selectedAreaData = areas.find(area => area._id === event.target.value);
+    setSelectedArea({ area: selectedAreaData.name });
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Hazard Reporting</h1>
+      Department:
+      <select value={selectedDepartment} onChange={handleDepartmentChange}>
+        <option value="">Select a department</option>
+        {departments.length > 0 &&
+          departments.map((department) => (
+            <option key={department._id} value={department._id}>
+              {department.department}
+            </option>
+          ))}
+      </select>
 
-<h1>Hazard Reports</h1>
-
-      <div>
-        <label htmlFor="site">Site:</label>
-        <input
-          type="text"
-          id="site"
-          name="site"
-          value={site}
-          onChange={handleSiteChange}
-          required
-          validationMessage="Required"
-        />
-      </div>
-      <div>
-        <label htmlFor="department">Department:</label>
-        <input
-          type="text"
-          id="department"
-          name="department"
-          value={department}
-          onChange={handleDepartmentChange}
-          required
-          validationMessage="Required"
-        />
-      </div>
-      <div>
-        <label htmlFor="area">Area:</label>
-        <input
-          type="text"
-          id="area"
-          name="area"
-          value={area}
-          onChange={handleAreaChange}
-          required
-          validationMessage="Required"
-        />
-      </div>
-      <div>
-        <label htmlFor="userType">User Type:</label>
-        <input
-          type="text"
-          id="userType"
-          name="userType"
-          value={userType}
-          onChange={handleUserTypeChange}
-          required
-          validationMessage="Required"
-        />
-      </div>
-      <div>
-        <label htmlFor="reportedStatus">Reported Status:</label>
-        <input
-          type="text"
-          id="reportedStatus"
-          name="reportedStatus"
-          value={reportedStatus}
-          onChange={handleReportedStatusChange}
-          required
-          validationMessage="Required"
-        />
-      </div>
-      <div>
-        <label htmlFor="reportStartDate">Report Start Date:</label>
-        <input
-          type="date"
-          id="reportStartDate"
-          name="reportStartDate"
-          value={reportStartDate}
-          onChange={handleReportStartDateChange}
-          required
-          validationMessage="Required"
-        />
-      </div>
-      <div>
-        <label htmlFor="reportEndDate">Report End Date:</label>
-        <input
-          type="date"
-          id="reportEndDate"
-          name="reportEndDate"
-          value={reportEndDate}
-          onChange={handleReportEndDateChange}
-          required
-          validationMessage="Required"
-        />
-      </div>
+      <label>
+        Area:
+        <select value={selectedArea} onChange={handleAreaChange}>
+          <option value="">Select an Area</option>
+          {areas.length > 0 &&
+            areas.map((area) => (
+              <option key={area._id} value={area._id}>
+                {area.name}
+              </option>
+            ))}
+        </select>
+      </label>
+      <br />
+      <label htmlFor="description">Description:</label>
+      <textarea
+        id="description"
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+        
+      />
+      <label htmlFor="reportDate">Date:</label>
+      <input
+        type="date"
+        id="reportDate"
+        value={reportDate}
+        onChange={(event) => setReportDate(event.target.value)}
+        
+      />
+      <label htmlFor="photos">Add photo:</label>
+      <input
+        type="text"
+        id="photos"
+        value={photos}
+        onChange={(event) => setPhotos(event.target.value)}
+        
+      />
+      <label htmlFor="responsibility">Responsibility:</label>
+      <input
+        type="text"
+        id="responsibility"
+        value={responsibility}
+        onChange={(event) => setResponsibility(event.target.value)}
+        
+      />
       <button type="submit">Submit</button>
     </form>
   );
-}
+};
 
-export default HazardReportForm;
+export default HazardReportingForm;
