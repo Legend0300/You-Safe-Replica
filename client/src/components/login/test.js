@@ -11,48 +11,49 @@ import CircularProgress from '@mui/material/CircularProgress';
 import HealthSafety from '../Assets/HealthSafety.svg';
 import axios from 'axios';
 
-
-//Login for managers
-
-function Login() {
+function Test() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [variant, setVariant] = useState('contained');
+  
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
+    // 'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYW5hZ2VyIjp7Im5hbWUiOiJ0b3kiLCJlbWFpbCI6InRveSIsImlkIjoiNjQzODQzM2FjNDc5MmI4NTc1ZmQ0MDBhIn0sInJvbGUiOiJNYW5hZ2VyIiwiaWF0IjoxNjgxNDQ5Njc5fQ.3Z2aBRgsLOBZWJcYhVloaWNs1KkFuSSHbvPQpWMD1Jo`,
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setVariant('outlined');
     setLoading(true);
-    const payload = {
-      email: email,
-      password: password,
-    };
-
-    axios
-      .post('http://localhost:4000/api/manager/login', payload, { headers })
-      .then((response) => {
-        setPassword('');
-        setEmail('');
-        setLoading(false);
-        setVariant('contained');
-        setToken(response.data.token);
-      })
-      .catch((error) => {
-        // handle error response
-        console.error(error);
+  
+    try {
+      const res = await axios.post('http://localhost:4000/api/user/login', {
+        email,
+        password,
       });
+  
+      setLoading(false);
+      setVariant('contained');
+      setToken(res.data.token);
+      localStorage.setItem('userjwt', res.data.token);
+    } catch (err) {
+      setLoading(false);
+      setError('Invalid credentials');
+    }
   };
+  
 
   useEffect(() => {
     console.log(token);
   }, [token]);
-  
+
+
+
+
   return (
     <Box
       sx={{
@@ -137,4 +138,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Test;

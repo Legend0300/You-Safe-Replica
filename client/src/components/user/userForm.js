@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const VisitorForm = () => {
+const UserForm = () => {
   const [areaManagerName, setAreaManagerName] = useState("");
   const [areas, setAreas] = useState([]);
   const [sites , setSites] = useState([]);
@@ -87,7 +87,7 @@ const VisitorForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="areaManagerName">Visitor Name: </label>
+        <label htmlFor="areaManagerName">User Name: </label>
         <input type="text" id="areaManagerName" value={areaManagerName} onChange={(e) => setAreaManagerName(e.target.value)} />
       </div>
 
@@ -143,4 +143,4 @@ const VisitorForm = () => {
   );
 }
 
-export default VisitorForm;
+export default UserForm;

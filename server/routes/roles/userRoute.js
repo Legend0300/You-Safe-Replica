@@ -7,13 +7,13 @@ const User = require('../../models/usertypeModel');
 
 
 
-router.get('/', userAuth , getUser);
+router.get('/:id'  , getUser);
 
 router.post('/login' , loginUser);
 
 router.post('/register' ,  registerUser);
 
-router.get('/logout', userAuth , logoutUser);
+router.get('/logout' , logoutUser);
 
 router.post('/forgot-password', ForgotPassword);
 

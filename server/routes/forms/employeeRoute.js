@@ -4,23 +4,23 @@ const {  getAllEmployees, getEmployeeById ,createNewEmployee ,updateEmployeeById
 const accessAuth = require('../../middleware/accessAuth');
 
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]), getAllEmployees);
+router.get('/',  getAllEmployees);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getEmployeeById);
+router.get('/:id',  getEmployeeById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewEmployee);
+router.post('/',  createNewEmployee);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]), updateEmployeeById);
+router.put('/:id', updateEmployeeById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]), deleteEmployeeById);
+router.delete('/:id',  deleteEmployeeById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getEmployee);
+router.get('/getSite/:id',  getEmployee);
 
 
 module.exports = router;

@@ -5,12 +5,12 @@ const { loginAdmin, getAdmin, registerAdmin, logoutAdmin } = require('../../cont
 
 const adminAuth = require('../../middleware/adminAuth');
 
-router.get('/' , adminAuth , getAdmin);
+router.get('/' ,  getAdmin);
 
 router.post('/login' , loginAdmin);
 
 router.post('/register' ,  registerAdmin);
 
-router.post('/logout', adminAuth , logoutAdmin);
+router.post('/logout' , logoutAdmin);
 
 module.exports = router;

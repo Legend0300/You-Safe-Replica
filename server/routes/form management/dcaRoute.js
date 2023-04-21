@@ -3,23 +3,23 @@ const router = express.Router();
 const accessAuth = require('../../middleware/accessAuth');
 const {  getAllDCAs , getDCAById , createNewDCA , deleteDCAById , getDCA , updateDCAById} = require('../../controllers/dcaController');
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]), getAllDCAs);
+router.get('/',  getAllDCAs);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getDCAById);
+router.get('/:id',  getDCAById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewDCA);
+router.post('/',  createNewDCA);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]),  updateDCAById);
+router.put('/:id',  updateDCAById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]), deleteDCAById);
+router.delete('/:id',  deleteDCAById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getDCA);
+router.get('/getSite/:id',  getDCA);
 
 
 

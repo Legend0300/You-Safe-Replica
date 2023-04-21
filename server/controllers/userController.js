@@ -11,7 +11,7 @@ const nodemailer = require('nodemailer');
 const getUser = async (req, res) => {
   try {
     // Get user ID from decoded JWT token
-    const { id } = req.user;
+    const { id } = req.params;
 
     // Find user by ID
     const user = await User.findById(id);
@@ -60,7 +60,7 @@ const loginUser = async (req, res) => {
     res.cookie('userjwt', token)
 
     // Return token and user data
-    res.json("token: " + token);
+    res.json({ token });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
