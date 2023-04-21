@@ -3,13 +3,13 @@ import axios from 'axios';
 
 const VisitorForm = () => {
   const [areaManagerName, setAreaManagerName] = useState("");
-  const [areas, setAreas] = useState([]);
   const [sites , setSites] = useState([]);
-  const [departments, setDepartments] = useState([]);
   const [selectedSite, setSelectedSite] = useState({ siteName: '' });
+  const [status, setStatus] = useState('');
+  const [areas, setAreas] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
   const [selectedArea, setSelectedArea] = useState({ area: '' });
-  const [status, setStatus] = useState('');
 
   useEffect(() => {
     // Fetch sites data from backend API
@@ -90,6 +90,19 @@ const VisitorForm = () => {
         <label htmlFor="areaManagerName">Visitor Name: </label>
         <input type="text" id="areaManagerName" value={areaManagerName} onChange={(e) => setAreaManagerName(e.target.value)} />
       </div>
+          <label>
+            Site:
+            <select value={selectedSite.siteName} onChange={handleSiteChange}>
+              <option value="">Select a site</option>
+              {sites.map((site) => (
+                <option key={site._id} value={site._id}>
+                  {site.siteName}
+                </option>
+              ))}
+            </select>
+          </label>
+          <br />
+       
 
       <label>
         Area:
@@ -103,20 +116,6 @@ const VisitorForm = () => {
         </select>
       </label>
       <br />
-
-      <label>
-        Site:
-        <select value={selectedSite.siteName} onChange={handleSiteChange}>
-          <option value="">Select a site</option>
-          {sites.map((site) => (
-            <option key={site._id} value={site._id}>
-              {site.siteName}
-            </option>
-          ))}
-        </select>
-      </label>
-      <br />
-      <label>
         Department:
         <select value={selectedDepartment.department} onChange={handleDepartmentChange}>
           <option value="">Select a department</option>
@@ -126,7 +125,8 @@ const VisitorForm = () => {
             </option>
           ))}
         </select>
-      </label>
+
+    
       <br />
       <div>
         <label htmlFor="status">
