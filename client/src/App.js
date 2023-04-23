@@ -20,28 +20,13 @@ import EmployeeForm from './components/user/employee';
 import IncidentReportForm from './components/user/incidentReportForm';
 import PlannedInspection from './components/user/plannedInspection';
 import DeepComplianceAuditForm from './components/user/deepComplianceAuditForm';
+import AreaFields from './components/admin/areaFields';
 
 
 function App() {
   return (
     <div className="app">
-      <DeepComplianceAuditForm />
-      <PlannedInspection />
-      <IncidentReportForm />
-      <HazardReportForm />
-      <br />
-      <VisitorForm />
-      <EmployeeForm />
-      <AreaManager />
-      < DepartmentForm />
-        < Site />
-        < EditSite />
-      <AreaForm />
-       <Test />
-       <Register />
-       < ReportingTypePage />
-       < HomePage />
-        < ReportDetails />
+      <AreaFields/>
     </div>
   );
 }
