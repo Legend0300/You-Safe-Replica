@@ -26,7 +26,7 @@ import AreaFields from './components/admin/areaFields';
 function App() {
   return (
     <div className="app">
-      <AreaFields/>
+      <null/>
     </div>
   );
 }
