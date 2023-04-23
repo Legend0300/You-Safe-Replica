@@ -1,6 +1,4 @@
 import { useState } from "react";
-import "../../styles/AreaFields.css"; 
-import "../../App.css";
 
 function AreaForm(props) {
   const [department, setDepartment] = useState(props.department);
