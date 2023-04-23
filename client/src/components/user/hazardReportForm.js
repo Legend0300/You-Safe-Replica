@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import '../../styles/HazardReportingForm.css';
-import "../../App.css";
 
 const HazardReportingForm = () => {
   const [reportedStatus, setReportedStatus] = useState('');
@@ -68,71 +66,65 @@ const HazardReportingForm = () => {
   };
 
   return (
-<form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-  <h1 style={{ marginBottom: "1rem" }}>Hazard Reporting</h1>
-  
-  <label style={{ marginBottom: "1rem" }}>Department:
-    <select value={selectedDepartment} onChange={handleDepartmentChange} style={{ marginLeft: "1rem" }}>
-      <option value="">Select a department</option>
-      {departments.length > 0 &&
-        departments.map((department) => (
-          <option key={department._id} value={department._id}>
-            {department.department}
-          </option>
-        ))}
-    </select>
-  </label>
+    <form onSubmit={handleSubmit}>
+      <h1>Hazard Reporting</h1>
+      Department:
+      <select value={selectedDepartment} onChange={handleDepartmentChange}>
+        <option value="">Select a department</option>
+        {departments.length > 0 &&
+          departments.map((department) => (
+            <option key={department._id} value={department._id}>
+              {department.department}
+            </option>
+          ))}
+      </select>
 
-  <label style={{ marginBottom: "1rem" }}>Area:
-    <select value={selectedArea} onChange={handleAreaChange} style={{ marginLeft: "2rem" }}>
-      <option value="">Select an Area</option>
-      {areas.length > 0 &&
-        areas.map((area) => (
-          <option key={area._id} value={area._id}>
-            {area.name}
-          </option>
-        ))}
-    </select>
-  </label>
-
-  <label htmlFor="description" style={{ marginBottom: "1rem" }}>Description:</label>
-  <textarea
-    id="description"
-    value={description}
-    onChange={(event) => setDescription(event.target.value)}
-    style={{ marginBottom: "1rem", width: "100%", padding: "0.5rem" }}
-  />
-
-  <label htmlFor="reportDate" style={{ marginBottom: "1rem" }}>Date:</label>
-  <input
-    type="date"
-    id="reportDate"
-    value={reportDate}
-    onChange={(event) => setReportDate(event.target.value)}
-    style={{ marginBottom: "1rem", padding: "0.5rem" }}
-  />
-
-  <label htmlFor="photos" style={{ marginBottom: "1rem" }}>Add photo:</label>
-  <input
-    type="text"
-    id="photos"
-    value={photos}
-    onChange={(event) => setPhotos(event.target.value)}
-    style={{ marginBottom: "1rem", padding: "0.5rem" }}
-  />
-
-  <label htmlFor="responsibility" style={{ marginBottom: "1rem" }}>Responsibility:</label>
-  <input
-    type="text"
-    id="responsibility"
-    value={responsibility}
-    onChange={(event) => setResponsibility(event.target.value)}
-    style={{ marginBottom: "1rem", padding: "0.5rem" }}
-  />
-
-  <button type="submit" style={{ padding: "0.5rem 1rem", backgroundColor: "blue", color: "white", borderRadius: "0.25rem", border: "none" }}>Submit</button>
-</form>
-
+      <label>
+        Area:
+        <select value={selectedArea} onChange={handleAreaChange}>
+          <option value="">Select an Area</option>
+          {areas.length > 0 &&
+            areas.map((area) => (
+              <option key={area._id} value={area._id}>
+                {area.name}
+              </option>
+            ))}
+        </select>
+      </label>
+      <br />
+      <label htmlFor="description">Description:</label>
+      <textarea
+        id="description"
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+        
+      />
+      <label htmlFor="reportDate">Date:</label>
+      <input
+        type="date"
+        id="reportDate"
+        value={reportDate}
+        onChange={(event) => setReportDate(event.target.value)}
+        
+      />
+      <label htmlFor="photos">Add photo:</label>
+      <input
+        type="text"
+        id="photos"
+        value={photos}
+        onChange={(event) => setPhotos(event.target.value)}
+        
+      />
+      <label htmlFor="responsibility">Responsibility:</label>
+      <input
+        type="text"
+        id="responsibility"
+        value={responsibility}
+        onChange={(event) => setResponsibility(event.target.value)}
+        
+      />
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 
