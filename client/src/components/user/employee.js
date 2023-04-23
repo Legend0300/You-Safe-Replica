@@ -11,9 +11,9 @@ const EmployeeForm = () => {
   const [selectedArea, setSelectedArea] = useState({ area: '' });
   const [status, setStatus] = useState('');
 
-  useEffect(() => {
+  useEffect(async () => {
     // Fetch sites data from backend API
-    fetch('http://localhost:4000/api/site')
+    await fetch('http://localhost:4000/api/site')
       .then((response) => response.json())
       .then((data) => setSites(data))
       .catch((error) => console.error(error));

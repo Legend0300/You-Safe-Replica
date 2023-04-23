@@ -19,6 +19,11 @@ function PlannedInspection() {
     event.preventDefault();
     // Do something with the form data, e.g. send it to the server
     console.log({ formName, status, questions });
+
+    // Reset the form
+    setFormName("");
+    setStatus("");
+    setQuestions([]);
   };
 
   return (
@@ -32,19 +37,11 @@ function PlannedInspection() {
           onChange={(event) => setFormName(event.target.value)}
         />
       </div>
+
+
+
       <div>
-        <label htmlFor="status">Status:</label>
-        <input
-          id="status"
-          type="text"
-          value={status}
-          onChange={(event) => setStatus(event.target.value)}
-        />
-      </div>
-      <div>
-        <button type="button" onClick={handleAddQuestion}>
-          Add Question
-        </button>
+
         {questions.map((question, index) => (
           <div key={index}>
             <label htmlFor={`question-heading-${index}`}>Question Heading:</label>
@@ -70,6 +67,18 @@ function PlannedInspection() {
           </div>
         ))}
       </div>
+      <button type="button" onClick={handleAddQuestion}>
+          Add Question
+        </button>
+
+      <div>
+  <label htmlFor="status">Status:</label>
+  <select id="status" value={status} onChange={(event) => setStatus(event.target.value)}>
+    <option value="">Select a status</option>
+    <option value="Enabled">Enabled</option>
+    <option value="Disabled">Disabled</option>
+  </select>
+</div>
       <button type="submit">Submit</button>
     </form>
   );

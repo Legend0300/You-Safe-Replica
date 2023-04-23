@@ -11,8 +11,8 @@ const HazardReportingForm = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
 
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/department`)
+  useEffect(async() => {
+    await fetch(`http://localhost:4000/api/department`)
       .then((response) => response.json())
       .then((data) => setDepartments(data))
       .catch((error) => console.error(error));
@@ -20,7 +20,7 @@ const HazardReportingForm = () => {
 
   useEffect(() => {
     // Fetch areas data for the selected department from backend API
-    fetch(`http://localhost:4000/api/area`)
+   fetch(`http://localhost:4000/api/area`)
       .then((response) => response.json())
       .then((data) => setAreas(data))
       .catch((error) => console.error(error));
@@ -31,8 +31,8 @@ const HazardReportingForm = () => {
     // perform submission logic here, e.g. make API call to save data
 
     console.log({
-      departments,
-      areas,
+      selectedDepartment,
+      selectedArea,
       reportedStatus,
       reportDate,
       description,

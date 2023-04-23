@@ -17,11 +17,17 @@ import DepartmentForm from './components/user/department';
 import AreaManager from './components/user/areaManager';
 import VisitorForm from './components/user/visitor';
 import EmployeeForm from './components/user/employee';
+import IncidentReportForm from './components/user/incidentReportForm';
+import PlannedInspection from './components/user/plannedInspection';
+import DeepComplianceAuditForm from './components/user/deepComplianceAuditForm';
 
 
 function App() {
   return (
     <div className="app">
+      <DeepComplianceAuditForm />
+      <PlannedInspection />
+      <IncidentReportForm />
       <HazardReportForm />
       <br />
       <VisitorForm />
