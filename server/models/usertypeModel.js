@@ -6,8 +6,14 @@ const AccountTypeEnum = Object.freeze({
 });
 
 const UserAccountSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    default: 'user',
+    required: true
+  },
   picture: {
     type: String,
+    default: 'https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361514_960_720.png',
     required: true
   },
   email: {

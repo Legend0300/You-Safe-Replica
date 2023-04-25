@@ -4,23 +4,23 @@ const {  getAllDepartments, getDepartmentById ,createNewDepartment ,updateDepart
 const accessAuth = require('../../middleware/accessAuth');
 
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]), getAllDepartments);
+router.get('/', getAllDepartments);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getDepartmentById);
+router.get('/:id', getDepartmentById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewDepartment);
+router.post('/', createNewDepartment);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]), updateDepartmentById);
+router.put('/:id', updateDepartmentById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]), deleteDepartmentById);
+router.delete('/:id', deleteDepartmentById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getDepartment);
+router.get('/getSite/:id', getDepartment);
 
 
 

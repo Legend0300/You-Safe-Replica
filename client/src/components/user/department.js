@@ -4,26 +4,51 @@ const DepartmentForm = () => {
   const [sites, setSites] = useState([]);
   const [department, setDepartment] = useState('');
   const [status, setStatus] = useState('');
-
+  const [selectedSite, setSelectedSite] = useState({ siteName: '' });
+  useEffect(() => {
+    // Fetch sites data from backend API
+     fetch('http://localhost:4000/api/site')
+      .then((response) => response.json())
+      .then((data) => setSites(data))
+      .catch((error) => console.error(error));
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // handle form submission here
-    console.log(`Submitting department form with site ${event.target.site.value}, department ${department} and status ${status}`);
+    console.log({
+      site: selectedSite.siteName,
+      department: department,
+      status: status,
+    });
+
+    setSelectedSite({ siteName: '' });
+    setDepartment('');
+    setStatus('');
   };
+
+  const handleSiteChange = (event) => {
+    const selectedSiteData = sites.find(site => site._id === event.target.value);
+    setSelectedSite({ siteName: selectedSiteData.siteName });
+
+    // Fetch departments data for the selected site from backend API
+  };
+
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="site">Site:</label>
-        <select id="site" name="site">
+      <label>
+        Site:
+        <select value={selectedSite.siteName} onChange={handleSiteChange}>
+          <option value="">Select a site</option>
           {sites.map((site) => (
-            <option key={site.id} value={site.id}>
+            <option key={site._id} value={site._id}>
               {site.siteName}
             </option>
           ))}
         </select>
-      </div>
+      </label>
+      <br />
       <div>
         <label htmlFor="department">Department:</label>
         <input type="text" id="department" name="department" value={department} onChange={(event) => setDepartment(event.target.value)} />

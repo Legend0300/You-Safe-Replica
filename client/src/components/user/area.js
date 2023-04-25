@@ -3,31 +3,40 @@ import React, { useState, useEffect } from 'react';
 const AreaForm = () => {
   const [sites, setSites] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const [selectedSite, setSelectedSite] = useState('');
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedSite, setSelectedSite] = useState({ siteName: '' });
+  const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
   const [areaName, setAreaName] = useState('');
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
 
-//   useEffect(() => {
-//     // Fetch sites data from backend API
-//     fetch('https://example.com/api/sites')
-//       .then((response) => response.json())
-//       .then((data) => setSites(data))
-//       .catch((error) => console.error(error));
-//   }, []);
+  useEffect(() => {
+    // Fetch sites data from backend API
+    fetch('http://localhost:4000/api/site')
+      .then((response) => response.json())
+      .then((data) => setSites(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+  // Fetch departments data for the selected site from backend API
+  useEffect(() => {
+
+
+  fetch(`http://localhost:4000/api/department`)
+    .then((response) => response.json())
+    .then((data) => setDepartments(data))
+    .catch((error) => console.error(error));
+
+  }, []);
 
   const handleSiteChange = (event) => {
-    setSelectedSite(event.target.value);
+    const selectedSiteData = sites.find(site => site._id === event.target.value);
+    setSelectedSite({ siteName: selectedSiteData.siteName });
 
-//     // Fetch departments data for the selected site from backend API
-//     fetch(`https://example.com/api/departments?site=${event.target.value}`)
-//       .then((response) => response.json())
-//       .then((data) => setDepartments(data))
-//       .catch((error) => console.error(error));
-   };
+    // Fetch departments data for the selected site from backend API
+  };
 
   const handleDepartmentChange = (event) => {
-    setSelectedDepartment(event.target.value);
+    const selectedDepartmentData = departments.find(department => department._id === event.target.value);
+    setSelectedDepartment({ department: selectedDepartmentData.department });
   };
 
   const handleAreaNameChange = (event) => {
@@ -43,60 +52,61 @@ const AreaForm = () => {
 
     // handle form submission logic here
     console.log({
-      site: selectedSite,
-      department: selectedDepartment,
+      site: selectedSite.siteName,
+      department: selectedDepartment.department,
       area: areaName,
-      status: status
+      status: status,
     });
 
     // reset form fields
-    setSelectedSite('');
-    setSelectedDepartment('');
+    setSelectedSite({ siteName: '' });
+    setSelectedDepartment({ department: '' });
     setAreaName('');
     setStatus('');
   };
 
   return (
-    <div>
-      <h1>Area Form</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Site:
-          <select value={selectedSite} onChange={handleSiteChange}>
-            <option value="">Select Site</option>
-            {sites.map((site) => (
-              <option key={site.id} value={site.name}>{site.name}</option>
-            ))}
-          </select>
-        </label>
-        <br />
-        <label>
-          Department:
-          <select value={selectedDepartment} onChange={handleDepartmentChange}>
-            <option value="">Select Department</option>
-            {departments.map((department) => (
-              <option key={department.id} value={department.name}>{department.name}</option>
-            ))}
-          </select>
-        </label>
-        <br />
-        <label>
-          Area:
-          <input type="text" value={areaName} onChange={handleAreaNameChange} />
-        </label>
-        <br />
-        <label>
-          Status:
-          <select value={status} onChange={handleStatusChange}>
-            <option value="">Select Status</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Site:
+        <select value={selectedSite.siteName} onChange={handleSiteChange}>
+          <option value="">Select a site</option>
+          {sites.map((site) => (
+            <option key={site._id} value={site._id}>
+              {site.siteName}
+            </option>
+          ))}
+        </select>
+      </label>
+      <br />
+      <label>
+        Department:
+        <select value={selectedDepartment.department} onChange={handleDepartmentChange}>
+          <option value="">Select a department</option>
+          {departments.map((department) => (
+            <option key={department._id} value={department._id}>
+              {department.department}
+            </option>
+          ))}
+        </select>
+      </label>
+      <br />
+      <label>
+        Area name:
+        <input type="text" value={areaName} onChange={handleAreaNameChange} />
+      </label>
+      <br />
+      <label>
+        Status:
+        <select name="status" value={status} onChange={handleStatusChange}>
+          <option hidden value="">Select a status</option>
+          <option value="Enabled">Enabled</option>
+          <option value="Disabled">Disabled</option>
+        </select>
+      </label>
+      <br />
+      <button type="submit">Create area</button>
+    </form>
   );
 };
 

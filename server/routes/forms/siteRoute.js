@@ -4,23 +4,23 @@ const {  getAllSites, getSiteById ,createNewSite ,updateSiteById ,deleteSiteById
 const accessAuth = require('../../middleware/accessAuth');
 
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]), getAllSites);
+router.get('/', getAllSites);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getSiteById);
+router.get('/:id',  getSiteById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewSite);
+router.post('/',  createNewSite);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]), updateSiteById);
+router.put('/:id',  updateSiteById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]), deleteSiteById);
+router.delete('/:id',  deleteSiteById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getSite);
+router.get('/getSite/:id',  getSite);
 
 
 

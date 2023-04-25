@@ -7,7 +7,7 @@ const DCAList = require('../models/dcaChecklistSchema');
 const getDCAlists = async (req, res) => {
     try {
         const dcaLists = await DCAList.find();
-        res.json(dcaLists);
+        res.json(dcaLists)
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

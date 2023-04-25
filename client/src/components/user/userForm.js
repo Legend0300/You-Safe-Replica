@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const VisitorForm = () => {
+const UserForm = () => {
   const [areaManagerName, setAreaManagerName] = useState("");
-  const [sites , setSites] = useState([]);
-  const [selectedSite, setSelectedSite] = useState({ siteName: '' });
-  const [status, setStatus] = useState('');
   const [areas, setAreas] = useState([]);
+  const [sites , setSites] = useState([]);
   const [departments, setDepartments] = useState([]);
+  const [selectedSite, setSelectedSite] = useState({ siteName: '' });
   const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
   const [selectedArea, setSelectedArea] = useState({ area: '' });
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     // Fetch sites data from backend API
@@ -87,22 +87,9 @@ const VisitorForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="areaManagerName">Visitor Name: </label>
+        <label htmlFor="areaManagerName">User Name: </label>
         <input type="text" id="areaManagerName" value={areaManagerName} onChange={(e) => setAreaManagerName(e.target.value)} />
       </div>
-          <label>
-            Site:
-            <select value={selectedSite.siteName} onChange={handleSiteChange}>
-              <option value="">Select a site</option>
-              {sites.map((site) => (
-                <option key={site._id} value={site._id}>
-                  {site.siteName}
-                </option>
-              ))}
-            </select>
-          </label>
-          <br />
-       
 
       <label>
         Area:
@@ -116,6 +103,20 @@ const VisitorForm = () => {
         </select>
       </label>
       <br />
+
+      <label>
+        Site:
+        <select value={selectedSite.siteName} onChange={handleSiteChange}>
+          <option value="">Select a site</option>
+          {sites.map((site) => (
+            <option key={site._id} value={site._id}>
+              {site.siteName}
+            </option>
+          ))}
+        </select>
+      </label>
+      <br />
+      <label>
         Department:
         <select value={selectedDepartment.department} onChange={handleDepartmentChange}>
           <option value="">Select a department</option>
@@ -125,8 +126,7 @@ const VisitorForm = () => {
             </option>
           ))}
         </select>
-
-    
+      </label>
       <br />
       <div>
         <label htmlFor="status">
@@ -143,4 +143,4 @@ const VisitorForm = () => {
   );
 }
 
-export default VisitorForm;
+export default UserForm;

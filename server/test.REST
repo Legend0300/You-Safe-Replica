@@ -18,9 +18,6 @@ Content-Type: application/json
 GET http://localhost:4000/api/site
 
 
-
-
-
 ###
 
 PUT http://localhost:4000/api/site/642af31e887a5060fd5ab048
@@ -41,6 +38,27 @@ Content-Type: application/json
 
 
 ###
+
+POST http://localhost:4000/api/site
+Content-Type: application/json
+
+{
+  "siteName": "New Sites",
+  "location": "Some locations",
+  "country": "Some countrys",
+  "city": "Some city",
+  "managerInformation": {
+    "fullName": "John Doed",
+    "emailAddress": "johndoe@example.com",
+    "contact": "1234567890",
+    "status": "Enabled"
+  }
+}
+
+
+###
+
+
 
 GET http://localhost:4000/api/site/642af32a887a5060fd5ab04a
 Content-Type: application/json
@@ -93,6 +111,11 @@ DELETE  http://localhost:4000/api/area/642e118f7c93b43a18f6fd8f
 
 ###
 
+GET http://localhost:4000/api/area
+
+
+###
+
 GET http://localhost:4000/api/area/
 
 ###
@@ -118,6 +141,10 @@ Content-Type: application/json
   "password": "myPassword"
 
 }
+
+###
+
+GET http://localhost:4000/api/user
 
 
 ###
@@ -329,3 +356,18 @@ Content-Type: application/json
   "password": "pass2"
 }
 
+###
+POST http://localhost:4000/api/reportingDetails
+Content-Type: application/json
+
+{
+    "Heading": "Report Heading",
+    "department": "New Department",
+    "area": "New Area",
+    "description": "Report Description",
+    "date": "2023-04-16T10:00:00.000Z",
+    "photos": "https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361514_960_720.png",
+    "responsibility": "John Doe"
+}
+
+###

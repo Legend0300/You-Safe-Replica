@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const hazardReportSchema = new mongoose.Schema({
-  site: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Site',
-    required: true
-  },
   department: {
     type: mongoose.Schema.Types.ObjectId,
     ref : 'Department',
@@ -14,11 +9,6 @@ const hazardReportSchema = new mongoose.Schema({
   area: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Area',
-    required: true
-  },
-  userType: {
-    type: String,
-    enum: ['Employee', 'Manager' , 'Area Manager' , 'Visitor'],
     required: true
   },
   reportedStatus: {
@@ -30,14 +20,18 @@ const hazardReportSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  startDate: {
-    type: Date,
+  description: {
+    type: String,
     required: true
   },
-  endDate: {
-    type: Date,
+  photos: {
+    type: String,
     required: true
-  }
+  },
+  responsibility: {
+    type: String,
+    required: true
+  },
 });
 
 const HazardReport = mongoose.model('HazardReport', hazardReportSchema);

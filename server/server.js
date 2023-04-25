@@ -1,7 +1,7 @@
 express = require('express');
 app = express();
 const cookieParser = require('cookie-parser');
-
+const cors = require('cors');
 
 const dotenv = require('dotenv');
 const connect = require('./config/dbconnection');
@@ -26,8 +26,16 @@ const dcachecklist = require('./routes/checklists/dcaChecklist');
 const pichecklist = require('./routes/checklists/piChecklist');
 const sam = require('./routes/Meetings/samReport');
 const reportingDetails = require('./routes/reports/reportingDetails');
-
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+  });
+  
 dotenv.config();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
@@ -53,11 +61,6 @@ app.use('/api/dcachecklist', dcachecklist)
 app.use('/api/pichecklist', pichecklist)
 app.use('/api/sam', sam)
 app.use('/api/reportingDetails', reportingDetails)
-
-
-
-
-
 
 connect();
 

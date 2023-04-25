@@ -4,23 +4,23 @@ const {  getAllAreaManagers, getAreaManagerById ,createNewAreaManager ,updateAre
 
 const accessAuth = require('../../middleware/accessAuth');
 // GET all sites
-router.get('/', accessAuth(["Admin" , "Manager"]), getAllAreaManagers);
+router.get('/', getAllAreaManagers);
 
 // GET one site by ID
-router.get('/:id', accessAuth(["Admin" , "Manager"]), getAreaManagerById);
+router.get('/:id', getAreaManagerById);
 
 // CREATE a new site
-router.post('/', accessAuth(["Admin" , "Manager"]), createNewAreaManager);
+router.post('/',  createNewAreaManager);
 
 // UPDATE one site by ID
-router.put('/:id', accessAuth(["Admin" , "Manager"]), updateAreaManagerById);
+router.put('/:id',  updateAreaManagerById);
 
 // DELETE one site by ID
-router.delete('/:id', accessAuth(["Admin"]), deleteAreaManagerById);
+router.delete('/:id',  deleteAreaManagerById);
 
 // GET one site by ID
 
-router.get('/getSite/:id', accessAuth(["Admin" , "Manager"]), getAreaManager);
+router.get('/getSite/:id',  getAreaManager);
 
 
 

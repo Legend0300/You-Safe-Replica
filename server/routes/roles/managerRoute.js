@@ -5,12 +5,12 @@ const { registerManager , loginManager , logoutManager , getManager } = require(
 
 const managerAuth = require('../../middleware/managerAuth');
 
-router.get('/', managerAuth , getManager);
+router.get('/' , getManager);
 
 router.post('/login' , loginManager);
 
-router.post('/register' ,  registerManager);
+router.post('/register' , registerManager);
 
-router.post('/logout', managerAuth , logoutManager);
+router.post('/logout' , logoutManager);
 
 module.exports = router;
