@@ -28,6 +28,7 @@ import DepartmentField from './components/user/DepartmentField';
 function App() {
   return (
     <div className="app">
+      <SafeUnsafeReportForm />
       <EmployeeForm />
     </div>
   );

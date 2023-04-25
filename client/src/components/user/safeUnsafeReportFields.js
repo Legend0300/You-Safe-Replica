@@ -1,8 +1,12 @@
 import { useState , useEffect } from "react";
 import DateSelector from "./DateSelector";
+import UserType from "./userTypeField";
+
+
+
 
 function SafeUnsafeReportForm() {
-  const [selectedDate, setSelectedDate] = useState(new Date()); 
+  const [selectedDate, setSelectedDate] = useState(""); 
   const [actType, setActType] = useState("");
   const [userType, setUserType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
@@ -31,11 +35,24 @@ function SafeUnsafeReportForm() {
   }, []);
 
 
-  const handlestartDateChange = (date) => {
-    setStartDate(date);
-    console.log(date);
+  const handleUserTypeChange = (selectedUserType) => {
+    setUserType(selectedUserType);
   };
 
+  const handlestartDateChange = (date) => {
+    setStartDate(date);
+    console.log(startDate);
+  };
+
+  const handleendDateChange = (date) => {
+    setEndDate(date);
+    console.log(endDate);
+  };
+
+  const handlereportDateChange = (date) => {
+    setReportDate(date);
+    console.log(reportDate);
+  };
 
   const handleDepartmentChange = (event) => {
     const selectedDepartmentData = departments.find(department => department._id === event.target.value);
@@ -51,9 +68,6 @@ function SafeUnsafeReportForm() {
     setActType(event.target.value);
   };
 
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-  };
 
   const handleReportedStatusChange = (event) => {
     setReportedStatus(event.target.value);
@@ -84,12 +98,28 @@ function SafeUnsafeReportForm() {
       startDate,
       endDate,
     });
+
+    // Reset form fields
+    setSelectedDepartment({ department: '' });
+    setSelectedArea({ area: '' });
+    setActType("");
+    setUserType("");
+    setReportedStatus("");
+    setReportDate("");
+    setStartDate("");
+    setEndDate("");
+    
   };
 
   return (
     <form onSubmit={handleSubmit}>
       Start Date:
-            <DateSelector selectedDate={selectedDate} onDateChange={handlestartDateChange} />
+      <DateSelector selectedDate={startDate} onDateChange={handlestartDateChange} />
+      End Date:
+      <DateSelector selectedDate={endDate} onDateChange={handleendDateChange} />
+      Report Date:
+      <DateSelector selectedDate={reportDate} onDateChange={handlereportDateChange} />
+  
            <div>
         <label>
           Area:
@@ -123,16 +153,7 @@ function SafeUnsafeReportForm() {
           <option value="unsafe">Unsafe</option>
         </select>
       </div>
-      <div>
-  <label htmlFor="userType">User Type:</label>
-  <select id="userType" name="userType" value={userType} onChange={handleUserTypeChange}>
-    <option value="">Select User Type</option>
-    <option value="employee">Employee</option>
-    <option value="visitor">Visitor</option>
-    <option value="admin">Admin</option>
-    <option value="areaManager">Area Manager</option>
-  </select>
-</div>
+      <UserType userType={userType} onUserTypeChange={handleUserTypeChange} />
       <div>
         <label htmlFor="reportedStatus">Reported Status:</label>
         <select onChange={handleReportedStatusChange}  handleReportedStatusChange value={reportedStatus} name="reportedStatus" id="reportedStatus">
