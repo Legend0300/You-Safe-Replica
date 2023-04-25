@@ -4,7 +4,14 @@ import DepartmentField from "./DepartmentField";
 import SiteField from "./siteField";
 import AreaField from "./AreaField";
 import StatusSelector from "./statusSelector";
-import { TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@material-ui/core";
 
 const EmployeeForm = () => {
   const [areaManagerName, setAreaManagerName] = useState("");
@@ -75,6 +82,9 @@ const EmployeeForm = () => {
       status,
     });
 
+    // Call your backend API or perform other actions here
+  };
+
     return (
       <form onSubmit={handleSubmit}>
         <div>
@@ -87,24 +97,11 @@ const EmployeeForm = () => {
         </div>
         <AreaField onSelectArea={handleSelectArea} />
         <SiteField onSelectSite={handleSelectSite} />
-
-        <FormControl>
-          <InputLabel id="department-select-label">Department</InputLabel>
-          <Select
-            labelId="department-select-label"
-            id="department-select"
-            value={selectedDepartment}
-            onChange={handleDepartmentChange}
-          >
-            {departments.map((department) => (
-              <MenuItem key={department._id} value={department._id}>
-                {department.departmentName}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <DepartmentField onSelectDepartment={handleSelectDepartment} />
 
         <StatusSelector status={status} setStatus={handleStatusChange} />
+
+
 
         <Button variant="contained" color="primary" type="submit">
           Submit
@@ -112,5 +109,5 @@ const EmployeeForm = () => {
       </form>
     );
   };
-};
+
 export default EmployeeForm;

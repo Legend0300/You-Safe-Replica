@@ -25,13 +25,10 @@ import SafeUnsafeReportForm from './components/user/safeUnsafeReportFields';
 import TaskReportsForm from './components/user/taskReportsFields';
 import DepartmentField from './components/user/DepartmentField';
 
-
 function App() {
   return (
     <div className="app">
       <EmployeeForm />
-      <TaskReportsForm />
-      <SafeUnsafeReportForm />
     </div>
   );
 }
