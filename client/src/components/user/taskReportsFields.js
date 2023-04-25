@@ -46,7 +46,6 @@ function TaskReportsForm(props) {
     event.preventDefault();
     // Call a function from the parent component to handle the form submission
     const obj = ({
-      site,
       type,
       assignedBy,
       assignedTo,
@@ -55,59 +54,71 @@ function TaskReportsForm(props) {
       startDate,
       endDate,
     });
+    console.log(obj);
+
+    //reset 
+    setType("");
+    setAssignedBy("");
+    setAssignedTo(""); 
+    setTaskStatus("");
+    setAssignedDate("");
+    setStartDate("");
+    setEndDate("");
+    
   };
+
+  const reportingTypes = [
+    'Safe/Unsafe Acts',
+    'Hazard Reporting',
+    'Incident Reporting',
+    'Deep Compliance Reporting',
+    'Planned Inspection',
+    'Safety Action Meeting (SAM)'
+  ]
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="site">Site:</label>
-        <input
-          type="text"
-          id="site"
-          name="site"
-          value={site}
-          onChange={handleSiteChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="type">Type:</label>
-        <input
-          type="text"
-          id="type"
-          name="type"
-          value={type}
-          onChange={handleTypeChange}
-        />
+      <label htmlFor="type">Type:</label>
+      <select type="text" id="type" name="type" value={type} onChange={handleTypeChange}>
+        <option value="">Select Type</option>
+        {reportingTypes.map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
+      </select>
       </div>
       <div>
         <label htmlFor="assignedBy">Assigned By:</label>
-        <input
-          type="text"
-          id="assignedBy"
-          name="assignedBy"
-          value={assignedBy}
-          onChange={handleAssignedByChange}
-        />
+        <select type="text" id="assignedBy" value={assignedBy} onChange={handleAssignedByChange} name="assignedBy">
+          <option value="">Select User Type</option>
+          <option value="self">Self</option>
+          <option value="employee">Employee</option>
+          <option value="visitor">Visitor</option>
+          <option value="admin">Admin</option>
+          <option value="areaManager">Area Manager</option>
+        </select>
       </div>
       <div>
-        <label htmlFor="assignedTo">Assigned To:</label>
-        <input
-          type="text"
-          id="assignedTo"
-          name="assignedTo"
-          value={assignedTo}
-          onChange={handleAssignedToChange}
-        />
+      <label htmlFor="userType">Assigned To:</label>
+  <select  type="text" id="assignedTo" name="assignedTo" value={assignedTo} onChange={handleAssignedToChange}>
+    <option value="">Select User Type</option>
+    <option value="self">Self</option>
+    <option value="employee">Employee</option>
+    <option value="visitor">Visitor</option>
+    <option value="admin">Admin</option>
+    <option value="areaManager">Area Manager</option>
+  </select>
       </div>
       <div>
-        <label htmlFor="taskStatus">Task Status:</label>
-        <input
-          type="text"
-          id="taskStatus"
-          name="taskStatus"
-          value={taskStatus}
-          onChange={handleTaskStatusChange}
-        />
+        <label htmlFor="reportedStatus">Reported Status:</label>
+        <select onChange={handleTaskStatusChange}  value={taskStatus} name="reportedStatus" id="reportedStatus">
+          <option value="">Select Reported Status</option>
+          <option value="Completed">Completed</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Pending">Pending</option>
+        </select>
       </div>
       <div>
         <label htmlFor="assignedDate">Assigned Date:</label>

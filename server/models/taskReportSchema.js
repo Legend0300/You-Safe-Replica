@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const taskReportSchema = new mongoose.Schema({
-  site: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Site',
-    required: true
-  },
   type: {
     type: String,
     required: true

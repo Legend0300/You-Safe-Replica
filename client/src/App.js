@@ -21,12 +21,17 @@ import IncidentReportForm from './components/user/incidentReportForm';
 import PlannedInspection from './components/user/plannedInspection';
 import DeepComplianceAuditForm from './components/user/deepComplianceAuditForm';
 import AreaFields from './components/admin/areaFields';
+import SafeUnsafeReportForm from './components/user/safeUnsafeReportFields';
+import TaskReportsForm from './components/user/taskReportsFields';
+import DepartmentField from './components/user/DepartmentField';
 
 
 function App() {
   return (
     <div className="app">
-      <null/>
+      <EmployeeForm />
+      <TaskReportsForm />
+      <SafeUnsafeReportForm />
     </div>
   );
 }

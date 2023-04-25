@@ -1,58 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import DepartmentField from "./DepartmentField";
+import SiteField from "./siteField";
+import AreaField from "./AreaField";
+import StatusSelector from "./statusSelector";
+import { TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 
 const EmployeeForm = () => {
   const [areaManagerName, setAreaManagerName] = useState("");
-  const [areas, setAreas] = useState([]);
-  const [sites , setSites] = useState([]);
+  const [sites, setSites] = useState([]);
+  const [selectedSite, setSelectedSite] = useState({ siteName: "" });
   const [departments, setDepartments] = useState([]);
-  const [selectedSite, setSelectedSite] = useState({ siteName: '' });
-  const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
-  const [selectedArea, setSelectedArea] = useState({ area: '' });
-  const [status, setStatus] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState({
+    department: "",
+  });
+  const [areas, setAreas] = useState([]);
+  const [selectedArea, setSelectedArea] = useState({ area: "" });
+  const [status, setStatus] = useState("");
 
-  useEffect(async () => {
-    // Fetch sites data from backend API
-    await fetch('http://localhost:4000/api/site')
-      .then((response) => response.json())
-      .then((data) => setSites(data))
-      .catch((error) => console.error(error));
-  }, []);
+  const handleSelectDepartment = (selectedDepartment) => {
+    setSelectedDepartment(selectedDepartment);
+    console.log(selectedDepartment);
+    // do something with the selected department data
+  };
 
-  // Fetch departments data for the selected site from backend API
-  useEffect(() => {
+  const handleSelectSite = (selectedSite) => {
+    setSelectedSite(selectedSite);
+    // Fetch departments data for the selected site from backend API
+  };
 
+  const handleSelectArea = (selectedArea) => {
+    setSelectedArea(selectedArea);
+  };
 
-  fetch(`http://localhost:4000/api/department`)
-    .then((response) => response.json())
-    .then((data) => setDepartments(data))
-    .catch((error) => console.error(error));
-
-  }, []);
-
-  useEffect(() => {
-    // Fetch areas data for the selected department from backend API
-    fetch(`http://localhost:4000/api/area`)
-      .then((response) => response.json())
-      .then((data) => setAreas(data))
-      .catch((error) => console.error(error));
-  }, []);
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+  };
 
   const handleSiteChange = (event) => {
-    const selectedSiteData = sites.find(site => site._id === event.target.value);
-    setSelectedSite({ siteName: selectedSiteData.siteName });
+    const selectedSiteData = sites.find(
+      (site) => site._id === event.target.value
+    );
+    setSelectedSite(selectedSiteData.siteName);
 
     // Fetch departments data for the selected site from backend API
   };
 
   const handleDepartmentChange = (event) => {
-    const selectedDepartmentData = departments.find(department => department._id === event.target.value);
-    setSelectedDepartment({ department: selectedDepartmentData.department });
+    const selectedDepartmentData = departments.find(
+      (department) => department._id === event.target.value
+    );
+    setSelectedDepartment(selectedDepartmentData.department);
   };
 
   const handleAreaChange = (event) => {
-    const selectedAreaData = areas.find(area => area._id === event.target.value);
-    setSelectedArea({ area: selectedAreaData.name });
+    const selectedAreaData = areas.find(
+      (area) => area._id === event.target.value
+    );
+    setSelectedArea(selectedAreaData.name);
   };
 
   const handleAreaManagerNameChange = (event) => {
@@ -63,84 +68,49 @@ const EmployeeForm = () => {
     e.preventDefault();
 
     console.log({
-      site: selectedSite.siteName,
-      department: selectedDepartment.department,
-      area: selectedArea.area,
+      site: selectedSite,
+      department: selectedDepartment,
+      area: selectedArea,
       areaManagerName: areaManagerName,
       status,
-      });
+    });
 
-    // try {
-    //   const res = await axios.post('/api/areaManager', {
-    //     areaManagerName,
-    //     area,
-    //     department,
-    //     status,
-    //   });
+    return (
+      <form onSubmit={handleSubmit}>
+        <div>
+          <TextField
+            id="areaManagerName"
+            label="Employee Name"
+            value={areaManagerName}
+            onChange={(e) => setAreaManagerName(e.target.value)}
+          />
+        </div>
+        <AreaField onSelectArea={handleSelectArea} />
+        <SiteField onSelectSite={handleSelectSite} />
 
-    //   console.log(res.data);
-    // } catch (err) {
-    //   console.error(err);
-    // }
-  }
+        <FormControl>
+          <InputLabel id="department-select-label">Department</InputLabel>
+          <Select
+            labelId="department-select-label"
+            id="department-select"
+            value={selectedDepartment}
+            onChange={handleDepartmentChange}
+          >
+            {departments.map((department) => (
+              <MenuItem key={department._id} value={department._id}>
+                {department.departmentName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="areaManagerName">Employee Name: </label>
-        <input type="text" id="areaManagerName" value={areaManagerName} onChange={(e) => setAreaManagerName(e.target.value)} />
-      </div>
+        <StatusSelector status={status} setStatus={handleStatusChange} />
 
-      <label>
-        Area:
-        <select value={selectedArea.name} onChange={handleAreaChange}>
-          <option value="">Select a Area</option>
-          {areas.map((area) => (
-            <option key={area._id} value={area._id}>
-              {area.name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <br />
-
-      <label>
-        Site:
-        <select value={selectedSite.siteName} onChange={handleSiteChange}>
-          <option value="">Select a site</option>
-          {sites.map((site) => (
-            <option key={site._id} value={site._id}>
-              {site.siteName}
-            </option>
-          ))}
-        </select>
-      </label>
-      <br />
-      <label>
-        Department:
-        <select value={selectedDepartment.department} onChange={handleDepartmentChange}>
-          <option value="">Select a department</option>
-          {departments.map((department) => (
-            <option key={department._id} value={department._id}>
-              {department.department}
-            </option>
-          ))}
-        </select>
-      </label>
-      <br />
-      <div>
-        <label htmlFor="status">
-          Status
-        </label>
-        <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option hidden value="">Select a status</option>
-          <option value="Enabled">Enabled</option>
-          <option value="Disabled">Disabled</option>
-        </select>
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
-
+        <Button variant="contained" color="primary" type="submit">
+          Submit
+        </Button>
+      </form>
+    );
+  };
+};
 export default EmployeeForm;

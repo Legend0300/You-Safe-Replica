@@ -11,8 +11,8 @@ const HazardReportingForm = () => {
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
 
-  useEffect(async() => {
-    await fetch(`http://localhost:4000/api/department`)
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/department`)
       .then((response) => response.json())
       .then((data) => setDepartments(data))
       .catch((error) => console.error(error));

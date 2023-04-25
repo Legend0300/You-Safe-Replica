@@ -1,26 +1,50 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import DateSelector from "./DateSelector";
 
 function SafeUnsafeReportForm() {
-  const [site, setSite] = useState("");
-  const [department, setDepartment] = useState("");
-  const [area, setArea] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date()); 
   const [actType, setActType] = useState("");
   const [userType, setUserType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
   const [reportDate, setReportDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
+  const [selectedArea, setSelectedArea] = useState({ area: '' });
+  const [areas, setAreas] = useState([]);
 
-  const handleSiteChange = (event) => {
-    setSite(event.target.value);
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/department`)
+    .then((response) => response.json())
+    .then((data) => setDepartments(data))
+    .catch((error) => console.error(error));
+
+  }, []);
+
+  useEffect(() => {
+    // Fetch areas data for the selected department from backend API
+    fetch(`http://localhost:4000/api/area`)
+      .then((response) => response.json())
+      .then((data) => setAreas(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+
+  const handlestartDateChange = (date) => {
+    setStartDate(date);
+    console.log(date);
   };
 
+
   const handleDepartmentChange = (event) => {
-    setDepartment(event.target.value);
+    const selectedDepartmentData = departments.find(department => department._id === event.target.value);
+    setSelectedDepartment(selectedDepartmentData.department);
   };
 
   const handleAreaChange = (event) => {
-    setArea(event.target.value);
+    const selectedAreaData = areas.find(area => area._id === event.target.value);
+    setSelectedArea(selectedAreaData.name);
   };
 
   const handleActTypeChange = (event) => {
@@ -50,74 +74,78 @@ function SafeUnsafeReportForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission here
+    console.log({
+      selectedDepartment,
+      selectedArea,
+      actType,
+      userType,
+      reportedStatus,
+      reportDate,
+      startDate,
+      endDate,
+    });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="site">Site:</label>
-        <input
-          type="text"
-          id="site"
-          name="site"
-          value={site}
-          onChange={handleSiteChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="department">Department:</label>
-        <input
-          type="text"
-          id="department"
-          name="department"
-          value={department}
-          onChange={handleDepartmentChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="area">Area:</label>
-        <input
-          type="text"
-          id="area"
-          name="area"
-          value={area}
-          onChange={handleAreaChange}
-        />
+      Start Date:
+            <DateSelector selectedDate={selectedDate} onDateChange={handlestartDateChange} />
+           <div>
+        <label>
+          Area:
+          <select value={selectedArea.name} onChange={handleAreaChange}>
+            <option value="">Select a Area</option>
+            {areas.map((area) => (
+              <option key={area._id} value={area._id}>
+                {area.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <br />
+        <label>
+          Department:
+          <select value={selectedDepartment.department} onChange={handleDepartmentChange}>
+            <option value="">Select a department</option>
+            {departments.map((department) => (
+              <option key={department._id} value={department._id}>
+                {department.department}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
       <div>
         <label htmlFor="actType">Act Type:</label>
-        <input
-          type="text"
-          id="actType"
-          name="actType"
-          value={actType}
-          onChange={handleActTypeChange}
-        />
+        <select onChange={handleActTypeChange} value={actType} name="actType" id="actType">
+          <option value="">Select Act Type</option>
+          <option value="safe">Safe</option>
+          <option value="unsafe">Unsafe</option>
+        </select>
       </div>
       <div>
-        <label htmlFor="userType">User Type:</label>
-        <input
-          type="text"
-          id="userType"
-          name="userType"
-          value={userType}
-          onChange={handleUserTypeChange}
-        />
-      </div>
+  <label htmlFor="userType">User Type:</label>
+  <select id="userType" name="userType" value={userType} onChange={handleUserTypeChange}>
+    <option value="">Select User Type</option>
+    <option value="employee">Employee</option>
+    <option value="visitor">Visitor</option>
+    <option value="admin">Admin</option>
+    <option value="areaManager">Area Manager</option>
+  </select>
+</div>
       <div>
         <label htmlFor="reportedStatus">Reported Status:</label>
-        <input
-          type="text"
-          id="reportedStatus"
-          name="reportedStatus"
-          value={reportedStatus}
-          onChange={handleReportedStatusChange}
-        />
+        <select onChange={handleReportedStatusChange}  handleReportedStatusChange value={reportedStatus} name="reportedStatus" id="reportedStatus">
+          <option value="">Select Reported Status</option>
+          <option value="Completed">Completed</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Pending">Pending</option>
+        </select>
       </div>
       <div>
         <label htmlFor="reportDate">Report Date:</label>
         <input
-          type="text"
+          type="date"
           id="reportDate"
           name="reportDate"
           value={reportDate}
@@ -127,7 +155,7 @@ function SafeUnsafeReportForm() {
       <div>
         <label htmlFor="startDate">Start Date:</label>
         <input
-            type="text"
+            type="date"
             id="startDate"
             name="startDate"
             value={startDate}
@@ -137,7 +165,7 @@ function SafeUnsafeReportForm() {
         <div>
         <label htmlFor="endDate">End Date:</label>
         <input
-            type="text"
+            type="date"
             id="endDate"
             name="endDate"
             value={endDate}
