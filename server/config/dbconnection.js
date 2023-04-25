@@ -39,4 +39,3 @@ module.exports = connect;
 //   // perform actions on the collection object
 //   client.close();
 // });
-
