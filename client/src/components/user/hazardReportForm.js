@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import DepartmentField from "./common/DepartmentField";
-import SiteField from "./common/siteField";
-import AreaField from "./common/AreaField";
-import DateSelector from './common/DateSelector';
+import DepartmentField from "../common/DepartmentField";
+import AreaField from "../common/AreaField";
+import DateSelector from '../common/DateSelector';
 
 const HazardReportingForm = () => {
   const [reportedStatus, setReportedStatus] = useState('');
@@ -41,7 +40,7 @@ const HazardReportingForm = () => {
   };
 
   const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
+    setReportedStatus(newStatus);
   };
 
   // const handlereportDateChange = (date) => {
@@ -75,17 +74,6 @@ const HazardReportingForm = () => {
     // setResponsibility('');
     // setSelectedDepartment('');
     // setSelectedArea('');
-  };
-
-  const handleDepartmentChange = (event) => {
-    const selectedDepartmentData = departments.find(department => department._id === event.target.value);
-    console.log(selectedDepartmentData);
-    setSelectedDepartment(selectedDepartmentData.department );
-  };
-
-  const handleAreaChange = (event) => {
-    const selectedAreaData = areas.find(area => area._id === event.target.value);
-    setSelectedArea(selectedAreaData.name);
   };
 
   const handleReportDateChange = event =>{
