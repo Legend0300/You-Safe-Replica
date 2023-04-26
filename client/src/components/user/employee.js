@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import DepartmentField from "./DepartmentField";
-import SiteField from "./siteField";
-import AreaField from "./AreaField";
+import DepartmentField from "./common/DepartmentField";
+import SiteField from "./common/siteField";
+import AreaField from "./common/AreaField";
 import StatusSelector from "./statusSelector";
 import {
   TextField,
