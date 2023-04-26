@@ -163,36 +163,6 @@ function SafeUnsafeReportForm() {
           <option value="Pending">Pending</option>
         </select>
       </div>
-      <div>
-        <label htmlFor="reportDate">Report Date:</label>
-        <input
-          type="date"
-          id="reportDate"
-          name="reportDate"
-          value={reportDate}
-          onChange={handleReportDateChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="startDate">Start Date:</label>
-        <input
-            type="date"
-            id="startDate"
-            name="startDate"
-            value={startDate}
-            onChange={handleStartDateChange}
-        />
-        </div>
-        <div>
-        <label htmlFor="endDate">End Date:</label>
-        <input
-            type="date"
-            id="endDate"
-            name="endDate"
-            value={endDate}
-            onChange={handleEndDateChange}
-        />
-        </div>
         <button type="submit">Submit</button>
     </form>
     );
