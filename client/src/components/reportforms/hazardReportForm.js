@@ -28,9 +28,8 @@ const HazardReportingForm = () => {
   };
   
   const handleReportDateChange = event =>{
-    const selectedReportedDate = event.target.value;
-    setReportDate(selectedReportedDate);
-    console.log(selectedReportedDate);
+    setReportDate(event);
+    console.log(event);
   }
   
   const handleSubmit = (event) => {
@@ -45,8 +44,6 @@ const HazardReportingForm = () => {
       description,
       photos,
       responsibility,
-      selectedDepartment,
-      selectedArea,
     });
 
     // reset form
