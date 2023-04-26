@@ -50,15 +50,15 @@ const HazardReportingForm = () => {
     });
 
     // reset form
-    setDepartments([]);
-    setAreas([]);
-    setReportedStatus('');
-    setReportDate('');
-    setDescription('');
-    setPhotos('');
-    setResponsibility('');
-    setSelectedDepartment('');
-    setSelectedArea('');
+    // setDepartments([]);
+    // setAreas([]);
+    // setReportedStatus('');
+    // setReportDate('');
+    // setDescription('');
+    // setPhotos('');
+    // setResponsibility('');
+    // setSelectedDepartment('');
+    // setSelectedArea('');
   };
 
   return (
