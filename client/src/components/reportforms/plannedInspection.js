@@ -1,9 +1,14 @@
 import { useState } from "react";
+import StatusSelector from "../common/statusSelector";
 
 function PlannedInspection() {
   const [formName, setFormName] = useState("");
-  const [status, setStatus] = useState("");
+  const [reportedStatus, setReportedStatus] = useState("");
   const [questions, setQuestions] = useState([]);
+
+  const handleReportedStatusChange = (event) => {
+    setReportedStatus(event);
+  };
 
   const handleAddQuestion = () => {
     setQuestions([...questions, { heading: "", question: "" }]);
@@ -18,16 +23,17 @@ function PlannedInspection() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Do something with the form data, e.g. send it to the server
-    console.log({ formName, status, questions });
+    console.log({ formName, reportedStatus, questions });
 
     // Reset the form
     setFormName("");
-    setStatus("");
+    setReportedStatus("");
     setQuestions([]);
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Planned Inspection</h1>
       <div>
         <label htmlFor="form-name">Form Name:</label>
         <input
@@ -71,14 +77,8 @@ function PlannedInspection() {
           Add Question
         </button>
 
-      <div>
-  <label htmlFor="status">Status:</label>
-  <select id="status" value={status} onChange={(event) => setStatus(event.target.value)}>
-    <option value="">Select a status</option>
-    <option value="Enabled">Enabled</option>
-    <option value="Disabled">Disabled</option>
-  </select>
-</div>
+      <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange} />
+
       <button type="submit">Submit</button>
     </form>
   );

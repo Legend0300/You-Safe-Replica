@@ -24,10 +24,12 @@ import IncidentReportForm from './components/reportforms/incidentReportForm';
 // import TaskReportsForm from './components/user/taskReportsFields';
 // import DepartmentField from './components/user/DepartmentField';
 import DCPIReportsForm from './components/reportforms/dCPIReportsReportsFields';
+import PlannedInspection from './components/reportforms/plannedInspection';
 
 function App() {
   return (
     <div className="app">
+      <PlannedInspection />
       <DCPIReportsForm/>
       <HazardReportForm />
       <IncidentReportForm />
