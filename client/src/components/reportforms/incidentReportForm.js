@@ -1,8 +1,8 @@
 import { useState , useEffect} from "react";
-import AreaField from "./common/AreaField";
-import DepartmentField from "./common/DepartmentField";
-import UserType from "./common/userTypeField";
-import DateSelector from "./common/DateSelector";
+import DepartmentField from "../common/DepartmentField";
+import AreaField from "../common/AreaField";
+import UserType from "../common/userTypeField";
+import DateSelector from "../common/DateSelector";
 
 function IncidentReportForm(props) {
   const [departments, setDepartments] = useState([]);

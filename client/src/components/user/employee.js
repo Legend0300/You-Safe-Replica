@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import DepartmentField from "./common/DepartmentField";
-import SiteField from "./common/siteField";
-import AreaField from "./common/AreaField";
-import StatusSelector from "./statusSelector";
+import SiteField from "../common/siteField";
+import DepartmentField from "../common/DepartmentField";
+import AreaField from "../common/AreaField";
+import StatusSelector from "../common/statusSelector";
+
+
+
+
 import {
   TextField,
   Button,
@@ -15,13 +19,8 @@ import {
 
 const EmployeeForm = () => {
   const [areaManagerName, setAreaManagerName] = useState("");
-  const [sites, setSites] = useState([]);
   const [selectedSite, setSelectedSite] = useState({ siteName: "" });
-  const [departments, setDepartments] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState({
-    department: "",
-  });
-  const [areas, setAreas] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState({department: "",});
   const [selectedArea, setSelectedArea] = useState({ area: "" });
   const [status, setStatus] = useState("");
 
@@ -44,28 +43,6 @@ const EmployeeForm = () => {
     setStatus(newStatus);
   };
 
-  const handleSiteChange = (event) => {
-    const selectedSiteData = sites.find(
-      (site) => site._id === event.target.value
-    );
-    setSelectedSite(selectedSiteData.siteName);
-
-    // Fetch departments data for the selected site from backend API
-  };
-
-  const handleDepartmentChange = (event) => {
-    const selectedDepartmentData = departments.find(
-      (department) => department._id === event.target.value
-    );
-    setSelectedDepartment(selectedDepartmentData.department);
-  };
-
-  const handleAreaChange = (event) => {
-    const selectedAreaData = areas.find(
-      (area) => area._id === event.target.value
-    );
-    setSelectedArea(selectedAreaData.name);
-  };
 
   const handleAreaManagerNameChange = (event) => {
     setAreaManagerName(event.target.value);

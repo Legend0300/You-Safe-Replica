@@ -2,8 +2,7 @@ import React from "react";
 
 function StatusSelector({ status, setStatus }) {
   const handleStatusChange = (e) => {
-    const newStatus = e.target.value;
-    setStatus(newStatus);
+    setStatus(e.target.value);
   };
 
   return (

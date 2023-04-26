@@ -14,7 +14,6 @@ const HazardReportingForm = () => {
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
-
   useEffect(() => {
     fetch(`http://localhost:4000/api/department`)
       .then((response) => response.json())
@@ -41,7 +40,7 @@ const HazardReportingForm = () => {
   };
 
   const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
+    setReportedStatus(newStatus);
   };
 
   // const handlereportDateChange = (date) => {
@@ -65,16 +64,15 @@ const HazardReportingForm = () => {
       selectedArea,
     });
 
-    // reset form
-    // setDepartments([]);
-    // setAreas([]);
-    // setReportedStatus('');
-    // setReportDate('');
-    // setDescription('');
-    // setPhotos('');
-    // setResponsibility('');
-    // setSelectedDepartment('');
-    // setSelectedArea('');
+    setDepartments([]);
+    setAreas([]);
+    setReportedStatus('');
+    setReportDate('');
+    setDescription('');
+    setPhotos('');
+    setResponsibility('');
+    setSelectedDepartment('');
+    setSelectedArea('');
   };
 
   const handleDepartmentChange = (event) => {
