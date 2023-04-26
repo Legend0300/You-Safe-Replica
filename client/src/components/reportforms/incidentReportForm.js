@@ -85,6 +85,7 @@ function IncidentReportForm(props) {
     <form onSubmit={handleSubmit}>
       <h1>Incident Report Form</h1>
       <AreaField onSelectArea={handleSelectArea}/>
+      
       <DepartmentField onSelectDepartment={handleSelectDepartment}/>
       <div>
         <label htmlFor="eventType">Event Type:</label>
