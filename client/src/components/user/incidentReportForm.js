@@ -65,20 +65,19 @@ const handleSelectArea = (selectedArea)=>{
     });
 
     // reset form
-    // setDepartments([]);
-    // setAreas([]);
-    // setEventType("");
-    // setEventSubType("");
-    // setUserType("");
-    // setReportedStatus("");
-    // setStartDate("");
-    // setEndDate("");
+    setEventType("");
+    setEventSubType("");
+    setUserType("");
+    setReportedStatus("");
+    setStartDate("");
+    setEndDate("");
 
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <AreaField onSelectArea={handleSelectArea}/>
+
       <DepartmentField onSelectDepartment={handleSelectDepartment}/>
       <div>
         <label htmlFor="eventType">Event Type:</label>
@@ -100,17 +99,8 @@ const handleSelectArea = (selectedArea)=>{
           onChange={handleEventSubTypeChange}
         />
       </div>
+
       <UserType onChange={handleUserTypeChange}/>
-      <div>
-  <label htmlFor="userType">User Type:</label>
-  <select id="userType" name="userType" value={userType} onChange={handleUserTypeChange}>
-    <option value="">Select User Type</option>
-    <option value="employee">Employee</option>
-    <option value="visitor">Visitor</option>
-    <option value="admin">Admin</option>
-    <option value="areaManager">Area Manager</option>
-  </select>
-</div>
 
         <div>
         <label htmlFor="reportedStatus">Reported Status:</label>
@@ -125,6 +115,7 @@ const handleSelectArea = (selectedArea)=>{
         <DateSelector selectedDate={startDate} onDateChange = {handleStartDateChange}/>
         
         <DateSelector selectedDate={endDate} onDateChange = {handleEndDateChange}/>
+        
         <button type="submit">Submit</button>
     </form>
     );
