@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DepartmentField from "../common/DepartmentField";
 import AreaField from "../common/AreaField";
 import DateSelector from '../common/DateSelector';
@@ -9,25 +9,9 @@ const HazardReportingForm = () => {
   const [description, setDescription] = useState('');
   const [photos, setPhotos] = useState('');
   const [responsibility, setResponsibility] = useState('');
-  const [areas, setAreas] = useState([]);
-  const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
 
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/department`)
-      .then((response) => response.json())
-      .then((data) => setDepartments(data))
-      .catch((error) => console.error(error));
-  }, []);
-
-  useEffect(() => {
-    // Fetch areas data for the selected department from backend API
-   fetch(`http://localhost:4000/api/area`)
-      .then((response) => response.json())
-      .then((data) => setAreas(data))
-      .catch((error) => console.error(error));
-  }, [selectedDepartment]);
 
   const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
@@ -42,12 +26,13 @@ const HazardReportingForm = () => {
   const handleStatusChange = (newStatus) => {
     setReportedStatus(newStatus);
   };
-
-  // const handlereportDateChange = (date) => {
-  //   setReportDate(date);
-  //   console.log(reportDate);
-  // };
-
+  
+  const handleReportDateChange = event =>{
+    const selectedReportedDate = event.target.value;
+    setReportDate(selectedReportedDate);
+    console.log(selectedReportedDate);
+  }
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     // perform submission logic here, e.g. make API call to save data
@@ -65,28 +50,26 @@ const HazardReportingForm = () => {
     });
 
     // reset form
-    // setDepartments([]);
-    // setAreas([]);
-    // setReportedStatus('');
-    // setReportDate('');
-    // setDescription('');
-    // setPhotos('');
-    // setResponsibility('');
-    // setSelectedDepartment('');
-    // setSelectedArea('');
+    setDepartments([]);
+    setAreas([]);
+    setReportedStatus('');
+    setReportDate('');
+    setDescription('');
+    setPhotos('');
+    setResponsibility('');
+    setSelectedDepartment('');
+    setSelectedArea('');
   };
 
-  const handleReportDateChange = event =>{
-    const selectedReportedDate = event.target.value;
-    setReportDate(selectedReportedDate);
-    console.log(selectedReportedDate);
-  }
   return (
     <form onSubmit={handleSubmit}>
       <h1>Hazard Reporting</h1>
       <AreaField onSelectArea={handleSelectArea} />
+
       <DepartmentField onSelectDepartment={handleSelectDepartment} />
+
       <DateSelector selectedDate={reportDate} onDateChange={handleReportDateChange} />
+
       <handleStatusChange setReportedStatus={reportedStatus} onChange={handleStatusChange} />
       <br />
       <label htmlFor="description">Description:</label>
