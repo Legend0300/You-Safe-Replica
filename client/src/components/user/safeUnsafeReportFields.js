@@ -1,6 +1,6 @@
 import { useState , useEffect } from "react";
 import DateSelector from "./DateSelector";
-import UserType from "./userTypeField";
+import UserType from "./common/userTypeField";
 
 
 

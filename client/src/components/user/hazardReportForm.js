@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import DepartmentField from "./common/DepartmentField";
+import SiteField from "./common/siteField";
+import AreaField from "./common/AreaField";
+import DateSelector from './common/DateSelector';
 
 const HazardReportingForm = () => {
   const [reportedStatus, setReportedStatus] = useState('');
@@ -26,6 +30,25 @@ const HazardReportingForm = () => {
       .catch((error) => console.error(error));
   }, [selectedDepartment]);
 
+  const handleSelectDepartment = (selectedDepartment) => {
+    setSelectedDepartment(selectedDepartment);
+    console.log(selectedDepartment);
+    // do something with the selected department data
+  };
+
+  const handleSelectArea = (selectedArea) => {
+    setSelectedArea(selectedArea);
+  };
+
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+  };
+
+  // const handlereportDateChange = (date) => {
+  //   setReportDate(date);
+  //   console.log(reportDate);
+  // };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // perform submission logic here, e.g. make API call to save data
@@ -43,68 +66,46 @@ const HazardReportingForm = () => {
     });
 
     // reset form
-    setDepartments([]);
-    setAreas([]);
-    setReportedStatus('');
-    setReportDate('');
-    setDescription('');
-    setPhotos('');
-    setResponsibility('');
-    setSelectedDepartment('');
-    setSelectedArea('');
+    // setDepartments([]);
+    // setAreas([]);
+    // setReportedStatus('');
+    // setReportDate('');
+    // setDescription('');
+    // setPhotos('');
+    // setResponsibility('');
+    // setSelectedDepartment('');
+    // setSelectedArea('');
   };
 
   const handleDepartmentChange = (event) => {
     const selectedDepartmentData = departments.find(department => department._id === event.target.value);
     console.log(selectedDepartmentData);
-    setSelectedDepartment({ department: selectedDepartmentData.department });
+    setSelectedDepartment(selectedDepartmentData.department );
   };
 
   const handleAreaChange = (event) => {
     const selectedAreaData = areas.find(area => area._id === event.target.value);
-    setSelectedArea({ area: selectedAreaData.name });
+    setSelectedArea(selectedAreaData.name);
   };
 
+  const handleReportDateChange = event =>{
+    const selectedReportedDate = event.target.value;
+    setReportDate(selectedReportedDate);
+    console.log(selectedReportedDate);
+  }
   return (
     <form onSubmit={handleSubmit}>
       <h1>Hazard Reporting</h1>
-      Department:
-      <select value={selectedDepartment} onChange={handleDepartmentChange}>
-        <option value="">Select a department</option>
-        {departments.length > 0 &&
-          departments.map((department) => (
-            <option key={department._id} value={department._id}>
-              {department.department}
-            </option>
-          ))}
-      </select>
-
-      <label>
-        Area:
-        <select value={selectedArea} onChange={handleAreaChange}>
-          <option value="">Select an Area</option>
-          {areas.length > 0 &&
-            areas.map((area) => (
-              <option key={area._id} value={area._id}>
-                {area.name}
-              </option>
-            ))}
-        </select>
-      </label>
+      <AreaField onSelectArea={handleSelectArea} />
+      <DepartmentField onSelectDepartment={handleSelectDepartment} />
+      <DateSelector selectedDate={reportDate} onDateChange={handleReportDateChange} />
+      <handleStatusChange setReportedStatus={reportedStatus} onChange={handleStatusChange} />
       <br />
       <label htmlFor="description">Description:</label>
       <textarea
         id="description"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
-        
-      />
-      <label htmlFor="reportDate">Date:</label>
-      <input
-        type="date"
-        id="reportDate"
-        value={reportDate}
-        onChange={(event) => setReportDate(event.target.value)}
         
       />
       <label htmlFor="photos">Add photo:</label>
