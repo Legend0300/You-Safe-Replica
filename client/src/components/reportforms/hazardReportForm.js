@@ -45,8 +45,6 @@ const HazardReportingForm = () => {
       description,
       photos,
       responsibility,
-      selectedDepartment,
-      selectedArea,
     });
 
     // reset form
