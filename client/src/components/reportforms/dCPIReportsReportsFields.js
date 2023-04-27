@@ -1,7 +1,13 @@
 import { useState } from "react";
+import SiteField from "../common/siteField";
+import StatusSelector from "../common/statusSelector";
+import DateSelector from "../common/DateSelector";
+import UserType from "../common/userTypeField";
+
 
 function DCPIReportsForm() {
-  const [site, setSite] = useState("");
+  // const [site, setSite] = useState("");
+  const [selectedSite,setSelectedSite] = useState({siteName:""});
   const [formCompliant, setFormCompliant] = useState(false);
   const [userType, setUserType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
@@ -9,51 +15,49 @@ function DCPIReportsForm() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const handleSiteChange = (event) => {
-    setSite(event.target.value);
+  const handleSelectSite = (selectedSite) => {
+    setSelectedSite(selectedSite);
+    // Fetch departments data for the selected site from backend API
   };
+  // const handleSiteChange = (event) => {
+  //   setSite(event.target.value);
+  // };
 
   const handleFormCompliantChange = (event) => {
     setFormCompliant(event.target.checked);
   };
 
   const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
+    setUserType(event);
   };
 
   const handleReportedStatusChange = (event) => {
-    setReportedStatus(event.target.value);
+    setReportedStatus(event);
   };
 
   const handleReportDateChange = (event) => {
-    setReportDate(event.target.value);
+    setReportDate(event);
   };
 
   const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
+    setStartDate(event);
   };
 
   const handleEndDateChange = (event) => {
-    setEndDate(event.target.value);
+    setEndDate(event);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // handle form submission here
+    console.log({selectedSite,formCompliant,userType,reportedStatus,reportDate,startDate,endDate});
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="site">Site:</label>
-        <input
-          type="text"
-          id="site"
-          name="site"
-          value={site}
-          onChange={handleSiteChange}
-        />
-      </div>
+        <h1>DCPI Reports</h1>
+      <SiteField onSelectSite={handleSelectSite}/>
+      
       <div>
         <label htmlFor="formCompliant">Form Compliant:</label>
         <input
@@ -64,56 +68,16 @@ function DCPIReportsForm() {
           onChange={handleFormCompliantChange}
         />
       </div>
-      <div>
-        <label htmlFor="userType">User Type:</label>
-        <input
-          type="text"
-          id="userType"
-          name="userType"
-          value={userType}
-          onChange={handleUserTypeChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="reportedStatus">Reported Status:</label>
-        <input
-          type="text"
-          id="reportedStatus"
-          name="reportedStatus"
-          value={reportedStatus}
-          onChange={handleReportedStatusChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="reportDate">Report Date:</label>
-        <input
-          type="date"
-          id="reportDate"
-          name="reportDate"
-          value={reportDate}
-          onChange={handleReportDateChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="startDate">Start Date:</label>
-        <input
-          type="date"
-          id="startDate"
-          name="startDate"
-          value={startDate}
-          onChange={handleStartDateChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="endDate">End Date:</label>
-        <input
-          type="date"
-          id="endDate"
-          name="endDate"
-          value={endDate}
-          onChange={handleEndDateChange}
-        />
-      </div>
+      <UserType userType={userType} onUserTypeChange={handleUserTypeChange}/>
+
+      <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange}/>
+
+      <DateSelector selectedDate={reportDate} onDateChange={handleReportDateChange}/>
+      
+      <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange}/>
+
+      <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange}/>
+
       <button type="submit">Submit</button>
     </form>
   );
