@@ -1,38 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SiteField from "../common/siteField";
 import StatusSelector from "../common/statusSelector";
 import DateSelector from "../common/DateSelector";
 import UserType from "../common/userTypeField";
+import { Link  , useParams } from "react-router-dom";
 
 
-function DCPIReportsForm() {
-  // const [site, setSite] = useState("");
-  const [selectedSite,setSelectedSite] = useState({siteName:""});
-  const [formCompliant, setFormCompliant] = useState(false);
+
+function DCPIReportsForm({ question }) {
+  const { questionId } = useParams();
+  const [selectedSite, setSelectedSite] = useState({ siteName: "" });
+  const [formCompliant, setFormCompliant] = useState("");
+  const [remarks, setRemarks] = useState("");
   const [userType, setUserType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
   const [reportDate, setReportDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [managers, setManagers] = useState([]);
+  const [responsibility, setResponsibility] = useState("");
+
+  useEffect(() => {
+    console.log(question);
+    const fetchManagers = async () => {
+      console.log("fetching managers");
+      const response = await fetch("http://localhost:4000/api/areaManager");
+      const data = await response.json();
+      setManagers(data);
+      console.log(data);
+    };
+    fetchManagers();
+  }, []);
 
   const handleSelectSite = (selectedSite) => {
     setSelectedSite(selectedSite);
-    // Fetch departments data for the selected site from backend API
   };
-  // const handleSiteChange = (event) => {
-  //   setSite(event.target.value);
-  // };
 
-  const handleFormCompliantChange = (event) => {
-    setFormCompliant(event.target.checked);
-  };
+
 
   const handleUserTypeChange = (event) => {
     setUserType(event);
   };
+  const handleFormCompliantChange = (event) => {
+    setFormCompliant(event.target.value);
+  };
+
+  const handleRemarksChange = (event) => {
+    setRemarks(event.target.value);
+  };
+
+ 
 
   const handleReportedStatusChange = (event) => {
-    setReportedStatus(event);
+    setReportedStatus(event.target.value);
   };
 
   const handleReportDateChange = (event) => {
@@ -47,39 +67,88 @@ function DCPIReportsForm() {
     setEndDate(event);
   };
 
+  const handleResponsibilityChange = (event) => {
+    setResponsibility(event.target.value);
+  };
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // handle form submission here
-    console.log({selectedSite,formCompliant,userType,reportedStatus,reportDate,startDate,endDate});
+    console.log({
+      formCompliant,
+      remarks,
+      reportedStatus,
+      responsibility,
+    });
+
+    //reset
+    setFormCompliant("");
+    setRemarks("");
+    setReportedStatus("");
+    setResponsibility("");
+    setReportedStatus("");
+
   };
 
   return (
+    <div>
     <form onSubmit={handleSubmit}>
-        <h1>DCPI Reports</h1>
-      <SiteField onSelectSite={handleSelectSite}/>
-      
+      <h1>DCPI Reports</h1>
+      <h1>{question} CheckList</h1>
+
+      <h1>Header: {question}</h1>
+      <h1>Question: {question}</h1>
       <div>
-        <label htmlFor="formCompliant">Form Compliant:</label>
-        <input
-          type="checkbox"
-          id="formCompliant"
-          name="formCompliant"
-          checked={formCompliant}
-          onChange={handleFormCompliantChange}
-        />
+      <div>
+  <label>
+    <input 
+      type="radio" 
+      name="Suitability" 
+      value="complaint"
+      checked={formCompliant === "complaint"}
+      onChange={handleFormCompliantChange}
+    />
+    Complaint
+  </label>
+  <label>
+    <input 
+      type="radio" 
+      name="Suitability" 
+      value="no-complaint"
+      checked={formCompliant === "no-complaint"}
+      onChange={handleFormCompliantChange}
+    />
+    No Complaint
+  </label>
+</div>
+
+
       </div>
-      <UserType userType={userType} onUserTypeChange={handleUserTypeChange}/>
 
-      <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange}/>
+    <label htmlFor="Status">Status</label>
+    <input onChange={handleReportedStatusChange} type="text" name="Status" />
 
-      <DateSelector selectedDate={reportDate} onDateChange={handleReportDateChange}/>
-      
-      <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange}/>
+      <label htmlFor="remarks">Action/Remarks: </label>
+      <input onChange={handleRemarksChange} type="text" name="remarks" />
 
-      <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange}/>
+      <label htmlFor="responsibility">Responsibility: </label>
+      <select
+        name="responsibility"
+        value={responsibility}
+        onChange={handleResponsibilityChange}
+      >
+        <option value="">Select Manager</option>
+        {managers.map((manager) => (
+          <option key={manager.id} value={manager.name}>
+            {manager.name}
+          </option>
+        ))}
+      </select>
 
       <button type="submit">Submit</button>
     </form>
+    <Link to="/">Back to base page</Link>
+    </div>
   );
 }
 

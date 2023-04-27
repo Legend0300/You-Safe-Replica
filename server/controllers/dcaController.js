@@ -100,15 +100,28 @@ const deleteDCAById = async (req, res) => {
 
 // GET one site by ID
 
-const getDCA = async (req, res) => {
+const getDCAquestions = async (req, res) => {
     try {
-        const dca = await DCA.findById(req.params.id);
-    
+        const dca = await DCA.find({});
+        const questions = [];
+        
+        dca.forEach(doc => {
+          const formName = doc.formName;
+          const docQuestions = doc.questions.map(q => ({
+            formName: formName,
+            heading: q.Heading,
+            question: q.Question
+          }));
+          questions.push(...docQuestions);
+        });
+        
+        console.log(questions);
+        res.json(questions);
+        
         if (dca == null) {
             return res.status(404).json({ message: 'Cannot find site' });
         }
     
-        res.json(dca);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -122,7 +135,7 @@ module.exports = {
     createNewDCA,
     updateDCAById,
     deleteDCAById,
-    getDCA
+    getDCAquestions
 }
 
 

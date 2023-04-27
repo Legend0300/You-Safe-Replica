@@ -12,7 +12,7 @@ const DCAListSchema = new mongoose.Schema({
     },
     status: {
       type: String,
-      enum: ['In Progress', 'Pending', 'Completed'],
+      enum: ['Not Applicable', 'Pending', 'Completed'],
       required: true
     },
     actionRemarks: {

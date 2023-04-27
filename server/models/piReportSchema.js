@@ -23,8 +23,8 @@ const piReportSchema = new mongoose.Schema({
   },
   reportedStatus: {
     type: String,
-    enum: ['In Progess', 'Completed' , 'Pending'],
-    default: 'In Progess'
+    enum: ['Not Applicable', 'Completed' , 'Pending'],
+    default: 'Not Applicable'
   },
   reportDate: {
     type: Date,

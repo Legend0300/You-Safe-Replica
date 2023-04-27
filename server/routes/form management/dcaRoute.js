@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const accessAuth = require('../../middleware/accessAuth');
-const {  getAllDCAs , getDCAById , createNewDCA , deleteDCAById , getDCA , updateDCAById} = require('../../controllers/dcaController');
+const {  getAllDCAs , getDCAById , createNewDCA , deleteDCAById , getDCAquestions , updateDCAById} = require('../../controllers/dcaController');
 // GET all sites
 router.get('/',  getAllDCAs);
 
+router.get('/get/questions',  getDCAquestions);
 // GET one site by ID
 router.get('/:id',  getDCAById);
 
@@ -19,7 +20,6 @@ router.delete('/:id',  deleteDCAById);
 
 // GET one site by ID
 
-router.get('/getSite/:id',  getDCA);
 
 
 

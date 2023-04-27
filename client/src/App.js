@@ -6,7 +6,7 @@ import './App.css';
 import HazardReportForm from './components/reportforms/hazardReportForm';
 // import HazardReportingForm from './components/reportforms/HazardReporting';
 // import Register from './components/login/Register';
-// import ReportingTypePage from './components/reports/reportingType';
+import ReportingTypePage from './components/reports/reportingType';
 // import HomePage from './components/home/homepage';
 // import ReportDetails from './components/reports/reportDetails';
 // import AreaForm from './components/user/area';
@@ -25,11 +25,18 @@ import IncidentReportForm from './components/reportforms/incidentReportForm';
 // import DepartmentField from './components/user/DepartmentField';
 import DCPIReportsForm from './components/reportforms/dCPIReportsReportsFields';
 import PlannedInspection from './components/reportforms/plannedInspection';
+import CheckList from './components/common/CheckList';
+import Questions from './components/common/Questions';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
     <div className="app">
-      <ReportingTypePage />
+      <BrowserRouter>
+      <CheckList />
+
+
+      </BrowserRouter>
     </div>
   );
 }
