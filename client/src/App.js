@@ -29,12 +29,7 @@ import PlannedInspection from './components/reportforms/plannedInspection';
 function App() {
   return (
     <div className="app">
-      <PlannedInspection />
-      <DCPIReportsForm/>
-      <HazardReportForm />
-      <IncidentReportForm />
-      {/* <SafeUnsafeReportForm /> */}
-      {/* <EmployeeForm /> */}
+      <ReportingTypePage />
     </div>
   );
 }

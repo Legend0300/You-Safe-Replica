@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const DCAListSchema = new mongoose.Schema({
+  header:{
+    type: String,
+    required: true
+  },
     suitabilityCheckbox: {
         type: String,
         enum: ["Compliant", "Non-Compliant"],

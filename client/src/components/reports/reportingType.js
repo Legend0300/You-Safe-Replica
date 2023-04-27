@@ -1,24 +1,29 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, Outlet, Routes } from 'react-router-dom';
 import NewSafeUnsafeActsForm from '../reportforms/SafeUnsafeform';
-import HazardReportingForm from '../reportforms/HazardReporting';
+import HazardReportingForm from '../reportforms/hazardReportForm';
 import IncidentReporting from '../reportforms/incidentReportForm';
 import DCPIReportsForm from '../reportforms/dCPIReportsReportsFields';
 import PlannedInspection from '../reportforms/plannedInspection';
-import NewSafeUnsafeActsFormtest from '../reportforms/SafetyActionMeeting'; 
+import NewSafeUnsafeActsFormtest from '../reportforms/SafetyActionMeeting';
+import HomePage from '../home/homepage';
 
 const ReportingTypePage = () => {
   return (
     <Router>
       <div>
+        <h1>Nav:</h1>
         <nav>
-          <Link to="/">Home</Link>
-
+          <Link to="/">Selection Menu</Link>
+          <br />
+          <Link to="/homepage">Home</Link>
         </nav>
+        <br />
         <Outlet />
       </div>
       <Routes>
           <Route path="/*" element={<SelectPage />} />
+          <Route path="/homepage" element={<HomePage />} />
           <Route path="/safe-unsafe-acts" element={<NewSafeUnsafeActsForm />} />
           <Route path="/hazard-reporting" element={<HazardReportingForm />} />
           <Route path="/incident-reporting" element={<IncidentReporting />} />

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const PIListSchema = new mongoose.Schema({
+  header:{
+    type: String,
+    required: true
+  },
     suitabilityCheckbox: {
         type: String,
         enum: ["Compliant", "Non-Compliant"],
@@ -18,7 +22,13 @@ const PIListSchema = new mongoose.Schema({
     responsibility: {
       type: String,
       required: true
-    }
+    },
+    type : {
+      type: String,
+      enum: ['PI'],
+      default: 'PI',
+      required: true
+    },
   });
 
 const PIList = mongoose.model('PIList', PIListSchema);
