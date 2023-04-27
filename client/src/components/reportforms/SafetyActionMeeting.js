@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import DepartmentField from '../common/DepartmentField';
+import AreaField from '../common/AreaField';
+import DateSelector from '../common/DateSelector';
 
 const NewSafeUnsafeActsFormtest = () => {
   const [actType, setActType] = useState('');
-  const [department, setDepartment] = useState('');
-  const [area, setArea] = useState('');
+  // const [department, setDepartment] = useState('');
+  // const [area, setArea] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
+  const [selectedArea, setSelectedArea] = useState({ area: '' });
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -15,12 +20,27 @@ const NewSafeUnsafeActsFormtest = () => {
     // Add code to submit form data to backend API
   };
 
+  const handleSelectDepartment = (selectedDepartment)=>{
+    setSelectedDepartment(selectedDepartment);
+    console.log(selectedDepartment);
+  };
+  const handleSelectArea = (selectedArea)=>{
+    setSelectedArea(selectedArea);
+    console.log(selectedArea);
+  };
+
+  const handleDateChange=(date)=>{
+    setDate(date);
+    console.log(date);
+  };
+
   const handlePhotoChange = (event) => {
     setPhoto(event.target.files[0]);
   };
 
   return (
     <div>
+      <h1>SafetyActionForm</h1>
       <h1>New Safe/Unsafe Acts</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -32,24 +52,9 @@ const NewSafeUnsafeActsFormtest = () => {
             required
           />
         </div>
-        <div>
-          <label>Department:</label>
-          <input
-            type="text"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Area:</label>
-          <input
-            type="text"
-            value={area}
-            onChange={(e) => setArea(e.target.value)}
-            required
-          />
-        </div>
+        <DepartmentField onSelectDepartment={handleSelectDepartment} />
+        
+        <AreaField onSelectArea={handleSelectArea} />
         <div>
           <label>Description:</label>
           <textarea
@@ -58,17 +63,7 @@ const NewSafeUnsafeActsFormtest = () => {
             required
           />
         </div>
-        <div>
-          <label>Date:</label>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            max={new Date().toISOString().split('T')[0]}
-            validationMessage="Report date cannot be in the future"
-            required
-          />
-        </div>
+        <DateSelector selectedDate={date} onSelectDate={handleDateChange} />
         <div>
           <label>Time:</label>
           <input
