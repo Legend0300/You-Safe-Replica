@@ -3,12 +3,12 @@ import SiteField from "../common/siteField";
 import StatusSelector from "../common/statusSelector";
 import DateSelector from "../common/DateSelector";
 import UserType from "../common/userTypeField";
-import { Link  , useParams } from "react-router-dom";
+import { Link  } from "react-router-dom";
+import { useLocation, useParams , Outlet } from "react-router-dom";
 
 
 
-function DCPIReportsForm({ question }) {
-  const { questionId } = useParams();
+function DCPIReportsForm({ questions }) {
   const [selectedSite, setSelectedSite] = useState({ siteName: "" });
   const [formCompliant, setFormCompliant] = useState("");
   const [remarks, setRemarks] = useState("");
@@ -20,8 +20,13 @@ function DCPIReportsForm({ question }) {
   const [managers, setManagers] = useState([]);
   const [responsibility, setResponsibility] = useState("");
 
+
   useEffect(() => {
-    console.log(question);
+    console.log();
+  }, []);
+
+  useEffect(() => {
+    console.log();
     const fetchManagers = async () => {
       console.log("fetching managers");
       const response = await fetch("http://localhost:4000/api/areaManager");
@@ -94,10 +99,10 @@ function DCPIReportsForm({ question }) {
     <div>
     <form onSubmit={handleSubmit}>
       <h1>DCPI Reports</h1>
-      <h1>{question} CheckList</h1>
+      <h1>{} CheckList</h1>
 
-      <h1>Header: {question}</h1>
-      <h1>Question: {question}</h1>
+      <h1>Header: {}</h1>
+      <h1>Question: {}</h1>
       <div>
       <div>
   <label>
