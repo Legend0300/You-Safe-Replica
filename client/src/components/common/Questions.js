@@ -7,31 +7,26 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
-import { useOutletContext } from "react-router-dom"
 import DCPIReportsForm from "../reportforms/dCPIReportsReportsFields";
 
 
 const Questions = () => {
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+
   return (
     <div>
       <Routes>
-        <Route path="/" element={<QuestionList />} />
+        <Route path="/" element={<QuestionList setSelectedQuestion={setSelectedQuestion} />} />
       </Routes>
-      <Outlet />
+      {selectedQuestion && <Outlet context={[selectedQuestion, selectedQuestion.formName]} />}
     </div>
   );
 };
 
-const QuestionList = () => {
+const QuestionList = ({ setSelectedQuestion }) => {
   const [questions, setQuestions] = useState([]);
   const location = useLocation(); 
   const formName = location.pathname.split("/").pop().replaceAll("%20", " ");
-  const [selectedQuestion, setSelectedQuestion] = useState({});
-
-  const handleQuestionClick = (question) => {
-    setSelectedQuestion(question);
-    console.log(selectedQuestion);
-  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -48,20 +43,15 @@ const QuestionList = () => {
     fetchQuestions();
   }, [formName]);
 
-  useEffect(() => {
-    console.log(questions);
-  }, [questions]);
-
   return (
     <div>
       <h1>Questions</h1>
       {questions.map((question) => (
         <div key={question.id}>
           <h2>{question.Question}</h2>
-          {console.log(question)}
           <Link
             to={{ pathname: `form`, state: { question: question } }}
-            onClick={() => handleQuestionClick(question)}
+            onClick={() => setSelectedQuestion({ ...question, formName })}
           >
             {question.Question}
           </Link>

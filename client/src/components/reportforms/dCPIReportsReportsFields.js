@@ -4,7 +4,7 @@ import StatusSelector from "../common/statusSelector";
 import DateSelector from "../common/DateSelector";
 import UserType from "../common/userTypeField";
 import { Link  } from "react-router-dom";
-import { useLocation, useParams , Outlet } from "react-router-dom";
+import { useLocation, useParams , Outlet , useOutletContext } from "react-router-dom";
 
 
 
@@ -21,18 +21,24 @@ function DCPIReportsForm({ questions }) {
   const [responsibility, setResponsibility] = useState("");
 
 
+  const [data] = useOutletContext()
+  const { formName, Header, Question } = data;
+  console.log(data);
+
+
+
   useEffect(() => {
-    console.log();
+    // console.log();
   }, []);
 
   useEffect(() => {
-    console.log();
+    // console.log();
     const fetchManagers = async () => {
       console.log("fetching managers");
       const response = await fetch("http://localhost:4000/api/areaManager");
       const data = await response.json();
       setManagers(data);
-      console.log(data);
+      // console.log(data);
     };
     fetchManagers();
   }, []);
@@ -98,11 +104,11 @@ function DCPIReportsForm({ questions }) {
   return (
     <div>
     <form onSubmit={handleSubmit}>
-      <h1>DCPI Reports</h1>
-      <h1>{} CheckList</h1>
+      <h1>DCA Reports</h1>
+      <h1>{formName} CheckList</h1>
 
-      <h1>Header: {}</h1>
-      <h1>Question: {}</h1>
+      <h1>Header: {Header}</h1>
+      <h1>Question: {Question}</h1>
       <div>
       <div>
   <label>

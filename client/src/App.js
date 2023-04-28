@@ -33,9 +33,8 @@ function App() {
   return (
     <div className="app">
       <BrowserRouter>
+      <ReportingTypePage />
       <CheckList />
-
-
       </BrowserRouter>
     </div>
   );

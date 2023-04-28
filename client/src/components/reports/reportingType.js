@@ -7,10 +7,11 @@ import DCPIReportsForm from '../reportforms/dCPIReportsReportsFields';
 import PlannedInspection from '../reportforms/plannedInspection';
 import NewSafeUnsafeActsFormtest from '../reportforms/SafetyActionMeeting';
 import HomePage from '../home/homepage';
+import CheckList from '../common/CheckList';
 
 const ReportingTypePage = () => {
   return (
-    <Router>
+    <div>
       <div>
         <h1>Nav:</h1>
         <nav>
@@ -27,11 +28,11 @@ const ReportingTypePage = () => {
           <Route path="/safe-unsafe-acts" element={<NewSafeUnsafeActsForm />} />
           <Route path="/hazard-reporting" element={<HazardReportingForm />} />
           <Route path="/incident-reporting" element={<IncidentReporting />} />
-          <Route path="/deep-compliance-reporting" element={<DCPIReportsForm />} />
+          <Route path="/checklist" element={<CheckList />} />
           <Route path="/planned-inspection" element={<PlannedInspection />} />
           <Route path="/safety-action-meeting" element={<NewSafeUnsafeActsFormtest />} />
       </Routes>
-    </Router>
+      </div>
   );
 };
 
@@ -40,7 +41,7 @@ const SelectPage = () => {
     { name: 'Safe/Unsafe Acts', path: '/safe-unsafe-acts' },
     { name: 'Hazard Reporting', path: '/hazard-reporting' },
     { name: 'Incident Reporting', path: '/incident-reporting' },
-    { name: 'Deep Compliance Reporting', path: '/deep-compliance-reporting' },
+    { name: 'Deep Compliance Reporting', path: '/checklist' },
     { name: 'Planned Inspection', path: '/planned-inspection' },
     { name: 'Safety Action Meeting (SAM)', path: '/safety-action-meeting' }
   ];
