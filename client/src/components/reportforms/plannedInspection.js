@@ -1,7 +1,8 @@
 import { useState } from "react";
 import StatusSelector from "../common/statusSelector";
 
-function PlannedInspection() {
+function PlannedInspection(props) {
+  console.log(props.type);
   const [formName, setFormName] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
   const [questions, setQuestions] = useState([]);

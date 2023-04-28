@@ -4,13 +4,14 @@ import SiteField from "./siteField";
 import Questions from "./Questions";
 import DCPIReportsForm from "../reportforms/dCPIReportsReportsFields";
 
-const ChecklistMap = ({ checklist }) => {
+const ChecklistMap = ({ checklist , type }) => {
+  console.log(type);
   return (
     <div>
       <label htmlFor="form-name">Form Name:</label>
       {checklist.map((checklist) => (
         <div key={checklist.id}>
-          <Link to={`/checklist/${checklist.formName}`}>{checklist.formName}</Link>
+{type === "dca" ? <Link to={`/checklist/${checklist.formName}`}>{checklist.formName}</Link> : type === "pi" ? <Link to={`/planned-inspection/${checklist.formName}`}>{checklist.formName}</Link> : null}
         </div>
       ))}
     </div>
@@ -19,15 +20,17 @@ const ChecklistMap = ({ checklist }) => {
 
 const CheckList = (props) => {
   const [checklist, setChecklist] = useState([]);
-
+  console.log(props.type[0]); 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:4000/api/dca');
+      const response = await fetch(`http://localhost:4000/api/${props.type[0]}`);
       const data = await response.json();
       setChecklist(data);
     };
     fetchData();
   }, []);
+
+
 
   return (
     <div>
@@ -38,7 +41,7 @@ const CheckList = (props) => {
       </nav>
       <br />
       <Routes>
-        <Route path="/" element={<ChecklistMap checklist={checklist} />} />
+        <Route path="/" element={<ChecklistMap type={props.type[0]} checklist={checklist} />} />
         <Route path="/checklist/:name" element={<Questions />}>
           <Route path="form" element={<DCPIReportsForm />} />
         </Route>
