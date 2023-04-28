@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Link, Outlet, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Link,
+  Outlet,
+  Routes,
+  Route,
+} from "react-router-dom";
 import SiteField from "./siteField";
 import Questions from "./Questions";
 import DCPIReportsForm from "../reportforms/dCPIReportsReportsFields";
@@ -10,19 +17,21 @@ const ChecklistMap = ({ checklist }) => {
       <label htmlFor="form-name">Form Name:</label>
       {checklist.map((checklist) => (
         <div key={checklist.id}>
-          <Link to={`/checklist/${checklist.formName}`}>{checklist.formName}</Link>
+          <Link to={`/checklist/${checklist.formName}`}>
+            {checklist.formName}
+          </Link>
         </div>
       ))}
     </div>
   );
-}
+};
 
 const CheckList = (props) => {
   const [checklist, setChecklist] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:4000/api/dca');
+      const response = await fetch("http://localhost:4000/api/dca");
       const data = await response.json();
       setChecklist(data);
     };
@@ -39,11 +48,12 @@ const CheckList = (props) => {
       <br />
       <Routes>
         <Route path="/" element={<ChecklistMap checklist={checklist} />} />
-        <Route path="/checklist/:name" element={<Questions />} />
-        <Route path="/checklist/dcaform/:questionId" element={<DCPIReportsForm />} />
+        <Route path="/checklist/:name" element={<Questions />}>
+          <Route path="form" element={<DCPIReportsForm />} />
+        </Route>
       </Routes>
     </div>
   );
-}
+};
 
 export default CheckList;
