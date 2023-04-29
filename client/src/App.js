@@ -33,8 +33,6 @@ import SafetyActionMeeting from './components/reportforms/SafetyActionMeeting';
 function App() {
   return (
     <div className="app">
-      <PlannedInspection />
-      <SafetyActionMeeting />
       <BrowserRouter>
       <ReportingTypePage />
       </BrowserRouter>

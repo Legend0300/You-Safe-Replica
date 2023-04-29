@@ -4,66 +4,79 @@ import AreaField from '../common/AreaField';
 import DateSelector from '../common/DateSelector';
 
 const NewSafeUnsafeActsFormtest = () => {
-  const [actType, setActType] = useState('');
-  // const [department, setDepartment] = useState('');
-  // const [area, setArea] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
   const [selectedArea, setSelectedArea] = useState({ area: '' });
-  const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [photo, setPhoto] = useState(null);
-  const [responsibility, setResponsibility] = useState('');
+  const [leader, setLeader] = useState("");
+  const [participants, setParticipants] = useState([]);
+  const [topic, setTopic] = useState("");
+  const [outline, setOutline] = useState("");
+  const [questions, setQuestions] = useState([]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add code to submit form data to backend API
-  };
 
+  
   const handleSelectDepartment = (selectedDepartment)=>{
     setSelectedDepartment(selectedDepartment);
-    console.log(selectedDepartment);
   };
+
   const handleSelectArea = (selectedArea)=>{
     setSelectedArea(selectedArea);
-    console.log(selectedArea);
   };
 
   const handleDateChange=(date)=>{
     setDate(date);
-    console.log(date);
   };
 
-  const handlePhotoChange = (event) => {
-    setPhoto(event.target.files[0]);
+  const handleAddQuestion = () => {
+    setQuestions([...questions, { heading: "", question: "" }]);
+  };
+
+  const handleQuestionChange = (index, field, value) => {
+    const newQuestions = [...questions];
+    newQuestions[index][field] = value;
+    setQuestions(newQuestions);
+  };
+  
+  const handleRemoveQuestion = (index) => {
+    const newQuestions = [...questions];
+    newQuestions.splice( questions.length-1,1);
+    setQuestions(newQuestions);
+  };
+  
+  const handleAddParticipant = () => {
+    setParticipants([...participants, ""]);
+  };
+
+  const handleParticipantChange = (index, value) => {
+    const newParticipants = [...participants];
+    newParticipants[index] = value;
+    setParticipants(newParticipants);
+  };
+
+  const handleRemoveParticipant = () => {
+    const newParticipants = [...participants];
+    newParticipants.splice(participants.length-1, 1);
+    setParticipants(newParticipants);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Add code to submit form data to backend API
+    console.log({ selectedDepartment, selectedArea, date, time, leader, participants, topic, outline, questions });
   };
 
   return (
     <div>
       <h1>SafetyActionForm</h1>
-      <h1>New Safe/Unsafe Acts</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Act Type:</label>
-          <input
-            type="text"
-            value={actType}
-            onChange={(e) => setActType(e.target.value)}
-            required
-          />
-        </div>
-        <DepartmentField onSelectDepartment={handleSelectDepartment} />
+       
+       <DepartmentField onSelectDepartment={handleSelectDepartment} />
         
-        <AreaField onSelectArea={handleSelectArea} />
-        <div>
-          <label>Description:</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
-        <DateSelector selectedDate={date} onSelectDate={handleDateChange} />
+       <AreaField onSelectArea={handleSelectArea} />
+          
+       <DateSelector selectedDate={date} onDateChange={handleDateChange} />
+       
         <div>
           <label>Time:</label>
           <input
@@ -73,24 +86,108 @@ const NewSafeUnsafeActsFormtest = () => {
             required
           />
         </div>
-        <div>
-          <label>Add Photo:</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handlePhotoChange}
-            required
-          />
+
+      <div>
+      <label htmlFor="leader">Leader:</label>
+      <input
+        type="text"
+        id="leader"
+        value={leader}
+        onChange={(e) => setLeader(e.target.value)}
+        required
+      />
+      </div>
+
+      <div>
+        <h2>Participants</h2>
+        {participants.map((participant, index) => (
+          <div key={index}>
+            <label htmlFor={`participant-${index}`}>Participant:</label>
+            <input
+              id={`participant-${index}`}
+              type="text"
+              value={participant}
+              onChange={(event) =>
+                handleParticipantChange(index, event.target.value)
+              }
+            />
+              
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <button
+          type="button"
+          onClick={() => handleAddParticipant()}>
+          Add Participant
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleRemoveParticipant()}>
+          Remove Participant
+        </button>
         </div>
-        <div>
-          <label>Responsibility:</label>
-          <input
-            type="text"
-            value={responsibility}
-            onChange={(e) => setResponsibility(e.target.value)}
-            required
-          />
-        </div>
+
+      <div>
+      <label htmlFor="topic">Topic:</label>
+      <input
+        type="text"
+        id="topic"
+        value={topic}
+        onChange={(e) => setTopic(e.target.value)}
+        required
+      />
+      </div>
+      
+      <div>
+      <label htmlFor="outline">Outline of Facts:</label>
+      <textarea
+        id="outline"
+        value={outline}
+        onChange={(e) => setOutline(e.target.value)}
+        required
+      />
+      </div>
+
+      <div>
+        <h2>Questions</h2>
+        {questions.map((question, index) => (
+          <div key={index}>
+            <label htmlFor={`question-heading-${index}`}>Question Heading:</label>
+            <input
+              id={`question-heading-${index}`}
+              type="text"
+              value={question.heading}
+              onChange={(event) =>
+                handleQuestionChange(index, "heading", event.target.value)
+              }
+            />
+            <br />
+            <label htmlFor={`question-${index}`}>Question:</label>
+            <input
+              id={`question-${index}`}
+              type="text"
+              value={question.question}
+              onChange={(event) =>
+                handleQuestionChange(index, "question", event.target.value)
+              }
+            />
+            <br />
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <button type="button" onClick={handleAddQuestion}>
+            Add Question
+        </button>
+        <button type="button" onClick={handleRemoveQuestion}>
+            Remove Question
+        </button>
+      </div>
+      
         <button type="submit">Submit</button>
       </form>
     </div>
