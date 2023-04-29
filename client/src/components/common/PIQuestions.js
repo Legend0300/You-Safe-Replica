@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import DCPIReportsForm from "../reportforms/dCPIReportsReportsFields";
 
-const Questions = (props) => {
+const PIQuestions = (props) => {
   const type = props.type;
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   return (
@@ -32,7 +32,7 @@ const QuestionList = ({ setSelectedQuestion , type }) => {
   console.log(type);
   useEffect(() => {
     const fetchQuestions = async () => {
-      const response = await fetch("http://localhost:4000/api/dca");
+      const response = await fetch("http://localhost:4000/api/pi");
       const data = await response.json();
 
       const matchingDCA = data.find((dca) => dca.formName === formName);
@@ -64,4 +64,4 @@ const QuestionList = ({ setSelectedQuestion , type }) => {
   );
 };
 
-export default Questions;
+export default PIQuestions;

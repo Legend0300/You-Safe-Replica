@@ -8,7 +8,7 @@ import { useLocation, useParams , Outlet , useOutletContext } from "react-router
 
 
 
-function DCPIReportsForm({ questions }) {
+function PIReportsForm({ questions }) {
   const [selectedSite, setSelectedSite] = useState({ siteName: "" });
   const [formCompliant, setFormCompliant] = useState("");
   const [remarks, setRemarks] = useState("");
@@ -166,4 +166,4 @@ function DCPIReportsForm({ questions }) {
   );
 }
 
-export default DCPIReportsForm;
+export default PIReportsForm;

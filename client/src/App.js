@@ -28,13 +28,15 @@ import PlannedInspection from './components/reportforms/plannedInspection';
 import CheckList from './components/common/CheckList';
 import Questions from './components/common/Questions';
 import { BrowserRouter } from 'react-router-dom';
+import SafetyActionMeeting from './components/reportforms/SafetyActionMeeting';
 
 function App() {
   return (
     <div className="app">
+      <PlannedInspection />
+      <SafetyActionMeeting />
       <BrowserRouter>
       <ReportingTypePage />
-      {/* <CheckList /> */}
       </BrowserRouter>
     </div>
   );
