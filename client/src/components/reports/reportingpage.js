@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import ReportingTypePage from './reportingType';
+import { Link , Outlet } from 'react-router-dom';
 
 const ReportingPage = () => {
   const [submittedReports, setSubmittedReports] = useState([]);
   const [offlinePendingReports, setOfflinePendingReports] = useState([]);
-
 
   return (
     <div>
@@ -36,6 +37,8 @@ const ReportingPage = () => {
           </li>
         ))}
       </ul>
+      <Link to="/reports/addreport">+</Link>
+      <Outlet />
     </div>
   );
 };

@@ -181,8 +181,20 @@ POST http://localhost:4000/api/manager/logout
 
 ###
 
-GET http://localhost:4000/api/manager
+GET http://localhost:4000/api/areaManager
 
+###
+
+///create an area manager through post request
+
+POST http://localhost:4000/api/areaManager
+Content-Type: application/json
+
+{
+    "area": "642e118f7c93b43a18f6fd8f",
+    "name": "John Doe",
+    "email": ""
+}
 
 ###
 
