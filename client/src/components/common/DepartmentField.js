@@ -15,6 +15,8 @@ const  DepartmentField = ({ onSelectDepartment }) => {
     );
     setSelectedDepartment(selectedDepartmentData.department);
     onSelectDepartment(selectedDepartmentData.department);
+
+    console.log(selectedDepartmentData.department);
   };
   
   return (

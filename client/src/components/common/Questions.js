@@ -26,10 +26,10 @@ const Questions = (props) => {
 
 const QuestionList = ({ setSelectedQuestion , type }) => {
 
-  const [questions, setQuestions] = useState([]);
   const location = useLocation(); 
-  const formName = location.pathname.split("/").pop().replaceAll("%20", " ");
   console.log(type);
+  const [questions, setQuestions] = useState([]);
+  const formName = location.pathname.split("/").pop().replaceAll("%20", " ");
   useEffect(() => {
     const fetchQuestions = async () => {
       const response = await fetch("http://localhost:4000/api/dca");

@@ -1,56 +1,62 @@
 import { useState, useEffect } from "react";
-import SiteField from "../common/siteField";
-import StatusSelector from "../common/statusSelector";
-import DateSelector from "../common/DateSelector";
-import UserType from "../common/userTypeField";
-import { Link  } from "react-router-dom";
 import { useLocation, useParams , Outlet , useOutletContext } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 
 
 
-function DCPIReportsForm({ questions }) {
-  const [selectedSite, setSelectedSite] = useState({ siteName: "" });
+function DCPIReportsForm() {
+  const location = useLocation();
   const [formCompliant, setFormCompliant] = useState("");
   const [remarks, setRemarks] = useState("");
-  const [userType, setUserType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
-  const [reportDate, setReportDate] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
   const [managers, setManagers] = useState([]);
   const [responsibility, setResponsibility] = useState("");
+  const navigate = useNavigate()
+  const [questions, setQuestions] = useState([]);
+  const formName = location.pathname.split("/").pop().replaceAll("%20", " ");
+  
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const response = await fetch("http://localhost:4000/api/dca");
+      const data = await response.json();
+      
+      const matchingDCA = data.find((dca) => dca.formName === formName);
+      if (matchingDCA) {
+        setQuestions(matchingDCA.questions);
+      }
+    };
+    
+    fetchQuestions();
+  }, [formName]);
+  
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    }
+  };
 
+  const handleBack = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+    }
+  };
 
-  const [data] = useOutletContext()
-  const { formName, Heading, Question } = data;
-
-
+  const currentQuestion = questions[currentQuestionIndex];
+  const { Heading, Question } = currentQuestion || {};
 
   useEffect(() => {
-    // console.log();
-  }, []);
-
-  useEffect(() => {
-    // console.log();
     const fetchManagers = async () => {
       console.log("fetching managers");
       const response = await fetch("http://localhost:4000/api/areaManager");
       const data = await response.json();
       setManagers(data);
-      // console.log(data);
     };
     fetchManagers();
   }, []);
 
-  const handleSelectSite = (selectedSite) => {
-    setSelectedSite(selectedSite);
-  };
 
-
-
-  const handleUserTypeChange = (event) => {
-    setUserType(event);
-  };
   const handleFormCompliantChange = (event) => {
     setFormCompliant(event.target.value);
   };
@@ -59,22 +65,8 @@ function DCPIReportsForm({ questions }) {
     setRemarks(event.target.value);
   };
 
- 
-
   const handleReportedStatusChange = (event) => {
     setReportedStatus(event.target.value);
-  };
-
-  const handleReportDateChange = (event) => {
-    setReportDate(event);
-  };
-
-  const handleStartDateChange = (event) => {
-    setStartDate(event);
-  };
-
-  const handleEndDateChange = (event) => {
-    setEndDate(event);
   };
 
   const handleResponsibilityChange = (event) => {
@@ -85,6 +77,7 @@ function DCPIReportsForm({ questions }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     console.log({
       formName,
       Heading,
@@ -153,15 +146,21 @@ function DCPIReportsForm({ questions }) {
       >
         <option value="">Select Manager</option>
         {managers.map((manager) => (
-          <option key={manager.id} value={manager.name}>
-            {manager.name}
+          <option key={manager.id} value={manager.fullName}>
+            {manager.fullName}
           </option>
         ))}
       </select>
 
-      <button type="submit">Submit</button>
+      <button type="submit">Next</button>
+      <button type="button" onClick={handleBack} disabled={currentQuestionIndex === 0}>
+          Back
+        </button>
+        <button type="button" onClick={handleNext} disabled={currentQuestionIndex === questions.length - 1}>
+          Skip
+        </button>
     </form>
-    <Link to="/">Back to base page</Link>
+    <Link to={`/newreport/dca`}>Back to base page</Link>
     </div>
   );
 }

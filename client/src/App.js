@@ -1,42 +1,42 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
-// import Test from './components/login/test';
-// import ForgotPass from './components/login/forgotpass';
-// import EditPass from './components/login/editpass';
 import HazardReportForm from './components/reportforms/hazardReportForm';
-// import HazardReportingForm from './components/reportforms/HazardReporting';
-// import Register from './components/login/Register';
 import ReportingTypePage from './components/reports/reportingType';
-// import HomePage from './components/home/homepage';
-// import ReportDetails from './components/reports/reportDetails';
-// import AreaForm from './components/user/area';
-// import Site from './components/user/site';
-// import EditSite from './components/user/editSite';
-// import DepartmentForm from './components/user/department';
-// import AreaManager from './components/user/areaManager';
-// import VisitorForm from './components/user/visitor';
-// import EmployeeForm from './components/user/employee';
-import IncidentReportForm from './components/reportforms/incidentReportForm';
-// import PlannedInspection from './components/user/plannedInspection';
-// import DeepComplianceAuditForm from './components/user/deepComplianceAuditForm';
-// import AreaFields from './components/admin/areaFields';
-// import SafeUnsafeReportForm from './components/user/safeUnsafeReportFields';
-// import TaskReportsForm from './components/user/taskReportsFields';
-// import DepartmentField from './components/user/DepartmentField';
-import DCPIReportsForm from './components/reportforms/dCPIReportsReportsFields';
-import PlannedInspection from './components/reportforms/plannedInspection';
-import CheckList from './components/common/CheckList';
-import Questions from './components/common/Questions';
-import { BrowserRouter } from 'react-router-dom';
+import SafeUnsafeReportForm from './components/user/safeUnsafeReportFields';
 import SafetyActionMeeting from './components/reportforms/SafetyActionMeeting';
+import DCPIReportsForm from './components/reportforms/dCPIReportsReportsFields';
+import PIReportForm from './components/reportforms/piReportForm';
+import CheckList from './components/common/CheckList';
+import HomePage from './components/home/homepage';
+import IncidentReportForm from './components/reportforms/incidentReportForm';
+import Login from './components/login/login';
+import NewSafeUnsafeActsForm from './components/reportforms/SafeUnsafeform';
+import Nav from './components/common/Nav';
+import ReportingPage from './components/reports/reportingpage';
 
 function App() {
   return (
     <div className="app">
-      <BrowserRouter>
-      <ReportingTypePage />
-      </BrowserRouter>
+      <Router>
+          <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/home' element={<HomePage />} />
+          <Route path='reports' element={<ReportingPage/>}/>
+          <Route path='/newreport' element={<ReportingTypePage />} />
+          <Route path='/newreport/hazardreport' element={<HazardReportForm />} />
+          <Route path='/newreport/safeusafereport' element={<NewSafeUnsafeActsForm />} />
+          <Route path='/newreport/safetyactionmeeting' element={<SafetyActionMeeting />} />
+          <Route path='/newreport/incidentreport' element={<IncidentReportForm />}/>
+          <Route path='/newreport/dca' element={<CheckList type={["dca"]} />} />
+          <Route path='/newreport/dca/:id' element={<DCPIReportsForm />} />
+          <Route path='/newreport/planned-inspection' element={<CheckList type={["pi"]} />} />
+          <Route path='/newreport/planned-inspection/:id' element={<PIReportForm />} />
+          <Route path='/*' element={<div>404 not found!</div>} />
+        </Routes>
+      </Router>
     </div>
   );
 }
+
 export default App;

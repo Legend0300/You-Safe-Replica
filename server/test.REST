@@ -383,3 +383,17 @@ Content-Type: application/json
 }
 
 ###
+
+POST localhost:4000/api/areamanager
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "emailAddress": "hello@hello.com",
+  "site": "642aecb8a39fec51ca4b076f",
+  "contact": "1234567890",
+  "department": "642f1b9c7d84bc4a18f6fd8e",
+  "area": "642e118f7c93b43a18f6fd8f",
+  "status": "Enabled"
+}
+

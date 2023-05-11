@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import ReportingTypePage from './reportingType';
-import { Link , Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ReportingPage = () => {
-  const [submittedReports, setSubmittedReports] = useState([]);
-  const [offlinePendingReports, setOfflinePendingReports] = useState([]);
+  const [reports, setReports] = useState([]);
+
+  const submittedReports = reports.filter(report => report.status === 'submitted');
+  const offlinePendingReports = reports.filter(report => report.status === 'offline_pending');
 
   return (
     <div>
@@ -37,8 +38,7 @@ const ReportingPage = () => {
           </li>
         ))}
       </ul>
-      <Link to="/reports/addreport">+</Link>
-      <Outlet />
+      <Link to="/newreport">+</Link>
     </div>
   );
 };

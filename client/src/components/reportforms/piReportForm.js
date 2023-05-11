@@ -8,7 +8,7 @@ import { useLocation, useParams , Outlet , useOutletContext } from "react-router
 
 
 
-function PIReportsForm({ questions }) {
+function PIReportsForm() {
   const [selectedSite, setSelectedSite] = useState({ siteName: "" });
   const [formCompliant, setFormCompliant] = useState("");
   const [remarks, setRemarks] = useState("");
@@ -20,15 +20,42 @@ function PIReportsForm({ questions }) {
   const [managers, setManagers] = useState([]);
   const [responsibility, setResponsibility] = useState("");
 
+  const location = useLocation();
 
-  const [data] = useOutletContext()
-  const { formName, Heading, Question } = data;
-
-
-
+  const [questions, setQuestions] = useState([]);
+  const formName = location.pathname.split("/").pop().replaceAll("%20", " ");
   useEffect(() => {
-    // console.log();
-  }, []);
+    const fetchQuestions = async () => {
+      const response = await fetch("http://localhost:4000/api/pi");
+      const data = await response.json();
+
+      const matchingDCA = data.find((pi) => pi.formName === formName);
+
+      if (matchingDCA) {
+        setQuestions(matchingDCA.questions);
+      }
+    };
+
+    fetchQuestions();
+  }, [formName]);
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const { Heading, Question } = currentQuestion || {};
+
 
   useEffect(() => {
     // console.log();
@@ -160,8 +187,14 @@ function PIReportsForm({ questions }) {
       </select>
 
       <button type="submit">Submit</button>
+      <button type="button" onClick={handleBack} disabled={currentQuestionIndex === 0}>
+          Back
+        </button>
+        <button type="button" onClick={handleNext} disabled={currentQuestionIndex === questions.length - 1}>
+          Skip
+        </button>
     </form>
-    <Link to="/">Back to base page</Link>
+    <Link to="/newreport/planned-inspection">Back to base page</Link>
     </div>
   );
 }

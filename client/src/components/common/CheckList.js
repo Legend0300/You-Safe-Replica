@@ -11,7 +11,7 @@ const ChecklistMap = ({ checklist , type }) => {
       <label htmlFor="form-name">Form Name:</label>
       {checklist.map((checklist) => (
         <div key={checklist.id}>
-{type === "dca" ? <Link to={`/checklist/${checklist.formName}`}>{checklist.formName}</Link> : type === "pi" ? <Link to={`/planned-inspection/${checklist.formName}`}>{checklist.formName}</Link> : null}
+{type === "dca" ? <Link to={`${checklist.formName}`}>{checklist.formName}</Link> : type === "pi" ? <Link to={`${checklist.formName}`}>{checklist.formName}</Link> : null}
         </div>
       ))}
     </div>
@@ -41,9 +41,8 @@ const CheckList = (props) => {
       </nav>
       <br />
       <Routes>
-        <Route path="/" element={<ChecklistMap type={props.type[0]} checklist={checklist} />} />
-        <Route path="/checklist/:name" element={<Questions />}>
-          <Route path="form" element={<DCPIReportsForm />} />
+        <Route path="/" element={<ChecklistMap type={props.type[0]} checklist={checklist} />}>
+          <Route path=":name" element={<DCPIReportsForm />} />
         </Route>
         <Route path="/*"  element={<>404 not found!</>}/> 
       </Routes>

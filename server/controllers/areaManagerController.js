@@ -32,12 +32,15 @@ const getAreaManagerById = async (req, res) => {
 
 const createNewAreaManager = async (req, res) => {
     
-        const areaManager = new AreaManager({
-            areaManagerName: req.body.areaManagerName,
-            area: req.body.area,
-            department: req.body.department,
-            status: req.body.status,
-        });
+    const areaManager = new AreaManager({
+        fullName: req.body.fullName,
+        emailAddress: req.body.emailAddress,
+        site: req.body.site,
+        contact: req.body.contact,
+        department: req.body.department,
+        area: req.body.area,
+        status: req.body.status,
+      });
     
         try {
             const newAreaManager = await areaManager.save();

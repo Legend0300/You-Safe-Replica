@@ -52,6 +52,10 @@ const safetyActionMeetingSchema = new mongoose.Schema({
     {
         type: String,
     },
+    type: {
+      type: String,
+      default: "safety action meeting"
+    }
   });
   
 

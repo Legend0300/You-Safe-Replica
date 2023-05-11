@@ -1,88 +1,76 @@
 import React , {useState , useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, Outlet, Routes } from 'react-router-dom';
-import NewSafeUnsafeActsForm from '../reportforms/SafeUnsafeform';
-import HazardReportingForm from '../reportforms/hazardReportForm';
-import IncidentReporting from '../reportforms/incidentReportForm';
-import DCPIReportsForm from '../reportforms/dCPIReportsReportsFields';
-import PlannedInspection from '../reportforms/plannedInspection';
-import NewSafeUnsafeActsFormtest from '../reportforms/SafetyActionMeeting';
-import HomePage from '../home/homepage';
-import CheckList from '../common/CheckList';
-import Questions from "../common/Questions";
-import PIQuestions from "../common/PIQuestions";
-import PIReportForm from "../reportforms/piReportForm";
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
+import Nav from '../common/Nav';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(2),
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+}));
 
 const ChecklistMap = ({ checklist }) => {
+  const classes = useStyles();
+
   return (
-    <div>
-      <label htmlFor="form-name">Form Name:</label>
-      {checklist.map((checklist) => (
-        <div key={checklist.id}>
-          <Link to={`/checklist/${checklist.formName}`}>{checklist.formName}</Link>
-        </div>
-      ))}
+    <div className={classes.root}>
+      <Typography variant="h6" component="label" htmlFor="form-name">Form Name:</Typography>
+      <List>
+        {checklist.map((checklist) => (
+          <ListItem key={checklist.id}>
+            <Link to={`/checklist/${checklist.formName}`} className={classes.link}>
+              <ListItemText primary={checklist.formName} />
+            </Link>
+          </ListItem>
+        ))}
+      </List>
     </div>
   );
 }
 
 const ReportingTypePage = () => {
   const reportingTypes = [
-    { name: 'Safe/Unsafe Acts', path: '/safe-unsafe-acts' },
-    { name: 'Hazard Reporting', path: '/hazard-reporting' },
-    { name: 'Incident Reporting', path: '/incident-reporting' },
-    { name: 'Deep Compliance Reporting', path: '/checklist' },
+    { name: 'Safe/Unsafe Acts', path: '/safeusafereport' },
+    { name: 'Hazard Reporting', path: '/hazardreport' },
+    { name: 'Incident Reporting', path: '/incidentreport' },
+    { name: 'Deep Compliance Reporting', path: '/dca' },
     { name: 'Planned Inspection', path: '/planned-inspection' },
-    { name: 'Safety Action Meeting (SAM)', path: '/safety-action-meeting' }
+    { name: 'Safety Action Meeting (SAM)', path: '/safetyactionmeeting' }
   ];
-
-
+  const classes = useStyles();
 
   return (
     <div>
-      <div>
-        <h1>Nav:</h1>
-        <nav>
-          <Link to="/">Selection Menu</Link>
-          <br />
-          <Link to="/homepage">Home</Link>
-        </nav>
-        <br />
-        <Outlet />
-      </div>
-      <Routes>
-        <Route path="/" element={<SelectPage reportingTypes={reportingTypes} />} />
-        <Route path="/homepage" element={<HomePage />} />
-        <Route path="/safe-unsafe-acts" element={<NewSafeUnsafeActsForm />} />
-        <Route path="/hazard-reporting" element={<HazardReportingForm />} />
-        <Route path="/incident-reporting" element={<IncidentReporting />} />
-        <Route path="/checklist" element={<CheckList type={["dca"]}/>} />
-        <Route path="/planned-inspection" element={<CheckList type={["pi"]}/>} />
-        <Route path="/safety-action-meeting" element={<NewSafeUnsafeActsFormtest />} />
-
-        <Route path="/planned-inspection/:name" element={<PIQuestions />}>
-          <Route path="form" element={<PIReportForm />} />
-        </Route>
-        <Route path="/checklist/:name" element={<Questions />}>
-          <Route path="form" element={<DCPIReportsForm />} />
-        </Route>
-        <Route path="/*" element={<>404 not found!</>}/> 
-      </Routes>
+      <SelectPage reportingTypes={reportingTypes} />
     </div>
   );
 };
 
 const SelectPage = ({ reportingTypes }) => {
+  const classes = useStyles();
+
   return (
-    <div>
-      <h1>Select Reporting Type</h1>
-      <ul>
+    <div className={classes.root}>
+          <Nav />
+
+      <Typography variant="h1">Select Reporting Type</Typography>
+      <List>
         {reportingTypes.map(type => (
-          <li key={type.name} >
-            <Link to={type.path}>{type.name}</Link>
-          </li>
+          <ListItem key={type.name}>
+            <Link to={`/newreport${type.path}`} className={classes.link}>
+              <ListItemText primary={type.name} />
+            </Link>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 };

@@ -40,6 +40,10 @@ const safeUnsafeReportSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  type: {
+    type: String,
+    default: "safe unsafe report"
+  }
 });
 
 const SafeUnsafeReport = mongoose.model('SafeUnsafeReport', safeUnsafeReportSchema);

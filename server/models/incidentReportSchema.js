@@ -36,6 +36,10 @@ const incidentReportSchema = new mongoose.Schema({
   endDate: {
     type: Date,
     required: true
+  },
+  type: {
+    type: String,
+    default: "incident report"
   }
 });
 
