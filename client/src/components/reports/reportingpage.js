@@ -8,32 +8,36 @@ const ReportingPage = () => {
   useEffect(() => {
     const fetchReports = async () => {
       const response = await fetch('http://localhost:4000/api/reports');
-      // const data = await response.json();
-      setReports(response.json);
+      const data = await response.json();
+      setReports(data);
     };
 
     fetchReports();
   }, []);
 
-  const submittedReports = reports.filter(report => report.status === 'submitted');
-  const offlinePendingReports = reports.filter(report => report.status === 'offline_pending');
+  const submittedReports = reports.filter(report => report.reportedStatus === 'reported');
+  const emptyString = '';
 
   return (
     <div>
       <h1>My Reporting</h1>
 
-      <p>Total Submitted Reports: {submittedReports.length}</p>
-      <p>Offline Pending Reports: {offlinePendingReports.length}</p>
+      {/* <p>Total Submitted Reports: {submittedReports.length}</p> */}
 
       <h2>Submitted Reports</h2>
       <ul>
-        {reports.map(({ id, picture, status, type, assignedTo, dueDate }) => (
-          <li key={id}>
-            <img src={picture} alt="Report" />
-            <p>Status: {status}</p>
-            <p>Type: {type}</p>
-            <p>Assigned to: {assignedTo}</p>
-            <p>Due Date: {dueDate}</p>
+        {reports.map((report) => (
+          <li key={report._id}>
+              <div>
+                <p>Report Image: {report.img}</p>
+                <p>Type: {report.type}</p>
+                <p>Act Type: {report.actType || emptyString}</p>
+                <p>Reported Status: {report.reportedStatus || emptyString}</p>
+                <p>Due Date: {report.endDate || emptyString}</p>
+              </div>
+            
+
+
             <button>View Details</button>
           </li>
         ))}

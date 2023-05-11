@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Outlet, Routes } from 're
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
 import Nav from '../common/Nav';
-
+import ReportingPage from './reportingpage';
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
@@ -71,6 +71,7 @@ const SelectPage = ({ reportingTypes }) => {
           </ListItem>
         ))}
       </List>
+      <ReportingPage />
     </div>
   );
 };
