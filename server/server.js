@@ -26,6 +26,8 @@ const dcachecklist = require('./routes/checklists/dcaChecklist');
 const pichecklist = require('./routes/checklists/piChecklist');
 const sam = require('./routes/Meetings/samReport');
 const reportingDetails = require('./routes/reports/reportingDetails');
+const reports = require('./routes/reports/reportroute');
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -61,6 +63,7 @@ app.use('/api/dcachecklist', dcachecklist)
 app.use('/api/pichecklist', pichecklist)
 app.use('/api/sam', sam)
 app.use('/api/reportingDetails', reportingDetails)
+app.use('/api/reports', reports)
 
 connect();
 

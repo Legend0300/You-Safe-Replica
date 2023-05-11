@@ -384,7 +384,7 @@ Content-Type: application/json
 
 ###
 
-POST localhost:4000/api/areamanager
+POST http://localhost:4000/api/areaManager
 Content-Type: application/json
 
 {
