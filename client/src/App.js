@@ -12,7 +12,6 @@ import HomePage from './components/home/homepage';
 import IncidentReportForm from './components/reportforms/incidentReportForm';
 import Login from './components/login/login';
 import NewSafeUnsafeActsForm from './components/reportforms/SafeUnsafeform';
-import Nav from './components/common/Nav';
 import ReportingPage from './components/reports/reportingpage';
 
 function App() {
