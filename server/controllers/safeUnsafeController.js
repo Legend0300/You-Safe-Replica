@@ -2,6 +2,7 @@ const SafeUnsafeReport = require('../models/safeUnsafeModel');
 const Site = require('../models/siteModel');
 const Department = require('../models/departmentModel');
 const Area = require('../models/areaModel');
+const AreaManager = require('../models/areaManagerModel');
 //const SafeUnsafe = require('../models/SafeUnsafeModel');
 
 
@@ -20,9 +21,6 @@ const getAllSafeUnsafeReports = async (req, res) => {
 // GET one site by ID
 const getSafeUnsafeReportById = async (req, res) => {
     try {
-
-
-
         const safeUnsafeReport = await SafeUnsafeReport.findById(req.params.id);
         const site = await Site.findById(safeUnsafeReport.site)
         //const safeUnsafe = await SafeUnsafe.findById(SafeUnsafeReport.SafeUnsafe)

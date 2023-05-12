@@ -30,7 +30,7 @@ const hazardReportSchema = new mongoose.Schema({
   },
   responsibility: {
     type: String,
-    required: true
+    default: "NA",
   },
   type: {
     type: String,

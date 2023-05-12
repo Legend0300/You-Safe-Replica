@@ -40,6 +40,10 @@ const incidentReportSchema = new mongoose.Schema({
   type: {
     type: String,
     default: "incident report"
+  },
+  responsibility: {
+    type: String,
+    default: "NA",
   }
 });
 

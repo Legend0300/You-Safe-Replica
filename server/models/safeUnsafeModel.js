@@ -20,9 +20,9 @@ const safeUnsafeReportSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userType: {
+  responsibility: {
     type: String,
-    required: true,
+    default: "NA",
   },
   reportedStatus: {
     type: String,
@@ -36,14 +36,15 @@ const safeUnsafeReportSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  endDate: {
+  dueDate: {
     type: Date,
     required: true,
   },
   type: {
     type: String,
     default: "safe unsafe report"
-  }
+  },
+
 });
 
 const SafeUnsafeReport = mongoose.model('SafeUnsafeReport', safeUnsafeReportSchema);
