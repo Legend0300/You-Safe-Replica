@@ -5,6 +5,10 @@ import DateSelector from "../common/DateSelector";
 import UserType from "../common/userTypeField";
 import { Link  } from "react-router-dom";
 import { useLocation, useParams , Outlet , useOutletContext } from "react-router-dom";
+import { FormControl, RadioGroup, Radio, TextField, Select, MenuItem, Button, Typography, FormControlLabel } from '@mui/material';
+import { Box } from '@mui/system';
+import { yellow, white } from '@mui/material/colors';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 
@@ -131,71 +135,95 @@ function PIReportsForm() {
 
   };
 
+  const theme = createTheme({
+    palette: {
+      primary: "yellow",
+      background: {
+        default: "white",
+      },
+    },
+  });
+
   return (
-    <div>
-    <form onSubmit={handleSubmit}>
-      <h1>DCA Reports</h1>
-      <h1>{formName} CheckList</h1>
-
-      <h1>Header: {Heading}</h1>
-      <h1>Question: {Question}</h1>
-      <div>
-      <div>
-  <label>
-    <input 
-      type="radio" 
-      name="Suitability" 
-      value="complaint"
-      checked={formCompliant === "complaint"}
-      onChange={handleFormCompliantChange}
-    />
-    Complaint
-  </label>
-  <label>
-    <input 
-      type="radio" 
-      name="Suitability" 
-      value="no-complaint"
-      checked={formCompliant === "no-complaint"}
-      onChange={handleFormCompliantChange}
-    />
-    No Complaint
-  </label>
-</div>
-
-
-      </div>
-
-    <label htmlFor="Status">Status</label>
-    <input onChange={handleReportedStatusChange} type="text" name="Status" />
-
-      <label htmlFor="remarks">Action/Remarks: </label>
-      <input onChange={handleRemarksChange} type="text" name="remarks" />
-
-      <label htmlFor="responsibility">Responsibility: </label>
-      <select
-        name="responsibility"
-        value={responsibility}
-        onChange={handleResponsibilityChange}
-      >
-        <option value="">Select Manager</option>
-        {managers.map((manager) => (
-          <option key={manager.id} value={manager.name}>
-            {manager.name}
-          </option>
-        ))}
-      </select>
-
-      <button type="submit">Submit</button>
-      <button type="button" onClick={handleBack} disabled={currentQuestionIndex === 0}>
-          Back
-        </button>
-        <button type="button" onClick={handleNext} disabled={currentQuestionIndex === questions.length - 1}>
-          Skip
-        </button>
-    </form>
-    <Link to="/newreport/planned-inspection">Back to base page</Link>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <form onSubmit={handleSubmit}>
+          <Typography variant="h1">DCA Reports</Typography>
+          <Typography variant="h1">{formName} CheckList</Typography>
+  
+          <Typography variant="h1">Header: {Heading}</Typography>
+          <Typography variant="h1">Question: {Question}</Typography>
+  
+          <FormControl component="fieldset">
+            <RadioGroup
+              name="Suitability"
+              value={formCompliant}
+              onChange={handleFormCompliantChange}
+              row
+            >
+              <FormControlLabel value="complaint" control={<Radio />} label="Complaint" />
+              <FormControlLabel value="no-complaint" control={<Radio />} label="No Complaint" />
+            </RadioGroup>
+          </FormControl>
+  
+          <TextField
+            onChange={handleReportedStatusChange}
+            type="text"
+            name="Status"
+            label="Status"
+            variant="outlined"
+          />
+  
+          <TextField
+            onChange={handleRemarksChange}
+            type="text"
+            name="remarks"
+            label="Action/Remarks"
+            variant="outlined"
+          />
+  
+          <FormControl>
+            <Select
+              name="responsibility"
+              value={responsibility}
+              onChange={handleResponsibilityChange}
+              displayEmpty
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <em>Select Manager</em>
+              </MenuItem>
+              {managers.map((manager) => (
+                <MenuItem key={manager.id} value={manager.name}>
+                  {manager.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+  
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+          <Button
+            type="button"
+            onClick={handleBack}
+            disabled={currentQuestionIndex === 0}
+            variant="outlined"
+          >
+            Back
+          </Button>
+          <Button
+            type="button"
+            onClick={handleNext}
+            disabled={currentQuestionIndex === questions.length - 1}
+            variant="outlined"
+          >
+            Skip
+          </Button>
+        </form>
+        <Link to="/newreport/planned-inspection">Back to base page</Link>
+      </Box>
+    </ThemeProvider>
   );
 }
 

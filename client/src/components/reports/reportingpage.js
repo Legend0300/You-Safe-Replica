@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReportDetails from './reportDetails';
+import { Box, Typography, Button } from "@mui/material";
+import { yellow } from "@mui/material/colors";
 
 const ReportingPage = () => {
   const [reports, setReports] = useState([]);
@@ -25,32 +27,52 @@ const ReportingPage = () => {
   };
 
   return (
-    <div>
-      <h1>My Reporting</h1>
-      <h2>Submitted Reports</h2>
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
+      <Typography variant="h1" component="h1" gutterBottom>
+        My Reporting
+      </Typography>
+      <Typography variant="h2" component="h2" gutterBottom>
+        Submitted Reports
+      </Typography>
       <ul>
         {reports.map((report) => (
           <li key={report._id}>
-            <div>
-              <p>Report Image: {report.img}</p>
-              <p>Type: {report.type}</p>
-              <p>Assigned To: {report.responsibility || emptyString}</p>
-              <p>Reported Status: {report.reportedStatus || emptyString}</p>
-              <p>Due Date: {report.dueDate || emptyString}</p>
-            </div>
-            <button onClick={() => handleViewDetails(report)}>View Details</button>
+            <Box display="flex" alignItems="center">
+              <div>
+                <Typography variant="body1" gutterBottom>
+                  Report Image: {report.img}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Type: {report.type}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Assigned To: {report.responsibility || "N/A"}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Reported Status: {report.reportedStatus || "N/A"}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Due Date: {report.dueDate || "N/A"}
+                </Typography>
+              </div>
+              <Button variant="contained" onClick={() => handleViewDetails(report)}>
+                View Details
+              </Button>
+            </Box>
           </li>
         ))}
       </ul>
-
+  
       {selectedReport ? (
         <ReportDetails report={selectedReport} />
       ) : (
-        <div>Select a report to view details</div>
+        <Typography variant="body1" gutterBottom>
+          Select a report to view details
+        </Typography>
       )}
-
+  
       <Link to="/newreport">+</Link>
-    </div>
+    </Box>
   );
 };
 
