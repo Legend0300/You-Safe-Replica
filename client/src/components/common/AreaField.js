@@ -1,4 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+// Create a custom MUI theme with yellow and white colors
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#ffff00', // yellow
+    },
+    background: {
+      default: '#ffffff', // white
+    },
+  },
+});
 
 const AreaField = ({ onSelectArea }) => {
   const [areas, setAreas] = useState([]);
@@ -12,23 +26,34 @@ const AreaField = ({ onSelectArea }) => {
   }, []);
 
   const handleAreaChange = (event) => {
-    const selectedAreaData = areas.find(area => area._id === event.target.value);
+    const selectedAreaData = areas.find((area) => area._id === event.target.value);
     setSelectedArea(selectedAreaData.name);
     onSelectArea(selectedAreaData.name);
   };
 
   return (
-    <>
-      Area:
-      <select value={selectedArea.name} onChange={handleAreaChange}>
-        <option value="">Select an area</option>
-        {areas.map((area) => (
-          <option key={area._id} value={area._id}>
-            {area.name}
-          </option>
-        ))}
-      </select>
-    </>
+    <ThemeProvider theme={theme}>
+      <FormControl>
+        <InputLabel id="area-select-label">Area:</InputLabel>
+        <Select
+        style={{ width: '100px' }}
+          labelId="area-select-label"
+          id="area-select"
+          value={selectedArea.name}
+          onChange={handleAreaChange}
+          label="Area"
+        >
+          <MenuItem value="">
+            <em>Select an area</em>
+          </MenuItem>
+          {areas.map((area) => (
+            <MenuItem key={area._id} value={area._id}>
+              {area.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </ThemeProvider>
   );
 };
 

@@ -71,7 +71,6 @@ const SelectPage = ({ reportingTypes }) => {
           </ListItem>
         ))}
       </List>
-      <ReportingPage />
     </div>
   );
 };

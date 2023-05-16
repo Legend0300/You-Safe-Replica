@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import { useLocation, useParams , Outlet , useOutletContext } from "react-router-dom";
 import { Link, useNavigate  } from "react-router-dom";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { 
+  TextField, 
+  Radio, 
+  RadioGroup, 
+  FormControlLabel, 
+  Select, 
+  MenuItem,
+  Button 
+} from "@material-ui/core";
+
 
 
 
@@ -97,72 +109,128 @@ function DCPIReportsForm() {
 
   };
 
-  return (
-    <div>
-    <form onSubmit={handleSubmit}>
-      <h1>DCA Reports</h1>
-      <h1>{formName} CheckList</h1>
 
-      <h1>Header: {Heading}</h1>
-      <h1>Question: {Question}</h1>
-      <div>
-      <div>
-  <label>
-    <input 
-      type="radio" 
-      name="Suitability" 
-      value="complaint"
-      checked={formCompliant === "complaint"}
-      onChange={handleFormCompliantChange}
-    />
-    Complaint
-  </label>
-  <label>
-    <input 
-      type="radio" 
-      name="Suitability" 
-      value="no-complaint"
-      checked={formCompliant === "no-complaint"}
-      onChange={handleFormCompliantChange}
-    />
-    No Complaint
-  </label>
-</div>
-
-
-      </div>
-
-    <label htmlFor="Status">Status</label>
-    <input onChange={handleReportedStatusChange} type="text" name="Status" />
-
-      <label htmlFor="remarks">Action/Remarks: </label>
-      <input onChange={handleRemarksChange} type="text" name="remarks" />
-
-      <label htmlFor="responsibility">Responsibility: </label>
-      <select
-        name="responsibility"
-        value={responsibility}
-        onChange={handleResponsibilityChange}
-      >
-        <option value="">Select Manager</option>
-        {managers.map((manager) => (
-          <option key={manager.id} value={manager.fullName}>
-            {manager.fullName}
-          </option>
-        ))}
-      </select>
-
-      <button type="submit">Next</button>
-      <button type="button" onClick={handleBack} disabled={currentQuestionIndex === 0}>
-          Back
-        </button>
-        <button type="button" onClick={handleNext} disabled={currentQuestionIndex === questions.length - 1}>
-          Skip
-        </button>
-    </form>
-    <Link to={`/newreport/dca`}>Back to base page</Link>
-    </div>
+  const useStyles = makeStyles((theme) => ({
+    formContainer: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      backgroundColor: "#fff",
+      padding: theme.spacing(2),
+      borderRadius: theme.spacing(1),
+      boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.1)",
+    },
+    formInput: {
+      marginBottom: theme.spacing(2),
+    },
+    formLabel: {
+      fontWeight: "bold",
+      marginBottom: theme.spacing(1),
+    },
+    buttonGroup: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginTop: theme.spacing(2),
+      width: "100%",
+    },
+    button: {
+      marginRight: theme.spacing(1),
+    },
+  }));
+  
+    const classes = useStyles();
+  
+    return (
+      <div className={classes.formContainer}>
+        <form onSubmit={handleSubmit}>
+          <h1>DCA Reports</h1>
+          <h1>{formName} CheckList</h1>
+  
+          <h1>Header: {Heading}</h1>
+          <h1>Question: {Question}</h1>
+  
+          <RadioGroup
+            aria-label="Suitability"
+            name="Suitability"
+            value={formCompliant}
+            onChange={handleFormCompliantChange}
+          >
+            <FormControlLabel
+              value="complaint"
+              control={<Radio />}
+              label="Complaint"
+            />
+            <FormControlLabel
+              value="no-complaint"
+              control={<Radio />}
+              label="No Complaint"
+            />
+          </RadioGroup>
+  
+          <TextField
+            className={classes.formInput}
+            label="Status"
+            variant="outlined"
+            name="Status"
+            onChange={handleReportedStatusChange}
+          />
+  
+          <TextField
+            className={classes.formInput}
+            label="Action/Remarks"
+            variant="outlined"
+            name="remarks"
+            onChange={handleRemarksChange}
+          />
+  
+          <div className={classes.formInput}>
+            <label className={classes.formLabel} htmlFor="responsibility">
+              Responsibility:
+            </label>
+            <Select
+              name="responsibility"
+              value={responsibility}
+              onChange={handleResponsibilityChange}
+              variant="outlined"
+            >
+              <MenuItem value="">Select Manager</MenuItem>
+              {managers.map((manager) => (
+                <MenuItem key={manager.id} value={manager.fullName}>
+                  {manager.fullName}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+  
+          <div className={classes.buttonGroup}>
+            <Button
+              className={classes.button}
+              type="button"
+              onClick={handleBack}
+              disabled={currentQuestionIndex === 0}
+              variant="contained"
+              color="primary"
+            >
+              Back
+            </Button>
+            <Button
+              className={classes.button}
+              type="button"
+              onClick={handleNext}
+              disabled={currentQuestionIndex === questions.length - 1}
+  variant="contained"
+  color="primary"
+  >
+  Skip
+  </Button>
+  <Button type="submit" variant="contained" color="primary">
+  Next
+  </Button>
+  </div>
+  </form>
+  <Link to={`/newreport/dca`}>Back to base page</Link>
+  </div>
   );
-}
+  };
 
 export default DCPIReportsForm;

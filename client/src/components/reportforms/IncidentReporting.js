@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { FormControl, InputLabel, Input, TextareaAutosize, ThemeProvider, Button } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { styled } from '@mui/system';
 
 const IncidentReporting = () => {
   const [formState, setFormState] = useState({
@@ -13,6 +16,41 @@ const IncidentReporting = () => {
     eventType: '',
     eventSubTypes: '',
     reason: '',
+  });
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#ffff00', // yellow
+      },
+      background: {
+        default: '#ffffff', // white
+      },
+    },
+    components: {
+      MuiFormControl: {
+        styleOverrides: {
+          root: {
+            marginBottom: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+          },
+        },
+      },
+      MuiInput: {
+        styleOverrides: {
+          root: {
+            width: '300px',
+          },
+        },
+      },
+      MuiTextareaAutosize: {
+        styleOverrides: {
+          root: {
+            width: '300px',
+          },
+        },
+      },
+    },
   });
 
   const handleInputChange = (event) => {

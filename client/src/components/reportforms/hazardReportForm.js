@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import DepartmentField from "../common/DepartmentField";
 import AreaField from "../common/AreaField";
-import DateSelector from '../common/DateSelector';
+import DateSelector from "../common/DateSelector";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { TextField, TextareaAutosize, Button } from "@mui/material";
+import { Typography } from "@mui/material";
+import { spacing } from '@mui/system';
 
 const HazardReportingForm = () => {
-  const [reportedStatus, setReportedStatus] = useState('');
-  const [reportDate, setReportDate] = useState('');
-  const [description, setDescription] = useState('');
-  const [photos, setPhotos] = useState('');
-  const [responsibility, setResponsibility] = useState('');
-  const [selectedDepartment, setSelectedDepartment] = useState('');
-  const [selectedArea, setSelectedArea] = useState('');
+  const [reportedStatus, setReportedStatus] = useState("");
+  const [reportDate, setReportDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [photos, setPhotos] = useState("");
+  const [responsibility, setResponsibility] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedArea, setSelectedArea] = useState("");
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#ffff00', // Yellow color
+      },
+      background: {
+        default: '#ffffff', // White color
+      },
+    },
+  });
+  
 
   const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
@@ -26,12 +41,12 @@ const HazardReportingForm = () => {
   const handleStatusChange = (newStatus) => {
     setReportedStatus(newStatus);
   };
-  
-  const handleReportDateChange = event =>{
+
+  const handleReportDateChange = (event) => {
     setReportDate(event);
     console.log(event);
-  }
-  
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // perform submission logic here, e.g. make API call to save data
@@ -59,41 +74,51 @@ const HazardReportingForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Hazard Reporting</h1>
-      <AreaField onSelectArea={handleSelectArea} />
-
-      <DepartmentField onSelectDepartment={handleSelectDepartment} />
-
-      <DateSelector selectedDate={reportDate} onDateChange={handleReportDateChange} />
-
-      <handleStatusChange setReportedStatus={reportedStatus} onChange={handleStatusChange} />
-      <br />
-      <label htmlFor="description">Description:</label>
-      <textarea
+    <ThemeProvider theme={theme}>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+      <Typography variant="h1">Hazard Reporting</Typography>{" "}
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+        <AreaField onSelectArea={handleSelectArea} />
+        <DepartmentField onSelectDepartment={handleSelectDepartment} />
+      </div>
+      <DateSelector
+        selectedDate={reportDate}
+        onDateChange={handleReportDateChange}
+      />
+      <handleStatusChange
+        setReportedStatus={reportedStatus}
+        onChange={handleStatusChange}
+      />
+      <TextField
         id="description"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
-        
+        multiline
+        rows={4}
+        label="Description"
+        style={{ marginBottom: '1rem' }}
       />
-      <label htmlFor="photos">Add photo:</label>
-      <input
-        type="text"
-        id="photos"
-        value={photos}
-        onChange={(event) => setPhotos(event.target.value)}
-        
-      />
-      <label htmlFor="responsibility">Responsibility:</label>
-      <input
-        type="text"
-        id="responsibility"
-        value={responsibility}
-        onChange={(event) => setResponsibility(event.target.value)}
-        
-      />
-      <button type="submit">Submit</button>
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+        <TextField
+          type="text"
+          id="photos"
+          value={photos}
+          onChange={(event) => setPhotos(event.target.value)}
+          label="Add photo"
+        />
+        <TextField
+          type="text"
+          id="responsibility"
+          value={responsibility}
+          onChange={(event) => setResponsibility(event.target.value)}
+          label="Responsibility"
+        />
+      </div>
+      <Button type="submit" variant="contained" color="primary">
+        Submit
+      </Button>
     </form>
+    </ThemeProvider>
   );
 };
 

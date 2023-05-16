@@ -4,6 +4,10 @@ import AreaField from "../common/AreaField";
 import UserType from "../common/userTypeField";
 import DateSelector from "../common/DateSelector";
 import StatusSelector from "../common/statusSelector";
+import { Box, FormControl, InputLabel, Input, ThemeProvider, Button } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { styled } from '@mui/system';
+
 
 function IncidentReportForm(props) {
   // const [departments, setDepartments] = useState([]);
@@ -16,6 +20,35 @@ function IncidentReportForm(props) {
   const [endDate, setEndDate] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
   const [selectedArea, setSelectedArea] = useState({ area: '' });
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#ffff00', // yellow
+      },
+      background: {
+        default: '#ffffff', // white
+      },
+    },
+    components: {
+      MuiFormControl: {
+        styleOverrides: {
+          root: {
+            marginBottom: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+          },
+        },
+      },
+      MuiInput: {
+        styleOverrides: {
+          root: {
+            width: '300px',
+          },
+        },
+      },
+    },
+  });
 
 
   const handleSelectDepartment = (selectedDepartment)=>{
@@ -82,42 +115,42 @@ function IncidentReportForm(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Incident Report Form</h1>
-      <AreaField onSelectArea={handleSelectArea}/>
-      
-      <DepartmentField onSelectDepartment={handleSelectDepartment}/>
-      <div>
-        <label htmlFor="eventType">Event Type:</label>
-        <input
-          type="text"
-          id="eventType"
-          name="eventType"
-          value={eventType}
-          onChange={handleEventTypeChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="eventSubType">Event Sub Type:</label>
-        <input
-          type="text"
-          id="eventSubType"
-          name="eventSubType"
-          value={eventSubType}
-          onChange={handleEventSubTypeChange}
-        />
-      </div>
-        <UserType userType={userType} onUserTypeChange={handleUserTypeChange}/>
-
-        <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange}/>
-
-        <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange} />
-
-        <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange} />
-      
-        <button type="submit">Submit</button>
-    </form>
-    );
+    <ThemeProvider theme={theme}>
+      <form onSubmit={handleSubmit}>
+        <Box>
+          <h1>Incident Report Form</h1>
+          <AreaField onSelectArea={handleSelectArea} />
+          <DepartmentField onSelectDepartment={handleSelectDepartment} />
+          <FormControl>
+            <InputLabel htmlFor="eventType">Event Type:</InputLabel>
+            <Input
+              type="text"
+              id="eventType"
+              name="eventType"
+              value={eventType}
+              onChange={handleEventTypeChange}
+            />
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
+            <Input
+              type="text"
+              id="eventSubType"
+              name="eventSubType"
+              value={eventSubType}
+              onChange={handleEventSubTypeChange}
+            />
+          </FormControl>
+          <UserType userType={userType} onUserTypeChange={handleUserTypeChange} />
+          <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange} />
+          <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange} />
+          <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange} />
+        </Box>
+        <Button style={{background: "yellow" , color: "black"}} type="submit">Submit</Button>
+      </form>
+    </ThemeProvider>
+  );
+  
 }
 
 export default IncidentReportForm;
