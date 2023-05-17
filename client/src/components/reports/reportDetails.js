@@ -32,6 +32,7 @@ const ReportDetails = (props) => {
             <img
               src="https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361514_960_720.png"
               alt="Report Photo"
+              width="40%"
             />
           </li>
         </ul>

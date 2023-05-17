@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import ReportDetails from './reportDetails';
-import { Box, Typography, Button } from '@mui/material';
-import { yellow } from '@mui/material/colors';
-import { useTheme } from '@mui/material/styles';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import ReportDetails from "./reportDetails";
+import { Box, Typography, Button } from "@mui/material";
+import { yellow } from "@mui/material/colors";
+import { useTheme } from "@mui/material/styles";
+import AddIcon from "@mui/icons-material/Add";
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
 
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack";
 
 const ReportingPage = () => {
   const [reports, setReports] = useState([]);
@@ -18,7 +19,7 @@ const ReportingPage = () => {
   // Fetch reports from API
   useEffect(() => {
     const fetchReports = async () => {
-      const response = await fetch('http://localhost:4000/api/reports');
+      const response = await fetch("http://localhost:4000/api/reports");
       const data = await response.json();
       setReports(data);
     };
@@ -27,9 +28,9 @@ const ReportingPage = () => {
   }, []);
 
   const submittedReports = reports.filter(
-    (report) => report.reportedStatus === 'reported'
+    (report) => report.reportedStatus === "reported"
   );
-  const emptyString = '';
+  const emptyString = "";
 
   const handleViewDetails = (report) => {
     setSelectedReport(report);
@@ -46,30 +47,33 @@ const ReportingPage = () => {
       <Typography variant="h4" component="h4" gutterBottom>
         My Reporting
       </Typography>
-      <Typography variant="h4" component="h4" gutterBottom>
-        Submitted Reports
+      <CardMedia style={{marginTop: "2%" , marginBottom: "2%" , backgroundColor: "transparent"}} >
+      <Typography variant="h6" component="h6" gutterBottom>
+        Submitted Reports 6
       </Typography>
+      <Typography variant="h6" component="h6" gutterBottom>
+        Offline Reports 0
+      </Typography>
+      </CardMedia>
       <Stack
         sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
+          display: "flex",
+          flexWrap: "wrap",
           spacing: 2,
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          alignContent: 'space-around',
-          alignItems: 'center',
-          
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignContent: "space-around",
+          alignItems: "center",
         }}
-        
       >
         {reports.map((report) => (
           <Card
             key={report._id}
             sx={{
-              display: 'flex',
+              display: "flex",
               maxWidth: 400,
               maxHeight: 400,
-              flexWrap: 'wrap',
+              flexWrap: "wrap",
               marginBottom: 3,
             }}
           >
@@ -77,26 +81,26 @@ const ReportingPage = () => {
               component="img"
               sx={{ width: 150 }}
               image={
-                'https://ichef.bbci.co.uk/news/976/cpsprodpb/F1F2/production/_118283916_b19c5a1f-162b-410b-8169-f58f0d153752.jpg' ||
+                "https://ichef.bbci.co.uk/news/976/cpsprodpb/F1F2/production/_118283916_b19c5a1f-162b-410b-8169-f58f0d153752.jpg" ||
                 report.img
               }
               alt="Live from space album cover"
             />
-            <Box sx={{ display: 'flex', flexDirection: 'column', width: 250 }}>
-              <CardContent sx={{ flex: '1 0 auto' }}>
+            <Box sx={{ display: "flex", flexDirection: "column", width: 250 }}>
+              <CardContent sx={{ flex: "1 0 auto" }}>
                 <Typography
                   variant="subtitle1"
                   color="text.secondary"
                   component="div"
                 >
-                  Status: {report.reportedStatus || 'N/A'}
+                  Status: {report.reportedStatus || "N/A"}
                 </Typography>
                 <Typography
                   variant="subtitle1"
                   color="text.secondary"
                   component="div"
                 >
-                  Assigned To: {report.responsibility || 'N/A'}
+                  Assigned To: {report.responsibility || "N/A"}
                 </Typography>
                 <Typography
                   variant="subtitle1"
@@ -110,17 +114,27 @@ const ReportingPage = () => {
                   color="text.secondary"
                   component="div"
                 >
-                  Due Date: {report.dueDate || 'N/A'}
+                  Due Date: {report.dueDate || "N/A"}
                 </Typography>
               </CardContent>
             </Box>
 
             <Button
-              variant="contained"
-              onClick={() => handleViewDetails(report)}
-            >
-              View Details
-            </Button>
+  variant="contained"
+  onClick={() => handleViewDetails(report)}
+  style={{
+    width: '100%',
+    backgroundColor: 'transparent',
+    color: '#ffb300',
+    transition: 'background-color 0.3s ease',
+    '&:hover': {
+      backgroundColor: 'rgb(233, 226, 164)',
+    },
+  }}
+>
+  View Details
+</Button>
+
           </Card>
         ))}
       </Stack>
@@ -133,7 +147,12 @@ const ReportingPage = () => {
         </Typography>
       )}
 
-      <Link to="/newreport">+</Link>
+      <Link to="/newreport">
+        <AddIcon style={{  position: 'fixed',
+  bottom: '20px',
+  right: '20px',
+  zIndex: '9999',backgroundColor: "#ffb300" , color: "white" , borderRadius: "100%" , fontSize: '32px', width: '48px' , height: '48px'}}/>
+      </Link>
     </Box>
   );
 };
