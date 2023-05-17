@@ -7,7 +7,7 @@ import { Link  } from "react-router-dom";
 import { useLocation, useParams , Outlet , useOutletContext } from "react-router-dom";
 import { FormControl, RadioGroup, Radio, TextField, Select, MenuItem, Button, Typography, FormControlLabel } from '@mui/material';
 import { Box } from '@mui/system';
-import { yellow, white } from '@mui/material/colors';
+import { yellow, white , black } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
@@ -136,23 +136,22 @@ function PIReportsForm() {
   };
 
   const theme = createTheme({
-    palette: {
-      primary: "yellow",
+  
+      primary: yellow[500],
       background: {
-        default: "white",
+        default: "ffffff",
       },
-    },
   });
 
   return (
     <ThemeProvider theme={theme}>
       <Box display="flex" flexDirection="column" alignItems="center">
         <form onSubmit={handleSubmit}>
-          <Typography variant="h1">DCA Reports</Typography>
-          <Typography variant="h1">{formName} CheckList</Typography>
+          <Typography variant="h3">DCA Reports</Typography>
+          <Typography variant="h3">{formName} CheckList</Typography>
   
-          <Typography variant="h1">Header: {Heading}</Typography>
-          <Typography variant="h1">Question: {Question}</Typography>
+          <Typography variant="h3">Header: {Heading}</Typography>
+          <Typography variant="h3">Question: {Question}</Typography>
   
           <FormControl component="fieldset">
             <RadioGroup
@@ -201,7 +200,7 @@ function PIReportsForm() {
             </Select>
           </FormControl>
   
-          <Button type="submit" variant="contained" color="primary">
+          <Button style={{background: "#ffc107" , color: "black"}} type="submit" variant="contained" >
             Submit
           </Button>
           <Button
