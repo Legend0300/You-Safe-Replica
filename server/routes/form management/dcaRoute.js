@@ -7,7 +7,7 @@ router.get('/',  getAllDCAs);
 
 router.get('/get/questions',  getDCAquestions);
 // GET one site by ID
-router.get('/:id',  getDCAById);
+router.get('/:id' ,  getDCAById);
 
 // CREATE a new site
 router.post('/',  createNewDCA);
