@@ -108,7 +108,7 @@ function Nav() {
               </MenuItem>
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <FaHardHat size="20px" color="yellow"/>
           <Typography
             variant="h5"
             noWrap
@@ -125,7 +125,7 @@ function Nav() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            UNILEVER
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Button
