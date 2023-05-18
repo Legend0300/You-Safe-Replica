@@ -11,7 +11,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { makeStyles } from '@material-ui/core/styles';
 
 function Nav() {
@@ -43,7 +42,6 @@ function Nav() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <FaHardHat size="20px" color="yellow" />
           <Typography
             variant="h6"
             noWrap
@@ -59,7 +57,7 @@ function Nav() {
               textDecoration: 'none',
             }}
           >
-            UNILEVER
+            USAFE
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -96,11 +94,6 @@ function Nav() {
                   <Typography>Homepage</Typography>
                 </Link>
               </MenuItem>
-              <MenuItem key="New Reports" onClick={handleCloseNavMenu}>
-                <Link to="/newreport" className={classes.link}>
-                  <Typography>New Report</Typography>
-                </Link>
-              </MenuItem>
               <MenuItem key="My Reports" onClick={handleCloseNavMenu}>
                 <Link to="/reports" className={classes.link}>
                   <Typography>My Reports</Typography>
@@ -108,7 +101,7 @@ function Nav() {
               </MenuItem>
             </Menu>
           </Box>
-          <FaHardHat size="20px" color="yellow"/>
+          <FaHardHat size="20px" color="yellow" />
           <Typography
             variant="h5"
             noWrap
@@ -125,9 +118,9 @@ function Nav() {
               textDecoration: 'none',
             }}
           >
-            UNILEVER
+            USAFE
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end'  }}>
             <Button
               key="Homepage"
               onClick={handleCloseNavMenu}
@@ -135,16 +128,6 @@ function Nav() {
             >
               <Link to="/home" className={classes.link}>
                 <Typography>Homepage</Typography>
-              </Link>
-            </Button>
-
-            <Button
-              key="New Report"
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              <Link to="/newreport" className={classes.link}>
-                <Typography>New Report</Typography>
               </Link>
             </Button>
 
