@@ -1,25 +1,40 @@
+
+
+
 import { useState } from "react";
 import DepartmentField from "../common/DepartmentField";
 import AreaField from "../common/AreaField";
 import UserType from "../common/userTypeField";
 import DateSelector from "../common/DateSelector";
 import StatusSelector from "../common/statusSelector";
-import { Box, FormControl, InputLabel, Input, ThemeProvider, Button } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { styled } from '@mui/system';
-
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  Input,
+  ThemeProvider,
+  Button,
+  TextField,
+  TimePicker,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+import { styled } from "@mui/system";
 
 function IncidentReportForm(props) {
-  // const [departments, setDepartments] = useState([]);
-  // const [areas, setAreas] = useState([]);
   const [eventType, setEventType] = useState("");
   const [eventSubType, setEventSubType] = useState("");
   const [userType, setUserType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
-  const [selectedArea, setSelectedArea] = useState({ area: '' });
+  const [selectedDepartment, setSelectedDepartment] = useState({ department: "" });
+  const [selectedArea, setSelectedArea] = useState({ area: "" });
+  const [description, setDescription] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [action, setAction] = useState("");
+  const [reason, setReason] = useState("");
 
   const theme = createTheme({
     palette: {
@@ -49,19 +64,19 @@ function IncidentReportForm(props) {
       },
     },
   });
+ 
 
-
-  const handleSelectDepartment = (selectedDepartment)=>{
+  const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
     console.log(selectedDepartment);
-  }
+  };
 
-  const handleSelectArea = (selectedArea)=>{
+  const handleSelectArea = (selectedArea) => {
     setSelectedArea(selectedArea);
     console.log(selectedArea);
-  }
+  };
 
-  const handleEventTypeChange = (event) => {
+const handleEventTypeChange = (event) => {
     setEventType(event.target.value);
   };
 
@@ -84,6 +99,21 @@ function IncidentReportForm(props) {
 
   const handleEndDateChange = (event) => {
     setEndDate(event);
+  };
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleEndTimeChange = (event) => {
+    setEndTime(event.target.value);
+  };
+
+  const handleActionChange = (event) => {
+    setAction(event.target.value);
+  };
+
+  const handleReasonChange = (event) => {
+    setReason(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -126,32 +156,25 @@ function IncidentReportForm(props) {
           <h1>Incident Report Form</h1>
           <AreaField onSelectArea={handleSelectArea} />
           <DepartmentField onSelectDepartment={handleSelectDepartment} />
-          <FormControl style={{ width: '200px' }}>
+          <FormControl>
             <InputLabel htmlFor="eventType">Event Type:</InputLabel>
-            <Select
+            <Input
+              type="text"
               id="eventType"
+              name="eventType"
               value={eventType}
-              onChange={(e) => setEventType(e.target.value)}
-              required
-            >
-              {eventTypes.map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </Select>
+              onChange={handleEventTypeChange}
+            />
           </FormControl>
-          <FormControl style={{ width: '300px' }}>
-            <InputLabel style={{ width: '200px' }}htmlFor="eventSubType">Event Sub Type:</InputLabel>
-            <Select
-            style={{ width: '200px' }}
+          <FormControl>
+            <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
+            <Input
+              type="text"
               id="eventSubType"
+              name="eventSubType"
               value={eventSubType}
-              onChange={(e) => setEventSubType(e.target.value)}
-              required
-            >
-              {/* Map the options for event subtypes here */}
-            </Select>
+              onChange={handleEventSubTypeChange}
+            />
           </FormControl>
           <UserType userType={userType} onUserTypeChange={handleUserTypeChange} />
           <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange} />
@@ -159,34 +182,42 @@ function IncidentReportForm(props) {
           <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange} />
           <FormControl>
             <InputLabel htmlFor="description">Description:</InputLabel>
-            <TextareaAutosize
+            <Input
+              type="text"
               id="description"
+              name="description"
               value={description}
               onChange={handleDescriptionChange}
-              rows={4}
-              required
             />
           </FormControl>
           <FormControl>
-            <InputLabel  htmlFor="endDate">Due Date:</InputLabel>
-            <TextField 
-            style={{margin: "9%"}}
-              type="date"
+            <InputLabel htmlFor="endDate">End Date:</InputLabel>
+            <Input
+              type="text"
               id="endDate"
+              name="endDate"
               value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              required
+              onChange={handleEndDateChange}
             />
           </FormControl>
-
+          <FormControl>
+            <InputLabel htmlFor="endTime">Time:</InputLabel>
+            <Input
+              type="text"
+              id="endTime"
+              name="endTime"
+              value={endTime}
+              onChange={handleEndTimeChange}
+            />
+          </FormControl>
           <FormControl>
             <InputLabel htmlFor="action">Action:</InputLabel>
             <Input
               type="text"
               id="action"
+              name="action"
               value={action}
-              onChange={(e) => setAction(e.target.value)}
-              required
+              onChange={handleActionChange}
             />
           </FormControl>
           <FormControl>
@@ -194,9 +225,9 @@ function IncidentReportForm(props) {
             <Input
               type="text"
               id="reason"
+              name="reason"
               value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              required
+              onChange={handleReasonChange}
             />
           </FormControl>
         </Box>
@@ -209,3 +240,5 @@ function IncidentReportForm(props) {
 }
 
 export default IncidentReportForm;
+
+
