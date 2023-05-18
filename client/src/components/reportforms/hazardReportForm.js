@@ -1,38 +1,47 @@
-import React, { useState ,useEffect } from "react";
-import DepartmentField from "../common/DepartmentField";
-import AreaField from "../common/AreaField";
-import DateSelector from "../common/DateSelector";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { Typography } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import DepartmentField from '../common/DepartmentField';
+import AreaField from '../common/AreaField';
+import DateSelector from '../common/DateSelector';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import { Typography } from '@mui/material';
 import { spacing } from '@mui/system';
-import { makeStyles } from "@material-ui/core/styles";
-import { 
-  TextField, 
-  Radio, 
-  RadioGroup, 
-  FormControlLabel, 
-  Select, 
-  MenuItem,
-  Button 
-} from "@material-ui/core";
-import { Box } from '@mui/system';
+import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@mui/material/InputAdornment';
+import {
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Button,
+} from '@material-ui/core';
+import Box from '@mui/material/Box';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Input from '@mui/material/Input';
 
 const HazardReportingForm = () => {
-  const [reportedStatus, setReportedStatus] = useState("");
-  const [reportDate, setReportDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [photos, setPhotos] = useState("");
-  const [responsibility, setResponsibility] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedArea, setSelectedArea] = useState("");
+  const [reportedStatus, setReportedStatus] = useState('');
+  const [reportDate, setReportDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [photos, setPhotos] = useState('');
+  const [responsibility, setResponsibility] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
   const [managers, setManagers] = useState([]);
   const [photo, setPhoto] = useState(null);
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState('');
 
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#ffff00', // Yellow color
+        main: '#ffb300', // Yellow color
       },
       background: {
         default: '#ffffff', // White color
@@ -42,14 +51,13 @@ const HazardReportingForm = () => {
 
   useEffect(() => {
     const fetchManagers = async () => {
-      console.log("fetching managers");
-      const response = await fetch("http://localhost:4000/api/areaManager");
+      console.log('fetching managers');
+      const response = await fetch('http://localhost:4000/api/areaManager');
       const data = await response.json();
       setManagers(data);
     };
     fetchManagers();
-  }, [])
-  
+  }, []);
 
   const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
@@ -106,83 +114,132 @@ const HazardReportingForm = () => {
 
   const useStyles = makeStyles((theme) => ({
     formContainer: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      backgroundColor: "#fff",
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: '#fff',
       padding: theme.spacing(2),
       borderRadius: theme.spacing(1),
-      boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.1)",
+      boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.1)',
     },
     formInput: {
       marginBottom: theme.spacing(2),
     },
     formLabel: {
-      fontWeight: "bold",
+      fontWeight: 'bold',
       marginBottom: theme.spacing(1),
     },
     buttonGroup: {
-      display: "flex",
-      justifyContent: "space-between",
+      display: 'flex',
+      justifyContent: 'space-between',
       marginTop: theme.spacing(2),
-      width: "100%",
+      width: '100%',
     },
     button: {
       marginRight: theme.spacing(1),
     },
   }));
-  
-    const classes = useStyles();
+
+  const classes = useStyles();
+
+  const [value, setValue] = React.useState();
+
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   return (
     <ThemeProvider theme={theme}>
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography variant="h1">Hazard Reporting</Typography>{" "}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-        <AreaField onSelectArea={handleSelectArea} />
-        <DepartmentField onSelectDepartment={handleSelectDepartment} />
-      </div>
-      <DateSelector
-        selectedDate={reportDate}
-        onDateChange={handleReportDateChange}
-      />
-      <Box>
-            <Typography>Time:</Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          bgcolor: 'background.paper',
+          p: 1,
+        }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <Typography
+            variant="h3"
+            sx={{ marginBottom: 4, textAlign: 'center' }}
+          >
+            Hazard Reporting
+          </Typography>{' '}
+          <div
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              marginBottom: '1rem',
+              flexDirection: 'column',
+            }}
+          >
+            <AreaField onSelectArea={handleSelectArea} />
+            <DepartmentField onSelectDepartment={handleSelectDepartment} />
             <TextField
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              required
+              id="description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              multiline
+              rows={4}
+              label="Description"
+              color="warning"
+              style={{ marginBottom: '1rem' }}
             />
+          </div>
+          <Box
+            sx={{
+              display: 'flex',
+              p: 1,
+              gap: '1rem',
+              marginBottom: '1rem',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}
+          >
+            <DateSelector
+              selectedDate={reportDate}
+              onDateChange={handleReportDateChange}
+            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                label="Time"
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+                color="warning"
+              />
+            </LocalizationProvider>
           </Box>
-      <handleStatusChange
-        setReportedStatus={reportedStatus}
-        onChange={handleStatusChange}
-      />
-      <TextField
-        id="description"
-        value={description}
-        onChange={(event) => setDescription(event.target.value)}
-        multiline
-        rows={4}
-        label="Description"
-        style={{ marginBottom: '1rem' }}
-      />
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-        <TextField
-          type="file"
-          id="photos"
-          value={photos}
-          onChange={(event) => setPhotos(event.target.value)}
-          label="Add photo"
-        />
-                  <div className={classes.formInput}>
-            <label className={classes.formLabel} htmlFor="responsibility">
-              Responsibility:
-            </label>
+          <handleStatusChange
+            setReportedStatus={reportedStatus}
+            onChange={handleStatusChange}
+          />
+         
+            <Input
+              type="file"
+              id="photos"
+              value={photos}
+              onChange={(event) => setPhotos(event.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <CameraAltIcon sx={{ fontSize: 40 }} />
+                </InputAdornment>
+              }
+              label="Add photo"
+            />
+          
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
+            <InputLabel id="demo-simple-select-helper-label">
+              Responsibility
+            </InputLabel>
             <Select
-              name="responsibility"
               value={responsibility}
+              label="Responsibility"
               onChange={handleResponsibilityChange}
               variant="outlined"
             >
@@ -193,12 +250,12 @@ const HazardReportingForm = () => {
                 </MenuItem>
               ))}
             </Select>
-          </div>
-      </div>
-      <Button type="submit" variant="contained" color="primary">
-        Submit
-      </Button>
-    </form>
+          </FormControl>
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </form>
+      </Box>
     </ThemeProvider>
   );
 };

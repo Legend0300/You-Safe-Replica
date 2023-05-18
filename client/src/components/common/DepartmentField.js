@@ -6,7 +6,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#ffff00', // yellow
+      main: '#ffb300', // yellow
     },
     background: {
       default: '#ffffff', // white
@@ -37,7 +37,7 @@ const DepartmentField = ({ onSelectDepartment }) => {
       <FormControl>
         <InputLabel id="department-select-label">Department:</InputLabel>
         <Select
-        style={{ width: '150px' }}
+        style={{ width: '100%' }}
           labelId="department-select-label"
           id="department-select"
           value={selectedDepartment.department}

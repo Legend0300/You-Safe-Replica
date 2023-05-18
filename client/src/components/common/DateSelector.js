@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { FormControl, InputLabel, Input, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { styled } from '@mui/system';
-import { DatePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 // Create a custom MUI theme with yellow and white colors
@@ -19,17 +18,20 @@ const theme = createTheme({
 });
 
 function DateSelector({ selectedDate, onDateChange }) {
+  const [value, setValue] = React.useState();
   const handleDateChange = (e) => {
     onDateChange(e.target.value);
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <FormControl>
-        <InputLabel  style={{ width: '100px' }}htmlFor="date">Date</InputLabel>
-        <Input style={{ width: '100px' , marginTop: "50px"}} type="date" id="date" value={selectedDate} onChange={handleDateChange} />
-      </FormControl>
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <DatePicker
+      label="Date"
+      value={value}
+      onChange={handleDateChange}
+      color='warning'
+    />
+</LocalizationProvider>
   );
 }
 
