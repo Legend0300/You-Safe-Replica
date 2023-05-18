@@ -1,11 +1,9 @@
-
-
-
 import { useState } from "react";
 import DepartmentField from "../common/DepartmentField";
 import AreaField from "../common/AreaField";
 import UserType from "../common/userTypeField";
 import DateSelector from "../common/DateSelector";
+import DateTimePicker from "@mui/lab/DateTimePicker";
 import StatusSelector from "../common/statusSelector";
 import {
   Box,
@@ -23,49 +21,50 @@ import { createTheme } from "@mui/material/styles";
 import { styled } from "@mui/system";
 
 function IncidentReportForm(props) {
-  const [eventType, setEventType] = useState("");
-  const [eventSubType, setEventSubType] = useState("");
+  const [eventType, setEventType] = useState([]);
+  const [eventSubType, setEventSubType] = useState([]);
   const [userType, setUserType] = useState("");
   const [incidentType, setIncidentType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState({ department: "" });
+  const [selectedDepartment, setSelectedDepartment] = useState({
+    department: "",
+  });
   const [selectedArea, setSelectedArea] = useState({ area: "" });
   const [description, setDescription] = useState("");
   const [endTime, setEndTime] = useState("");
   const [action, setAction] = useState("");
-  const [reason, setReason] = useState("");
+  const [reason, setReason] = useState([]);
 
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#ffff00', // yellow
+        main: "#ffff00", // yellow
       },
       background: {
-        default: '#ffffff', // white
+        default: "#ffffff", // white
       },
     },
     components: {
       MuiFormControl: {
         styleOverrides: {
           root: {
-            marginBottom: '20px',
-            display: 'flex',
-            flexDirection: 'column',
+            marginBottom: "20px",
+            display: "flex",
+            flexDirection: "column",
           },
         },
       },
       MuiInput: {
         styleOverrides: {
           root: {
-            width: '300px',
+            width: "300px",
           },
         },
       },
     },
   });
- 
 
   const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
@@ -77,7 +76,7 @@ function IncidentReportForm(props) {
     console.log(selectedArea);
   };
 
-const handleEventTypeChange = (event) => {
+  const handleEventTypeChange = (event) => {
     setEventType(event.target.value);
   };
 
@@ -85,11 +84,9 @@ const handleEventTypeChange = (event) => {
     setEventSubType(event.target.value);
   };
 
-
   const handleReportedStatusChange = (event) => {
     setReportedStatus(event);
   };
-
 
   const handleStartDateChange = (event) => {
     setStartDate(event);
@@ -117,8 +114,6 @@ const handleEventTypeChange = (event) => {
   const handleIncidentTypeChange = (event) => {
     setIncidentType(event.target.value);
   };
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -161,45 +156,59 @@ const handleEventTypeChange = (event) => {
           <AreaField onSelectArea={handleSelectArea} />
           <DepartmentField onSelectDepartment={handleSelectDepartment} />
           <FormControl>
-            <InputLabel htmlFor="eventType">Event Type:</InputLabel>
-            <Input
-              type="text"
-              id="eventType"
-              name="eventType"
-              value={eventType}
-              onChange={handleEventTypeChange}
-            />
-          </FormControl>
-        
+  <InputLabel htmlFor="eventType">Event Type:</InputLabel>
+  <Select
+    id="eventType"
+    name="eventType"
+    value={eventType}
+    onChange={handleEventTypeChange}
+  >
+    {eventType.map((option) => (
+      <MenuItem key={option} value={option}>
+        {option}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+<FormControl>
+  <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
+  <Select
+    id="eventSubType"
+    name="eventSubType"
+    value={eventSubType}
+    onChange={handleEventSubTypeChange}
+  >
+    {eventSubType.map((option) => (
+      <MenuItem key={option} value={option}>
+        {option}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
           <FormControl>
-            <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
-            <Input
-              type="text"
-              id="eventSubType"
-              name="eventSubType"
-              value={eventSubType}
-              onChange={handleEventSubTypeChange}
-            />
+            <InputLabel htmlFor="incidentType">Incident Type</InputLabel>
+            <Select
+              style={{ width: "120px" }}
+              id="incidentType"
+              name="incidentType"
+              value={incidentType}
+              onChange={handleIncidentTypeChange}
+            >
+              <option value="IncidentType">Select Incident</option>
+            </Select>
           </FormControl>
-          
-          <FormControl>
-          <InputLabel htmlFor="incidentType">Incident Type</InputLabel>
-        <Select
-        style={{ width: '120px' }}
-          id="incidentType"
-          name="incidentType"
-          value={incidentType}
-          onChange={handleIncidentTypeChange}
-        >
-          <option value="IncidentType">Select Incident</option>
-        </Select>
-          </FormControl>      
-          <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange} />
-          <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange} />
-          <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange} />
+          <StatusSelector
+            status={reportedStatus}
+            setStatus={handleReportedStatusChange}
+          />
           <FormControl>
             <InputLabel htmlFor="description">Description:</InputLabel>
-            <Input
+            <TextField
+            variant="filled"
+            rows={4}
+            multiline
               type="text"
               id="description"
               name="description"
@@ -210,7 +219,7 @@ const handleEventTypeChange = (event) => {
           <FormControl>
             <InputLabel htmlFor="endDate">End Date:</InputLabel>
             <Input
-              type="text"
+              type="date"
               id="endDate"
               name="endDate"
               value={endDate}
@@ -220,7 +229,7 @@ const handleEventTypeChange = (event) => {
           <FormControl>
             <InputLabel htmlFor="endTime">Time:</InputLabel>
             <Input
-              type="text"
+              type="time"
               id="endTime"
               name="endTime"
               value={endTime}
@@ -228,8 +237,11 @@ const handleEventTypeChange = (event) => {
             />
           </FormControl>
           <FormControl>
-            <InputLabel htmlFor="action">Action:</InputLabel>
-            <Input
+            <InputLabel style={{marginBottom: "5%"}} htmlFor="action">Action:</InputLabel>
+            <TextField
+             variant="filled"
+             rows={4}
+             multiline
               type="text"
               id="action"
               name="action"
@@ -239,13 +251,18 @@ const handleEventTypeChange = (event) => {
           </FormControl>
           <FormControl>
             <InputLabel htmlFor="reason">Reason:</InputLabel>
-            <Input
-              type="text"
+            <Select
               id="reason"
               name="reason"
               value={reason}
               onChange={handleReasonChange}
-            />
+            >
+              {reason.map((reason) => (
+                <MenuItem key={reason} value={reason}>
+                  {reason}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
         </Box>
         <Button style={{ background: "yellow", color: "black" }} type="submit">
@@ -257,5 +274,3 @@ const handleEventTypeChange = (event) => {
 }
 
 export default IncidentReportForm;
-
-

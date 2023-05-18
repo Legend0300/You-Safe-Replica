@@ -43,6 +43,7 @@ function DCPIReportsForm() {
   
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   
+  console.log(questions);
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
