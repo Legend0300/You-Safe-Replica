@@ -23,6 +23,10 @@ const PIListSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    endDate: {
+      type: Date,
+      required: true
+    },
     type : {
       type: String,
       enum: ['PI'],

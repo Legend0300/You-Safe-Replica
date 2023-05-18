@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const hazardReportSchema = new mongoose.Schema({
+
   department: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref : 'Department',
     required: true
   },
   area: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'Area',
     required: true
   },
@@ -20,17 +21,21 @@ const hazardReportSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  endDate: {
+    type: Date,
+    required: true
+  },
   description: {
     type: String,
     required: true
   },
   photos: {
     type: String,
-    required: true
   },
   responsibility: {
     type: String,
-    default: "NA",
+    required: true,
+    default: "",
   },
   type: {
     type: String,
@@ -38,6 +43,6 @@ const hazardReportSchema = new mongoose.Schema({
   }
 });
 
-const HazardReport = mongoose.model('HazardReport', hazardReportSchema);
+const HazardReport = mongoose.models.HazardReport || mongoose.model('HazardReport', hazardReportSchema);
 
 module.exports = HazardReport;

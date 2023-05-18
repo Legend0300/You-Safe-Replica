@@ -3,13 +3,11 @@ const mongoose = require('mongoose');
 // Define Incident Report Schema
 const incidentReportSchema = new mongoose.Schema({
   department: {
-    ref: 'Department',
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true
   },
   area: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Area',
+    type: String,
     required: true
   },
   eventType: {
@@ -43,6 +41,7 @@ const incidentReportSchema = new mongoose.Schema({
   },
   responsibility: {
     type: String,
+    required: true,
     default: "NA",
   }
 });

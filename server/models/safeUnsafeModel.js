@@ -7,14 +7,12 @@ const safeUnsafeReportSchema = new mongoose.Schema({
     required: true,
   },
   department: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Department',
-    required: true,
+    type: String,
+    required: true
   },
   area: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Area',
-    required: true,
+    type: String,
+    required: true
   },
   actType: {
     type: String,
@@ -22,7 +20,8 @@ const safeUnsafeReportSchema = new mongoose.Schema({
   },
   responsibility: {
     type: String,
-    default: "NA",
+    required: true, 
+    default: "",
   },
   reportedStatus: {
     type: String,
@@ -33,8 +32,7 @@ const safeUnsafeReportSchema = new mongoose.Schema({
     required: true,
   },
   startDate: {
-    type: Date,
-    required: true,
+    type: Date
   },
   endDate: {
     type: Date,

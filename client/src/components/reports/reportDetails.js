@@ -19,7 +19,7 @@ const ReportDetails = (props) => {
       <p>Department: {report.department ? report.department : 'NA'}</p>
       <p>Area: {report.area || 'NA'}</p>
       <p>Description: {report.description || 'NA'}</p>
-      <p>Date: {report.date || 'NA'}</p>
+      <p>Date: {report.endDate || 'NA'}</p>
       <div>
         <h3>Photos</h3>
         <ul>
