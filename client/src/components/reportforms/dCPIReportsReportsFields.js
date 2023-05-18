@@ -40,7 +40,7 @@ function DCPIReportsForm() {
     
     fetchQuestions();
   }, [formName]);
-  
+    
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   
   console.log(questions);
@@ -83,8 +83,11 @@ function DCPIReportsForm() {
   };
 
   const handleResponsibilityChange = (event) => {
+    setManagers(event.target.value);
     setResponsibility(event.target.value);
   };
+
+
 
 
   const handleSubmit = (event) => {
