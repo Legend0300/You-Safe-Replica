@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import DepartmentField from '../common/DepartmentField';
 import AreaField from '../common/AreaField';
 import DateSelector from '../common/DateSelector';
@@ -14,6 +14,18 @@ const NewSafeUnsafeActsForm = () => {
   const [time, setTime] = useState('');
   const [photo, setPhoto] = useState(null);
   const [responsibility, setResponsibility] = useState('');
+  const [managers, setManagers] = useState([]);
+
+
+  useEffect(() => {
+    const fetchManagers = async () => {
+      console.log("fetching managers");
+      const response = await fetch("http://localhost:4000/api/areaManager");
+      const data = await response.json();
+      setManagers(data);
+    };
+    fetchManagers();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();

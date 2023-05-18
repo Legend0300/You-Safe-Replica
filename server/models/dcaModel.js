@@ -27,7 +27,12 @@ const dcaSchema = new mongoose.Schema({
     enum: ['Enabled', 'Disabled'],
     default: 'Enabled'
   },
-  questions: [questionSchema]
+  questions: [questionSchema],
+  endDate: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
 });
 
 const DCA = mongoose.model('DCA', dcaSchema);

@@ -24,7 +24,7 @@ const safetyActionMeetingSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    date: {
+    endDate: {
       type: Date,
       required: true
     },
@@ -33,8 +33,7 @@ const safetyActionMeetingSchema = new mongoose.Schema({
       required: true
     },
     leader: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Visitor' || 'Manager' || 'AreaManager' || 'Employee' || 'Admin',
+      type: String,
       required: true
     },
 

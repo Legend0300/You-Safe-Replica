@@ -1,4 +1,4 @@
-const HazardReport = require('../models/HazardreportModel');
+const HazardReport = require('../models/hazardreportModel');
 const Site = require('../models/siteModel');
 //const Hazard = require('../models/HazardModel');
 
@@ -39,7 +39,6 @@ const createNewHazardReport = async (req, res) => {
 
 
     const hazardReport = new HazardReport({
-        site: sites._id,
         department: req.body.department,
         area: req.body.area,
         userType: req.body.userType,
@@ -47,6 +46,7 @@ const createNewHazardReport = async (req, res) => {
         reportDate: req.body.reportDate,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
+        description: req.body.description,  
 
     });
 

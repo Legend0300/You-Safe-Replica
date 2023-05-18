@@ -28,6 +28,12 @@ const piSchema = new mongoose.Schema({
     default: 'Enabled'
   },
   questions: [questionSchema]
+  ,
+  endDate: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
 });
 
 const PI = mongoose.model('PI', piSchema);

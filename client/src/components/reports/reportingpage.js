@@ -108,7 +108,7 @@ const ReportingPage = () => {
                   color="text.secondary"
                   component="div"
                 >
-                  Assigned To: {report.responsibility || "N/A"}
+                  Assigned To: {report.responsibility || ""}
                 </Typography>
                 <Typography
                   variant="subtitle1"
