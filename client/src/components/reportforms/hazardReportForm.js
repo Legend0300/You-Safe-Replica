@@ -15,6 +15,7 @@ import {
   MenuItem,
   Button 
 } from "@material-ui/core";
+import { Box } from '@mui/system';
 
 const HazardReportingForm = () => {
   const [reportedStatus, setReportedStatus] = useState("");
@@ -25,6 +26,8 @@ const HazardReportingForm = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [selectedArea, setSelectedArea] = useState("");
   const [managers, setManagers] = useState([]);
+  const [photo, setPhoto] = useState(null);
+  const [time, setTime] = useState("");
 
   const theme = createTheme({
     palette: {
@@ -69,6 +72,10 @@ const HazardReportingForm = () => {
   const handleReportDateChange = (event) => {
     setReportDate(event);
     console.log(event);
+  };
+
+  const handlePhotoChange = (event) => {
+    setPhoto(event.target.files[0]);
   };
 
   const handleSubmit = (event) => {
@@ -139,6 +146,15 @@ const HazardReportingForm = () => {
         selectedDate={reportDate}
         onDateChange={handleReportDateChange}
       />
+      <Box>
+            <Typography>Time:</Typography>
+            <TextField
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              required
+            />
+          </Box>
       <handleStatusChange
         setReportedStatus={reportedStatus}
         onChange={handleStatusChange}

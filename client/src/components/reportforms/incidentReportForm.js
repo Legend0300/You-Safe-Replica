@@ -84,9 +84,6 @@ const handleEventTypeChange = (event) => {
     setEventSubType(event.target.value);
   };
 
-  const handleUserTypeChange = (event) => {
-    setUserType(event);
-  };
 
   const handleReportedStatusChange = (event) => {
     setReportedStatus(event);
@@ -115,6 +112,12 @@ const handleEventTypeChange = (event) => {
   const handleReasonChange = (event) => {
     setReason(event.target.value);
   };
+
+  const handleIncidentTypeChange = (event) => {
+    setIncidentType(event.target.value);
+  };
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -166,6 +169,7 @@ const handleEventTypeChange = (event) => {
               onChange={handleEventTypeChange}
             />
           </FormControl>
+        
           <FormControl>
             <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
             <Input
@@ -176,7 +180,19 @@ const handleEventTypeChange = (event) => {
               onChange={handleEventSubTypeChange}
             />
           </FormControl>
-          <UserType userType={userType} onUserTypeChange={handleUserTypeChange} />
+          
+          <FormControl>
+          <InputLabel htmlFor="incidentType">Incident Type</InputLabel>
+        <Select
+        style={{ width: '120px' }}
+          id="incidentType"
+          name="incidentType"
+          value={incidentType}
+          onChange={handleIncidentTypeChange}
+        >
+          <option value="IncidentType">Select Incident</option>
+        </Select>
+          </FormControl>      
           <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange} />
           <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange} />
           <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange} />
