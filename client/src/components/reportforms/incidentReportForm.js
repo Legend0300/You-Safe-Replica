@@ -97,12 +97,14 @@ function IncidentReportForm(props) {
       userType,
       reportedStatus,
       startDate,
-      endDate
+      endDate,
+      description,
+      endTime,
+      action,
+      reason,
     });
 
-    // reset form
-    // setDepartments([]);
-    // setAreas([]);
+    // Reset form state
     setSelectedDepartment("");
     setSelectedArea("");
     setEventType("");
@@ -111,7 +113,10 @@ function IncidentReportForm(props) {
     setReportedStatus("");
     setStartDate("");
     setEndDate("");
-
+    setDescription("");
+    setEndTime("");
+    setAction("");
+    setReason("");
   };
 
   return (
@@ -121,36 +126,86 @@ function IncidentReportForm(props) {
           <h1>Incident Report Form</h1>
           <AreaField onSelectArea={handleSelectArea} />
           <DepartmentField onSelectDepartment={handleSelectDepartment} />
-          <FormControl>
+          <FormControl style={{ width: '200px' }}>
             <InputLabel htmlFor="eventType">Event Type:</InputLabel>
-            <Input
-              type="text"
+            <Select
               id="eventType"
-              name="eventType"
               value={eventType}
-              onChange={handleEventTypeChange}
-            />
+              onChange={(e) => setEventType(e.target.value)}
+              required
+            >
+              {eventTypes.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
-          <FormControl>
-            <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
-            <Input
-              type="text"
+          <FormControl style={{ width: '300px' }}>
+            <InputLabel style={{ width: '200px' }}htmlFor="eventSubType">Event Sub Type:</InputLabel>
+            <Select
+            style={{ width: '200px' }}
               id="eventSubType"
-              name="eventSubType"
               value={eventSubType}
-              onChange={handleEventSubTypeChange}
-            />
+              onChange={(e) => setEventSubType(e.target.value)}
+              required
+            >
+              {/* Map the options for event subtypes here */}
+            </Select>
           </FormControl>
           <UserType userType={userType} onUserTypeChange={handleUserTypeChange} />
           <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange} />
           <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange} />
           <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange} />
+          <FormControl>
+            <InputLabel htmlFor="description">Description:</InputLabel>
+            <TextareaAutosize
+              id="description"
+              value={description}
+              onChange={handleDescriptionChange}
+              rows={4}
+              required
+            />
+          </FormControl>
+          <FormControl>
+            <InputLabel  htmlFor="endDate">Due Date:</InputLabel>
+            <TextField 
+            style={{margin: "9%"}}
+              type="date"
+              id="endDate"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              required
+            />
+          </FormControl>
+
+          <FormControl>
+            <InputLabel htmlFor="action">Action:</InputLabel>
+            <Input
+              type="text"
+              id="action"
+              value={action}
+              onChange={(e) => setAction(e.target.value)}
+              required
+            />
+          </FormControl>
+          <FormControl>
+            <InputLabel htmlFor="reason">Reason:</InputLabel>
+            <Input
+              type="text"
+              id="reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              required
+            />
+          </FormControl>
         </Box>
-        <Button style={{background: "yellow" , color: "black"}} type="submit">Submit</Button>
+        <Button style={{ background: "yellow", color: "black" }} type="submit">
+          Submit
+        </Button>
       </form>
     </ThemeProvider>
   );
-  
 }
 
 export default IncidentReportForm;
