@@ -4,7 +4,7 @@ import AreaField from "../common/AreaField";
 import UserType from "../common/userTypeField";
 import DateSelector from "../common/DateSelector";
 import StatusSelector from "../common/statusSelector";
-import { Box, FormControl, InputLabel, Input, ThemeProvider, Button } from '@mui/material';
+import { Box, FormControl, InputLabel, Input, ThemeProvider, Button,Select } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { styled } from '@mui/system';
 
@@ -20,6 +20,7 @@ function IncidentReportForm(props) {
   const [endDate, setEndDate] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState({ department: '' });
   const [selectedArea, setSelectedArea] = useState({ area: '' });
+  const [incidentType, setIncidentType] = useState({ IncidentType: '' });
 
   const theme = createTheme({
     palette: {
@@ -69,9 +70,6 @@ function IncidentReportForm(props) {
     setEventSubType(event.target.value);
   };
 
-  const handleUserTypeChange = (event) => {
-    setUserType(event);
-  };
 
   const handleReportedStatusChange = (event) => {
     setReportedStatus(event);
@@ -85,6 +83,12 @@ function IncidentReportForm(props) {
   const handleEndDateChange = (event) => {
     setEndDate(event);
   };
+
+  const handleIncidentTypeChange = (event) => {
+    setIncidentType(event.target.value);
+  };
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -131,6 +135,7 @@ function IncidentReportForm(props) {
               onChange={handleEventTypeChange}
             />
           </FormControl>
+        
           <FormControl>
             <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
             <Input
@@ -141,7 +146,19 @@ function IncidentReportForm(props) {
               onChange={handleEventSubTypeChange}
             />
           </FormControl>
-          <UserType userType={userType} onUserTypeChange={handleUserTypeChange} />
+          
+          <FormControl>
+          <InputLabel htmlFor="incidentType">Incident Type</InputLabel>
+        <Select
+        style={{ width: '120px' }}
+          id="incidentType"
+          name="incidentType"
+          value={incidentType}
+          onChange={handleIncidentTypeChange}
+        >
+          <option value="IncidentType">Select Incident</option>
+        </Select>
+          </FormControl>      
           <StatusSelector status={reportedStatus} setStatus={handleReportedStatusChange} />
           <DateSelector selectedDate={startDate} onDateChange={handleStartDateChange} />
           <DateSelector selectedDate={endDate} onDateChange={handleEndDateChange} />
