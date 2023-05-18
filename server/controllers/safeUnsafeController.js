@@ -55,8 +55,7 @@ const createNewSafeUnsafeReport = async (req, res) => {
         userType: req.body.userType,
         reportedStatus: req.body.reportedStatus,
         reportDate: req.body.reportDate,
-        startDate: req.body.startDate,
-        endDate: req.body.endDate,
+        dueDate: req.body.dueDate,
 
     });
 
@@ -100,9 +99,7 @@ const updateSafeUnsafeReport = async (req, res) => {
         if (req.body.reportDate != null) {
             safeUnsafeReport.reportDate = req.body.reportDate;
         }
-        if (req.body.startDate != null) {
-            safeUnsafeReport.startDate = req.body.startDate;
-        }
+
         if (req.body.endDate != null) {
             safeUnsafeReport.endDate = req.body.endDate;
         }

@@ -16,6 +16,7 @@ const ReportingPage = () => {
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
 
+  
   // Fetch reports from API
   useEffect(() => {
     const fetchReports = async () => {
@@ -23,19 +24,20 @@ const ReportingPage = () => {
       const data = await response.json();
       setReports(data);
     };
-
+    
     fetchReports();
   }, []);
-
+  
   const submittedReports = reports.filter(
     (report) => report.reportedStatus === "reported"
-  );
-  const emptyString = "";
-
-  const handleViewDetails = (report) => {
-    setSelectedReport(report);
-  };
-
+    );
+    const emptyString = "";
+    
+    const handleViewDetails = (report) => {
+      setSelectedReport(report);
+    };
+    
+    console.log(reports);
   return (
     <Box
       display="flex"
@@ -114,7 +116,7 @@ const ReportingPage = () => {
                   color="text.secondary"
                   component="div"
                 >
-                  Due Date: {report.dueDate || "N/A"}
+                  Due Date: {report.endDate  || "N/A"}
                 </Typography>
               </CardContent>
             </Box>
