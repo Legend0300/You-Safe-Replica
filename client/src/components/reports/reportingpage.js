@@ -49,13 +49,19 @@ const ReportingPage = () => {
       <Typography variant="h4" component="h4" gutterBottom>
         My Reporting
       </Typography>
-      <CardMedia style={{marginTop: "2%" , marginBottom: "2%" , backgroundColor: "transparent"}} >
-      <Typography variant="h6" component="h6" gutterBottom>
-        Submitted Reports 6
-      </Typography>
-      <Typography variant="h6" component="h6" gutterBottom>
-        Offline Reports 0
-      </Typography>
+      <CardMedia
+        style={{
+          marginTop: "2%",
+          marginBottom: "2%",
+          backgroundColor: "transparent",
+        }}
+      >
+        <Typography variant="h6" component="h6" gutterBottom>
+          Submitted Reports 6
+        </Typography>
+        <Typography variant="h6" component="h6" gutterBottom>
+          Offline Reports 0
+        </Typography>
       </CardMedia>
       <Stack
         sx={{
@@ -122,21 +128,20 @@ const ReportingPage = () => {
             </Box>
 
             <Button
-  variant="contained"
-  onClick={() => handleViewDetails(report)}
-  style={{
-    width: '100%',
-    backgroundColor: 'transparent',
-    color: '#ffb300',
-    transition: 'background-color 0.3s ease',
-    '&:hover': {
-      backgroundColor: 'rgb(233, 226, 164)',
-    },
-  }}
->
-  View Details
-</Button>
-
+              variant="contained"
+              onClick={() => handleViewDetails(report)}
+              style={{
+                width: "100%",
+                backgroundColor: "transparent",
+                color: "#ffb300",
+                transition: "background-color 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "rgb(233, 226, 164)",
+                },
+              }}
+            >
+              View Details
+            </Button>
           </Card>
         ))}
       </Stack>
@@ -150,10 +155,20 @@ const ReportingPage = () => {
       )}
 
       <Link to="/newreport">
-        <AddIcon style={{  position: 'fixed',
-  bottom: '20px',
-  right: '20px',
-  zIndex: '9999',backgroundColor: "#ffb300" , color: "white" , borderRadius: "100%" , fontSize: '32px', width: '48px' , height: '48px'}}/>
+        <AddIcon
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            zIndex: "9999",
+            backgroundColor: "#ffb300",
+            color: "white",
+            borderRadius: "100%",
+            fontSize: "32px",
+            width: "48px",
+            height: "48px",
+          }}
+        />
       </Link>
     </Box>
   );

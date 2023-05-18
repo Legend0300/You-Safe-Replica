@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,24 +6,24 @@ import {
   Link,
   Outlet,
   Routes,
-} from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
-import Nav from '../common/Nav';
-import Divider from '@mui/material/Divider';
-import ReportingPage from './reportingpage';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+} from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography, List, ListItem, ListItemText } from "@material-ui/core";
+import Nav from "../common/Nav";
+import Divider from "@mui/material/Divider";
+import ReportingPage from "./reportingpage";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
   },
   link: {
-    color: '#000000de',
-    display: 'flex',
-    width: '100%',
-    textDecoration: 'none',
-    justifyContent: 'space-between',
-    aligntems: 'center',
+    color: "#000000de",
+    display: "flex",
+    width: "100%",
+    textDecoration: "none",
+    justifyContent: "space-between",
+    aligntems: "center",
   },
 }));
 
@@ -53,12 +53,12 @@ const ChecklistMap = ({ checklist }) => {
 
 const ReportingTypePage = () => {
   const reportingTypes = [
-    { name: 'Safe/Unsafe Acts', path: '/safeusafereport' },
-    { name: 'Hazard Reporting', path: '/hazardreport' },
-    { name: 'Incident Reporting', path: '/incidentreport' },
-    { name: 'Deep Compliance Reporting', path: '/dca' },
-    { name: 'Planned Inspection', path: '/planned-inspection' },
-    { name: 'Safety Action Meeting (SAM)', path: '/safetyactionmeeting' },
+    { name: "Safe/Unsafe Acts", path: "/safeusafereport" },
+    { name: "Hazard Reporting", path: "/hazardreport" },
+    { name: "Incident Reporting", path: "/incidentreport" },
+    { name: "Deep Compliance Reporting", path: "/dca" },
+    { name: "Planned Inspection", path: "/planned-inspection" },
+    { name: "Safety Action Meeting (SAM)", path: "/safetyactionmeeting" },
   ];
   const classes = useStyles();
 
@@ -81,7 +81,7 @@ const SelectPage = ({ reportingTypes }) => {
           <div>
             <ListItem key={type.name}>
               <Link to={`/newreport${type.path}`} className={classes.link}>
-                <ListItemText primary={type.name} />{' '}
+                <ListItemText primary={type.name} />{" "}
                 <ArrowForwardIosIcon fontSize="medium" />
               </Link>
             </ListItem>
