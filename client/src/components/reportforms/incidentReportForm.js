@@ -26,6 +26,7 @@ function IncidentReportForm(props) {
   const [eventType, setEventType] = useState("");
   const [eventSubType, setEventSubType] = useState("");
   const [userType, setUserType] = useState("");
+  const [incidentType, setIncidentType] = useState("");
   const [reportedStatus, setReportedStatus] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
