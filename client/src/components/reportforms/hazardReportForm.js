@@ -154,18 +154,11 @@ const HazardReportingForm = () => {
       />
       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
         <TextField
-          type="text"
+          type="file"
           id="photos"
           value={photos}
           onChange={(event) => setPhotos(event.target.value)}
           label="Add photo"
-        />
-        <TextField
-          type="text"
-          id="responsibility"
-          value={responsibility}
-          onChange={(event) => setResponsibility(event.target.value)}
-          label="Responsibility"
         />
                   <div className={classes.formInput}>
             <label className={classes.formLabel} htmlFor="responsibility">
