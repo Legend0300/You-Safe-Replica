@@ -16,23 +16,32 @@ const dcaSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  type: {
+  type : {
     type: String,
     enum: ['DCA'],
     default: 'DCA',
     required: true
   },
-  status: {
-    type: String,
-    enum: ['Enabled', 'Disabled'],
-    default: 'Enabled'
+  reportedStatus: {
+    type: String,    
+    enum: ['In Progress', 'Pending', 'Completed'],
+    default: 'In Progress'
   },
-  questions: [questionSchema],
+  questions: [questionSchema]
+  ,
   endDate: {
     type: Date,
     required: true,
     default: Date.now
   },
+  responsibility: {
+    type: String,
+    required: true
+  },
+  actionRemarks: {
+    type: String,
+    required: true
+  }
 });
 
 const DCA = mongoose.model('DCA', dcaSchema);

@@ -15,7 +15,6 @@ const hazardReportSchema = new mongoose.Schema({
   reportedStatus: {
     type: String,
     enum: ['In Progress', 'Pending', 'Completed'],
-    required: true
   },
   reportDate: {
     type: Date,

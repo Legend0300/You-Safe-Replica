@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import HealthSafety from '../Assets/HealthSafety.svg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 //Login for managers
@@ -21,6 +22,9 @@ function Login() {
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [variant, setVariant] = useState('contained');
+
+  const navigate = useNavigate();
+
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -33,21 +37,34 @@ function Login() {
       email: email,
       password: password,
     };
-
-    axios
-      .post('http://localhost:4000/api/manager/login', payload, { headers })
-      .then((response) => {
-        setPassword('');
-        setEmail('');
-        setLoading(false);
-        setVariant('contained');
-        setToken(response.data.token);
-      })
-      .catch((error) => {
-        // handle error response
-        console.error(error);
-      });
+  
+    try {
+      const response = await axios.post('http://localhost:4000/api/user/login', payload, { headers });
+      setPassword('');
+      setEmail('');
+      setLoading(false);
+      setVariant('contained');
+      const token = response.data.token;
+      localStorage.setItem('usertoken', token); // Store token in localStorage
+      setToken(token);
+      navigate('/home');
+    } catch (error) {
+      // Handle error response
+      console.error(error);
+      setError('Invalid email or password');
+      setLoading(false);
+      setVariant('contained');
+    }
   };
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Perform actions when token is present
+      console.log('Token found:', token);
+      // ...
+    }
+  }, []);
+  
 
   useEffect(() => {
     console.log(token);
@@ -128,7 +145,7 @@ function Login() {
                   'Login'
                 )}
               </Button>
-              <Button href="#text-buttons">Forgot Password</Button>
+              <Button href="/forgotpassword">Forgot Password</Button>
             </CardActions>
           </Box>
         </CardContent>

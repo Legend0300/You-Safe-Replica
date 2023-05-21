@@ -43,7 +43,6 @@ function DCPIReportsForm() {
     
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   
-  console.log(questions);
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -187,24 +186,24 @@ function DCPIReportsForm() {
             onChange={handleRemarksChange}
           />
   
-          <div className={classes.formInput}>
-            <label className={classes.formLabel} htmlFor="responsibility">
-              Responsibility:
-            </label>
-            <Select
-              name="responsibility"
-              value={responsibility}
-              onChange={handleResponsibilityChange}
-              variant="outlined"
-            >
-              <MenuItem value="">Select Manager</MenuItem>
-              {managers.map((manager) => (
-                <MenuItem key={manager.id} value={manager.fullName}>
-                  {manager.fullName}
-                </MenuItem>
-              ))}
-            </Select>
-          </div>
+  <div className={classes.formInput}>
+          <label className={classes.formLabel} htmlFor="responsibility">
+            Responsibility:
+          </label>
+          <Select
+            name="responsibility"
+            value={responsibility}
+            onChange={handleResponsibilityChange}
+            variant="outlined"
+          >
+            <MenuItem value="">Select Manager</MenuItem>
+            {Array.isArray(managers) && managers.map((manager) => (
+              <MenuItem key={manager.id} value={manager.fullName}>
+                {manager.fullName}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
   
           <div className={classes.buttonGroup}>
             <Button

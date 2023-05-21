@@ -12,6 +12,16 @@ const getAllPIs = async (req, res) => {
     }
     }
 
+const getPIquestions = async (req, res) => {
+    try {
+        const pis = await PI.find();
+
+        res.json(pis);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 // GET one site by ID
 // testing
 const getPIById = async (req, res) => {
@@ -37,6 +47,8 @@ const createNewPI = async (req, res) => {
                     questions: req.body.questions,
                     status: req.body.status,
                     endDate: req.body.endDate,
+                    responsibility: req.body.responsibility,
+                    actionRemarks: req.body.actionRemarks,
                     
                 });
             

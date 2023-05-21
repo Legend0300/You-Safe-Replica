@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet , useNavigate, Navigate } from 'react-router-dom';
 import './App.css';
 import HazardReportForm from './components/reportforms/hazardReportForm';
 import ReportingTypePage from './components/reports/reportingType';
@@ -13,12 +13,15 @@ import IncidentReportForm from './components/reportforms/incidentReportForm';
 import Login from './components/login/login';
 import NewSafeUnsafeActsForm from './components/reportforms/SafeUnsafeform';
 import ReportingPage from './components/reports/reportingpage';
+import ForgotPassword from './components/login/forgotpass';
 
 function App() {
   return (
     <div className="app">
       <Router>
           <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path='/forgotpassword' element={<ForgotPassword />} />
           <Route path='/login' element={<Login />} />
           <Route path='/home' element={<HomePage />} />
           <Route path='reports' element={<ReportingPage/>}/>

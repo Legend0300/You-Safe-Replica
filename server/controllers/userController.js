@@ -24,10 +24,12 @@ const getUser = async (req, res) => {
 };
 
 // Login user
+// Get user
 const loginUser = async (req, res) => {
   try {
-    // Get email and password from request body
-    const { email, password } = req.body;
+    // Get email from request body
+    const { email , password } = req.body;
+
 
     // Find user by email
     const user = await User.findOne({ email });
@@ -47,17 +49,19 @@ const loginUser = async (req, res) => {
 
     // Generate JWT token with user ID as payload
     const token = jwt.sign({
-        user : {
-          name: user.name,
-          email: user.email ,
-          id: user._id,
-          userId: user.employeeId
-        } ,
+      user: {
+        name: user.name,
+        email: user.email,
+        id: user._id,
+        userId: user.employeeId,
+        picture: user.picture,
+        accountType: user.accountType,
         role: user.AccountTypeEnum
-    
-      }, process.env.JWT_SECRET);
+      },
+      role: user.AccountTypeEnum
+    }, process.env.JWT_SECRET);
 
-    res.cookie('userjwt', token)
+    res.cookie('userjwt', token);
 
     // Return token and user data
     res.json({ token });
@@ -65,6 +69,7 @@ const loginUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Register user
 const registerUser = async (req, res) => {
@@ -102,6 +107,9 @@ const registerUser = async (req, res) => {
 const logoutUser = (req, res) => {
   try {
     // Clear token from session
+    res.clearCookie('usertoken');
+
+    //clear cookie from local storage
     res.clearCookie('userjwt');
 
     // Return success message

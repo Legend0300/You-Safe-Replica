@@ -1,4 +1,4 @@
-const HazardReport = require('../models/HazardreportModel');
+const HazardReport = require('../models/hazardreportModel');
 const SafeUnsafeReport = require('../models/safeUnsafeModel');
 const SafetyActionMeeting = require('../models/samSchema');
 const PI = require('../models/piModel');
@@ -11,6 +11,20 @@ const IncidentReport = require('../models/incidentReportSchema');
 const getAllReports = async (req, res) => {
     try {
         const reports = [];
+
+        const dcaLists = await DCA.find();
+        const questions = dcaLists.flatMap((dcaList) =>
+          dcaList.questions.map((question) => ({
+            questionData: question,
+            formName: dcaList.formName,
+            status: dcaList.status,
+            endDate: dcaList.endDate,
+            responsibility: dcaList.responsibility,
+            actionRemarks: dcaList.actionRemarks,
+            type: dcaList.type,
+          }))
+        );
+          
     
         const hazardReports = await HazardReport.find();
         reports.push(...hazardReports);
@@ -25,7 +39,7 @@ const getAllReports = async (req, res) => {
         reports.push(...piReports);
     
         const dcaChecklists = await DCA.find();
-        reports.push(...dcaChecklists);
+        reports.push(...questions);
     
         const incidentReports = await IncidentReport.find();
         reports.push(...incidentReports);

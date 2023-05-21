@@ -6,6 +6,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import jwt_decode from 'jwt-decode';
 import {
   makeStyles,
   createMuiTheme,
@@ -49,31 +50,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const logout = () => {
+  localStorage.removeItem('usertoken');
+};
+
 const HomePage = () => {
   const classes = useStyles();
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await fetch(
-        'http://localhost:4000/api/user/642c66b7e819bc86120413d6'
-      );
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.indexOf('application/json') !== -1) {
-        const body = await response.json();
-        setUser(body);
-      } else {
-        const body = await response.text();
-        console.log(`Response body: ${body}`);
+      try {
+        const token = localStorage.getItem('usertoken');
+        const user1 = jwt_decode(token).user;
+        console.log(user1);
+
+
+        // const userData = await response.json();
+        setUser(user1);
+      } catch (error) {
+        console.log(error);
       }
     };
-    getUser().catch((err) => console.log(err));
+
+    getUser();
   }, []);
 
-  const url = '';
+  const url = ""
+
 
   useStyles();
 
@@ -113,7 +117,7 @@ const HomePage = () => {
               Account Type : {user.accountType}
             </Typography>
             <Typography variant="subtitle1" align="center">
-              Employee Id: {user.employeeId}
+              Employee Id: {user.id}
             </Typography>
           </div>
           <List  disablePadding>
@@ -143,7 +147,7 @@ const HomePage = () => {
             </ListItem>
             <Divider />
             <ListItem disablePadding>
-              <ListItemButton component="a" href="/logout">
+              <ListItemButton onClick={logout} component="a" href="/login">
                 <LogoutIcon fontSize="medium" sx={{ marginRight: 1 }} />{' '}
                 <ListItemText primary="Logout" />{' '}
                 <ArrowForwardIosIcon fontSize="medium" />
@@ -158,29 +162,3 @@ const HomePage = () => {
 
 export default HomePage;
 
-/*
-          
-              <ListItemText primary=/>
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemIcon>
-                <LockOutlined />
-              </ListItemIcon>
-              <ListItemText primary= />
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemIcon>
-                <LockOutlined />
-              </ListItemIcon>
-              <ListItemText primary= />
-            </ListItem>
-          </List>
-        </Stack>
-        <Button variant="contained" color="primary" href="/change-password">
-          Change Password
-        </Button>
-        <Button variant="contained" color="primary" href="/contact-us">
-          Contact us
-        </Button>
-        
-       */

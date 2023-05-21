@@ -25,7 +25,7 @@ const incidentReportSchema = new mongoose.Schema({
   reportedStatus: {
     type: String,
     enum: ['In Progress', 'Pending', 'Completed'],
-    required: true
+    default: 'In Progress'
   },
   startDate: {
     type: Date,
