@@ -46,7 +46,8 @@ const createNewHazardReport = async (req, res) => {
         reportDate: req.body.reportDate,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
-        description: req.body.description,  
+        description: req.body.description,
+        responsibility : req.body.responsibility,
 
     });
 

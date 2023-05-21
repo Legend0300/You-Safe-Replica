@@ -36,6 +36,8 @@ const createNewPI = async (req, res) => {
                     formName: req.body.formName,
                     questions: req.body.questions,
                     status: req.body.status,
+                    endDate: req.body.endDate,
+                    
                 });
             
                 try {
