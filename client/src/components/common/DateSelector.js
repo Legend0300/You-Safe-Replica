@@ -20,7 +20,7 @@ const theme = createTheme({
 function DateSelector({ selectedDate, onDateChange }) {
   const [value, setValue] = React.useState();
   const handleDateChange = (e) => {
-    onDateChange(e.target.value);
+    onDateChange(e);
   };
 
   return (

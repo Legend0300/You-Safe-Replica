@@ -15,6 +15,7 @@ function ForgotPassword() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [variant, setVariant] = useState('contained');
+  const [token, setToken] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,31 +36,8 @@ function ForgotPassword() {
         return;
         }
 
-    const payload = {
-      username: username,
-    };
-    try {
-      const response = await axios.post('http://localhost:4000/api/user/login', payload, { headers });
-      setUsername('');
-      setLoading(false);
-      setVariant('contained');
-      const token = response.data.token;
-      localStorage.setItem('usertoken', token); // Store token in localStorage
-      setToken(token);
-    } catch (error) {
-      // Handle error response
-      console.error(error);
-      setError(error.response.data.message);
-      setUsername('');
-      setLoading(false);
-      setVariant('contained');
-    }
-    console.log(username);
-    setUsername('');
-    setLoading(false);
-    setVariant('contained');
-    setError('');
-  };
+
+
 
   return (
     <Box
@@ -119,6 +97,7 @@ function ForgotPassword() {
       </Card>
     </Box>
   );
+}
 }
 
 export default ForgotPassword;

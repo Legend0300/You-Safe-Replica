@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const {       getAllDCAReports,
-    getDCAlistById,
-    createNewDCAlist,
-    updateDCAlistById,
-    deleteDCAlistById,
-    getDCAquestions } = require('../../controllers/dcaReportController');
+    getDCAReportById,
+    createNewDCAReport,
+    updateDCAReport,
+    deleteDCAReport,
+     } = require('../../controllers/dcaReportController');
 
 router.get('/' , getAllDCAReports);
 
