@@ -34,6 +34,14 @@ const piSchema = new mongoose.Schema({
     required: true,
     default: Date.now
   },
+  responsibility: {
+    type: String,
+    required: true
+  },
+  actionRemarks: {
+    type: String,
+    required: true
+  },
 });
 
 const PI = mongoose.model('PI', piSchema);

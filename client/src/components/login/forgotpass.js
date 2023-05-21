@@ -34,6 +34,26 @@ function ForgotPassword() {
         setVariant('contained');
         return;
         }
+
+    const payload = {
+      username: username,
+    };
+    try {
+      const response = await axios.post('http://localhost:4000/api/user/login', payload, { headers });
+      setUsername('');
+      setLoading(false);
+      setVariant('contained');
+      const token = response.data.token;
+      localStorage.setItem('usertoken', token); // Store token in localStorage
+      setToken(token);
+    } catch (error) {
+      // Handle error response
+      console.error(error);
+      setError(error.response.data.message);
+      setUsername('');
+      setLoading(false);
+      setVariant('contained');
+    }
     console.log(username);
     setUsername('');
     setLoading(false);
@@ -69,7 +89,7 @@ function ForgotPassword() {
       </Typography>
             <TextField
               id="outlined-basic"
-              label="Username"
+              label="email"
               variant="standard"
               autoComplete="off"
               error={Boolean(error)}
