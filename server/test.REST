@@ -347,7 +347,7 @@ Content-Type: application/json
 
 {
     "email": "ahmed.mansur.bhatti@gmail.com" ,
-    "password": "pass2"
+    "password": "   "
 }
 
 ###
