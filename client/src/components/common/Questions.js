@@ -1,16 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import { Container, Typography, Link, ThemeProvider } from "@mui/material";
+import { Container, Typography, Link, ThemeProvider, Button } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
 // Create a custom MUI theme with yellow and white colors
 const theme = createTheme({
   palette: {
     primary: {
+      main: '#000000', // black
+    },
+    secondary: {
       main: '#ffff00', // yellow
     },
     background: {
-      default: '#ffffff', // white
+      default: '#ffff00', // yellow
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff', // white
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: '#000000', // black
+        },
+      },
     },
   },
 });
@@ -59,7 +78,7 @@ const QuestionList = ({ setSelectedQuestion, type }) => {
     <div>
       <Typography variant="h1">Questions</Typography>
       {questions.map((question) => (
-        <div key={question.Question}>
+        <div key={question.Question} style={{ border: '1px solid black', padding: '10px', margin: '10px' }}>
           <Typography variant="h2">{question.Question}</Typography>
           <Link
             component={RouterLink}
