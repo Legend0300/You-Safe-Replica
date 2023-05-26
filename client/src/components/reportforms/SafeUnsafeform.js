@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import DepartmentField from '../common/DepartmentField';
-import AreaField from '../common/AreaField';
-import DateSelector from '../common/DateSelector';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import { Typography } from '@mui/material';
-import { spacing } from '@mui/system';
 import { makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@mui/material/InputAdornment';
 import {
   TextField,
   Radio,
   RadioGroup,
   FormControlLabel,
   Button,
+  Typography,
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  FormHelperText,
+  Select,
+  Input,
+  InputAdornment,
 } from '@material-ui/core';
-import Box from '@mui/material/Box';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Input from '@mui/material/Input';
+import DepartmentField from '../common/DepartmentField';
+import AreaField from '../common/AreaField';
+import DateSelector from '../common/DateSelector';
 
 const NewSafeUnsafeActsForm = () => {
   const [reportedStatus, setReportedStatus] = useState('');
@@ -63,6 +62,7 @@ const NewSafeUnsafeActsForm = () => {
   const handleActtypeChange = (event) => {
     setActtype(event.target.value);
   };
+
 
   const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
