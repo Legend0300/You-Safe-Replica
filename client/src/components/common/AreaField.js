@@ -16,7 +16,7 @@ const theme = createTheme({
 
 const AreaField = ({ onSelectArea }) => {
   const [areas, setAreas] = useState([]);
-  const [selectedArea, setSelectedArea] = useState({ name: '' });
+  const [selectedArea, setSelectedArea] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:4000/api/area')
@@ -26,8 +26,9 @@ const AreaField = ({ onSelectArea }) => {
   }, []);
 
   const handleAreaChange = (event) => {
-    const selectedAreaData = areas.find((area) => area._id === event.target.value);
-    setSelectedArea(selectedAreaData.name);
+    const selectedAreaId = event.target.value;
+    const selectedAreaData = areas.find((area) => area._id === selectedAreaId);
+    setSelectedArea(selectedAreaId);
     onSelectArea(selectedAreaData.name);
   };
 
@@ -36,10 +37,10 @@ const AreaField = ({ onSelectArea }) => {
       <FormControl>
         <InputLabel id="area-select-label">Area:</InputLabel>
         <Select
-        style={{ width: '100%' }}
+          style={{ width: '100%' }}
           labelId="area-select-label"
           id="area-select"
-          value={selectedArea.name}
+          value={selectedArea}
           onChange={handleAreaChange}
           label="Area"
         >

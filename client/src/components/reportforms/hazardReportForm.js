@@ -88,31 +88,37 @@ const HazardReportingForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+    const formData = {
+      department: selectedDepartment,
+      area: selectedArea,
+      reportedStatus: "Pending",
+      endDate: reportDate,
+      description: description,
+      photos: photos,
+      responsibility: responsibility,
+      reportDate: Date.now()
+    };
     try {
       const response = await fetch('http://localhost:4000/api/hazardreport', {
         method: 'POST',
-        body: {
-          department: selectedDepartment,
-          area: selectedArea,
-          reportedStatus,
-          endDate: reportDate,
-          description: description,
-          photos: photos,
-          responsibility: responsibility,
-          reportDate: Date.now()
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify(formData),
       });
-      const data = await response.json();
-      console.log(data); // Handle the response from the backend
-      // Reset form fields
-      setSelectedDepartment('');
-      setSelectedArea('');
-      setReportedStatus('');
-      setReportDate('');
-      setDescription('');
-      setPhotos('');
-      setResponsibility('');
+      if (response.ok) {
+        console.log('Hazard report submitted successfully!');
+        // Reset form fields
+        setSelectedDepartment('');
+        setSelectedArea('');
+        setReportedStatus('');
+        setReportDate('');
+        setDescription('');
+        setPhotos('');
+        setResponsibility('');
+      } else {
+        console.error('Failed to submit hazard report.');
+      }
     } catch (error) {
       console.error('Error:', error);
     }
@@ -221,10 +227,7 @@ const HazardReportingForm = () => {
               />
             </LocalizationProvider>
           </Box>
-          <handleStatusChange
-            setReportedStatus={reportedStatus}
-            onChange={handleStatusChange}
-          />
+
          
             <Input
               type="file"

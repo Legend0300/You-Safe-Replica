@@ -40,7 +40,7 @@ const DepartmentField = ({ onSelectDepartment }) => {
         style={{ width: '100%' }}
           labelId="department-select-label"
           id="department-select"
-          value={selectedDepartment.department}
+          value={departments.department}
           onChange={handleDepartmentChange}
           label="Department"
         >

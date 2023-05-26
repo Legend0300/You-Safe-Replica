@@ -1,20 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import DepartmentField from '../common/DepartmentField';
 import AreaField from '../common/AreaField';
 import DateSelector from '../common/DateSelector';
-
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import { Typography } from '@mui/material';
+import { spacing } from '@mui/system';
+import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@mui/material/InputAdornment';
+import {
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Button,
+} from '@material-ui/core';
+import Box from '@mui/material/Box';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Input from '@mui/material/Input';
 
 const NewSafeUnsafeActsForm = () => {
-  const [actType, setActType] = useState('');
+  const [reportedStatus, setReportedStatus] = useState('');
+  const [reportDate, setReportDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [photos, setPhotos] = useState('');
+  const [responsibility, setResponsibility] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [photo, setPhoto] = useState(null);
-  const [responsibility, setResponsibility] = useState('');
   const [managers, setManagers] = useState([]);
+  const [photo, setPhoto] = useState(null);
+  const [time, setTime] = useState('');
+  const [acttype, setActtype] = useState('');
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#ffb300', // Yellow color
+      },
+      background: {
+        default: '#ffffff', // White color
+      },
+    },
+  });
 
   useEffect(() => {
     const fetchManagers = async () => {
@@ -26,115 +60,212 @@ const NewSafeUnsafeActsForm = () => {
     fetchManagers();
   }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
-    // Create a form data object
-
-    try {
-      const response = await fetch('http://localhost:4000/api/safeUnsafeReport', {
-        method: 'POST',
-        body: {
-          actType: actType,
-          department: selectedDepartment,
-          area: selectedArea,
-          description: description,
-          date: date,
-          time: time,
-          photos: photo,
-          responsibility: responsibility,
-          description: description,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create new safe/unsafe report');
-      }
-
-      // Reset the form fields after successful submission
-      setActType('');
-      setSelectedDepartment('');
-      setSelectedArea('');
-      setDescription('');
-      setDate('');
-      setTime('');
-      setPhoto(null);
-      setResponsibility('');
-
-      console.log('New safe/unsafe report created successfully');
-    } catch (error) {
-      console.error(error.message);
-    }
+  const handleActtypeChange = (event) => {
+    setActtype(event.target.value);
   };
 
-  const handleSelectedDepartment = (selectedDepartment) => {
+  const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
-  };
-
-  const handleSelectedArea = (selectedArea) => {
-    setSelectedArea(selectedArea);
-  };
-
-  const handleDateChange = (date) => {
-    setDate(date);
-  };
-
-  const handlePhotoChange = (event) => {
-    setPhoto(event.target.files[0]);
+    console.log(selectedDepartment);
+    // do something with the selected department data
   };
 
   const handleResponsibilityChange = (event) => {
     setResponsibility(event.target.value);
   };
 
+  const handleSelectArea = (selectedArea) => {
+    setSelectedArea(selectedArea);
+  };
+
+  const handleStatusChange = (newStatus) => {
+    setReportedStatus(newStatus);
+  };
+
+  const handleReportDateChange = (event) => {
+    setReportDate(event);
+    console.log(event);
+  };
+
+  const handlePhotoChange = (event) => {
+    setPhoto(event.target.files[0]);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = {
+      department: selectedDepartment,
+      area: selectedArea,
+      acttype: acttype,
+      reportedStatus: 'Pending',
+      endDate: reportDate,
+      description: description,
+      photos: photos,
+      responsibility: responsibility,
+      reportDate: Date.now(),
+    };
+
+    try {
+      const response = await fetch(
+        'http://localhost:4000/api/safeUnsafeReport',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        console.log('New safe/unsafe report created successfully');
+        // Reset form fields
+        setActtype('');
+        setSelectedDepartment('');
+        setSelectedArea('');
+        setReportedStatus('');
+        setReportDate('');
+        setDescription('');
+        setPhotos('');
+        setResponsibility('');
+      } else {
+        console.error('Failed to create new safe/unsafe report');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const useStyles = makeStyles((theme) => ({
+    formContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      padding: theme.spacing(2),
+      borderRadius: theme.spacing(1),
+      boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.1)',
+    },
+    formInput: {
+      marginBottom: theme.spacing(2),
+    },
+    formLabel: {
+      fontWeight: 'bold',
+      marginBottom: theme.spacing(1),
+    },
+    buttonGroup: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginTop: theme.spacing(2),
+      width: '100%',
+    },
+    button: {
+      marginRight: theme.spacing(1),
+    },
+  }));
+
+  const classes = useStyles();
+
+  const [value, setValue] = React.useState();
+
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
   return (
-    <div>
-      <h1>SafeUnsafeForm</h1>
-      <h1>New Safe/Unsafe Acts</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Act Type:</label>
-          <input
-            type="text"
-            value={actType}
-            onChange={(e) => setActType(e.target.value)}
-            required
-          />
-        </div>
-        <DepartmentField onSelectDepartment={handleSelectedDepartment} />
-
-        <AreaField onSelectArea={handleSelectedArea} />
-
-        <div>
-          <label>Description:</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
-
-        <DateSelector onDateChange={handleDateChange} />
-
-        <div>
-          <label>Time:</label>
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Add Photo:</label>
-          <input
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          bgcolor: 'background.paper',
+          p: 1,
+        }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <Typography
+            variant="h3"
+            sx={{ marginBottom: 4, textAlign: 'center' }}
+          >
+            Safe UnSafe Reporting
+          </Typography>{' '}
+          <div
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              marginBottom: '1rem',
+              flexDirection: 'column',
+            }}
+          >
+            <FormControl sx={{ mt: 3, mb: 1, display: 'flex' }}>
+              <InputLabel id="demo-simple-select-label">Act Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={acttype}
+                label="Act Type"
+                onChange={handleActtypeChange}
+              >
+                <MenuItem value={'safe'}>Safe</MenuItem>
+                <MenuItem value={'unsafe'}>Unsafe</MenuItem>
+              </Select>
+            </FormControl>
+            <AreaField onSelectArea={handleSelectArea} />
+            <DepartmentField onSelectDepartment={handleSelectDepartment} />
+            <TextField
+              id="description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              multiline
+              rows={4}
+              label="Description"
+              color="warning"
+              style={{ marginBottom: '1rem' }}
+            />
+          </div>
+          <Box
+            sx={{
+              display: 'flex',
+              p: 1,
+              gap: '1rem',
+              marginBottom: '1rem',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}
+          >
+            <DateSelector
+              selectedDate={reportDate}
+              onDateChange={handleReportDateChange}
+            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                label="Time"
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+                color="warning"
+              />
+            </LocalizationProvider>
+          </Box>
+          <Input
             type="file"
-            accept="image/*"
-            onChange={handlePhotoChange}
-            required
+            id="photos"
+            value={photos}
+            onChange={(event) => setPhotos(event.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <CameraAltIcon sx={{ fontSize: 40 }} />
+              </InputAdornment>
+            }
+            label="Add photo"
           />
-        </div>
-        <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
             <InputLabel id="demo-simple-select-helper-label">
               Responsibility
             </InputLabel>
@@ -152,9 +283,12 @@ const NewSafeUnsafeActsForm = () => {
               ))}
             </Select>
           </FormControl>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </form>
+      </Box>
+    </ThemeProvider>
   );
 };
 
