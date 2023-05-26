@@ -88,7 +88,6 @@ const HazardReportingForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
     const formData = {
       department: selectedDepartment,
       area: selectedArea,
@@ -99,7 +98,6 @@ const HazardReportingForm = () => {
       responsibility: responsibility,
       reportDate: Date.now()
     };
-  
     try {
       const response = await fetch('http://localhost:4000/api/hazardreport', {
         method: 'POST',
@@ -108,7 +106,6 @@ const HazardReportingForm = () => {
         },
         body: JSON.stringify(formData),
       });
-  
       if (response.ok) {
         console.log('Hazard report submitted successfully!');
         // Reset form fields
@@ -230,10 +227,7 @@ const HazardReportingForm = () => {
               />
             </LocalizationProvider>
           </Box>
-          <handleStatusChange
-            setReportedStatus={reportedStatus}
-            onChange={handleStatusChange}
-          />
+
          
             <Input
               type="file"

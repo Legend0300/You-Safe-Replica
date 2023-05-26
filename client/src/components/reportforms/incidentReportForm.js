@@ -1,79 +1,89 @@
-import { useState } from "react";
-import DepartmentField from "../common/DepartmentField";
-import AreaField from "../common/AreaField";
-import UserType from "../common/userTypeField";
-import DateSelector from "../common/DateSelector";
-import DateTimePicker from "@mui/lab/DateTimePicker";
-import StatusSelector from "../common/statusSelector";
+import React, { useState, useEffect } from 'react';
+import DepartmentField from '../common/DepartmentField';
+import AreaField from '../common/AreaField';
+import DateSelector from '../common/DateSelector';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import { Typography } from '@mui/material';
+import { spacing } from '@mui/system';
+import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@mui/material/InputAdornment';
 import {
-  Box,
-  FormControl,
-  InputLabel,
-  Input,
-  ThemeProvider,
-  Button,
   TextField,
-  TimePicker,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import { createTheme } from "@mui/material/styles";
-import { styled } from "@mui/system";
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Button,
+} from '@material-ui/core';
+import Box from '@mui/material/Box';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Input from '@mui/material/Input';
 
-function IncidentReportForm(props) {
+const IncidentReportForm = () => {
   const [eventType, setEventType] = useState([]);
   const [eventSubType, setEventSubType] = useState([]);
-  const [userType, setUserType] = useState("");
-  const [incidentType, setIncidentType] = useState("");
-  const [reportedStatus, setReportedStatus] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState({
-    department: "",
-  });
-  const [selectedArea, setSelectedArea] = useState({ area: "" });
-  const [description, setDescription] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [action, setAction] = useState("");
+  const [incidentType, setIncidentType] = useState('');
+  const [action, setAction] = useState('');
   const [reason, setReason] = useState([]);
+  const [reportedStatus, setReportedStatus] = useState('');
+  const [reportDate, setReportDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [photos, setPhotos] = useState('');
+  const [responsibility, setResponsibility] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
+  const [managers, setManagers] = useState([]);
+  const [photo, setPhoto] = useState(null);
 
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#ffff00", // yellow
+        main: '#ffb300', // Yellow color
       },
       background: {
-        default: "#ffffff", // white
-      },
-    },
-    components: {
-      MuiFormControl: {
-        styleOverrides: {
-          root: {
-            marginBottom: "20px",
-            display: "flex",
-            flexDirection: "column",
-          },
-        },
-      },
-      MuiInput: {
-        styleOverrides: {
-          root: {
-            width: "300px",
-          },
-        },
+        default: '#ffffff', // White color
       },
     },
   });
 
+  useEffect(() => {
+    const fetchManagers = async () => {
+      console.log('fetching managers');
+      const response = await fetch('http://localhost:4000/api/areaManager');
+      const data = await response.json();
+      setManagers(data);
+    };
+    fetchManagers();
+  }, []);
+
   const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
     console.log(selectedDepartment);
+    // do something with the selected department data
+  };
+
+  const handleResponsibilityChange = (event) => {
+    setResponsibility(event.target.value);
   };
 
   const handleSelectArea = (selectedArea) => {
     setSelectedArea(selectedArea);
-    console.log(selectedArea);
+  };
+
+  const handleStatusChange = (newStatus) => {
+    setReportedStatus(newStatus);
+  };
+
+  const handleReportDateChange = (event) => {
+    setReportDate(event);
+    console.log(event);
   };
 
   const handleEventTypeChange = (event) => {
@@ -82,25 +92,6 @@ function IncidentReportForm(props) {
 
   const handleEventSubTypeChange = (event) => {
     setEventSubType(event.target.value);
-  };
-
-  const handleReportedStatusChange = (event) => {
-    setReportedStatus(event);
-  };
-
-  const handleStartDateChange = (event) => {
-    setStartDate(event);
-  };
-
-  const handleEndDateChange = (event) => {
-    setEndDate(event);
-  };
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const handleEndTimeChange = (event) => {
-    setEndTime(event.target.value);
   };
 
   const handleActionChange = (event) => {
@@ -115,82 +106,225 @@ function IncidentReportForm(props) {
     setIncidentType(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Call a function from the parent component to handle the form submission
-    console.log({
-      selectedDepartment,
-      selectedArea,
-      eventType,
-      eventSubType,
-      userType,
-      reportedStatus,
-      startDate,
-      endDate,
-      description,
-      endTime,
-      action,
-      reason,
-    });
 
-    // Reset form state
-    setSelectedDepartment("");
-    setSelectedArea("");
-    setEventType("");
-    setEventSubType("");
-    setUserType("");
-    setReportedStatus("");
-    setStartDate("");
-    setEndDate("");
-    setDescription("");
-    setEndTime("");
-    setAction("");
-    setReason("");
+    const formData = {
+      department: selectedDepartment,
+      area: selectedArea,
+      reportedStatus: 'Pending',
+      endDate: reportDate,
+      description: description,
+      photos: photos,
+      responsibility: responsibility,
+      reportDate: Date.now(),
+    };
+
+    try {
+      const response = await fetch('http://localhost:4000/api/hazardreport', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log('Hazard report submitted successfully!');
+        // Reset form fields
+        setSelectedDepartment('');
+        setSelectedArea('');
+        setReportedStatus('');
+        setReportDate('');
+        setDescription('');
+        setPhotos('');
+        setResponsibility('');
+        setSelectedDepartment('');
+        setSelectedArea('');
+        setEventType('');
+        setEventSubType('');
+
+        setReportedStatus('');
+
+        setDescription('');
+
+        setAction('');
+        setReason('');
+      } else {
+        console.error('Failed to submit hazard report.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const useStyles = makeStyles((theme) => ({
+    formContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      padding: theme.spacing(2),
+      borderRadius: theme.spacing(1),
+      boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.1)',
+    },
+    formInput: {
+      marginBottom: theme.spacing(2),
+    },
+    formLabel: {
+      fontWeight: 'bold',
+      marginBottom: theme.spacing(1),
+    },
+    buttonGroup: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      marginTop: theme.spacing(2),
+      width: '100%',
+    },
+    button: {
+      marginRight: theme.spacing(1),
+    },
+  }));
+
+  const classes = useStyles();
+
+  const [value, setValue] = React.useState();
+
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <form onSubmit={handleSubmit}>
-        <Box>
-          <h1>Incident Report Form</h1>
-          <AreaField onSelectArea={handleSelectArea} />
-          <DepartmentField onSelectDepartment={handleSelectDepartment} />
-          <FormControl>
-  <InputLabel htmlFor="eventType">Event Type:</InputLabel>
-  <Select
-    id="eventType"
-    name="eventType"
-    value={eventType}
-    onChange={handleEventTypeChange}
-  >
-    {eventType.map((option) => (
-      <MenuItem key={option} value={option}>
-        {option}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
-<FormControl>
-  <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
-  <Select
-    id="eventSubType"
-    name="eventSubType"
-    value={eventSubType}
-    onChange={handleEventSubTypeChange}
-  >
-    {eventSubType.map((option) => (
-      <MenuItem key={option} value={option}>
-        {option}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
-          <FormControl>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          bgcolor: 'background.paper',
+          p: 1,
+        }}
+      >
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <Typography
+            variant="h3"
+            sx={{ marginBottom: 4, textAlign: 'center' }}
+          >
+            Incident Report Form
+          </Typography>{' '}
+          <div
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              marginBottom: '1rem',
+              flexDirection: 'column',
+            }}
+          >
+            <AreaField onSelectArea={handleSelectArea} />
+            <DepartmentField onSelectDepartment={handleSelectDepartment} />
+            <TextField
+              id="description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              multiline
+              rows={4}
+              label="Description"
+              color="warning"
+              style={{ marginBottom: '1rem' }}
+            />
+          </div>
+          <Box
+            sx={{
+              display: 'flex',
+              p: 1,
+              gap: '1rem',
+              marginBottom: '1rem',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}
+          >
+            <DateSelector
+              selectedDate={reportDate}
+              onDateChange={handleReportDateChange}
+            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                label="Time"
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+                color="warning"
+              />
+            </LocalizationProvider>
+          </Box>
+          <Input
+            type="file"
+            id="photos"
+            value={photos}
+            onChange={(event) => setPhotos(event.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <CameraAltIcon sx={{ fontSize: 40 }} />
+              </InputAdornment>
+            }
+            label="Add photo"
+          />
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
+            <InputLabel id="demo-simple-select-helper-label">
+              Responsibility
+            </InputLabel>
+            <Select
+              value={responsibility}
+              label="Responsibility"
+              onChange={handleResponsibilityChange}
+              variant="outlined"
+            >
+              <MenuItem value="">Select Manager</MenuItem>
+              {managers.map((manager) => (
+                <MenuItem key={manager.id} value={manager.fullName}>
+                  {manager.fullName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
+            <InputLabel htmlFor="eventType">Event Type:</InputLabel>
+            <Select
+              id="eventType"
+              name="eventType"
+              value={eventType}
+              onChange={handleEventTypeChange}
+            >
+              {eventType.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
+            <InputLabel htmlFor="eventSubType">Event Sub Type:</InputLabel>
+            <Select
+              id="eventSubType"
+              name="eventSubType"
+              value={eventSubType}
+              onChange={handleEventSubTypeChange}
+            >
+              {eventSubType.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
             <InputLabel htmlFor="incidentType">Incident Type</InputLabel>
             <Select
-              style={{ width: "120px" }}
+              style={{ width: '120px' }}
               id="incidentType"
               name="incidentType"
               value={incidentType}
@@ -199,49 +333,14 @@ function IncidentReportForm(props) {
               <option value="IncidentType">Select Incident</option>
             </Select>
           </FormControl>
-          <StatusSelector
-            status={reportedStatus}
-            setStatus={handleReportedStatusChange}
-          />
-          <FormControl>
-            <InputLabel htmlFor="description">Description:</InputLabel>
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
+            <InputLabel style={{ marginBottom: '5%' }} htmlFor="action">
+              Action:
+            </InputLabel>
             <TextField
-            variant="filled"
-            rows={4}
-            multiline
-              type="text"
-              id="description"
-              name="description"
-              value={description}
-              onChange={handleDescriptionChange}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel htmlFor="endDate">End Date:</InputLabel>
-            <Input
-              type="date"
-              id="endDate"
-              name="endDate"
-              value={endDate}
-              onChange={handleEndDateChange}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel htmlFor="endTime">Time:</InputLabel>
-            <Input
-              type="time"
-              id="endTime"
-              name="endTime"
-              value={endTime}
-              onChange={handleEndTimeChange}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel style={{marginBottom: "5%"}} htmlFor="action">Action:</InputLabel>
-            <TextField
-             variant="filled"
-             rows={4}
-             multiline
+              variant="filled"
+              rows={4}
+              multiline
               type="text"
               id="action"
               name="action"
@@ -249,7 +348,7 @@ function IncidentReportForm(props) {
               onChange={handleActionChange}
             />
           </FormControl>
-          <FormControl>
+          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
             <InputLabel htmlFor="reason">Reason:</InputLabel>
             <Select
               id="reason"
@@ -264,13 +363,16 @@ function IncidentReportForm(props) {
               ))}
             </Select>
           </FormControl>
-        </Box>
-        <Button style={{ background: "yellow", color: "black" }} type="submit">
-          Submit
-        </Button>
-      </form>
+          <Button
+            style={{ background: 'yellow', color: 'black' }}
+            type="submit"
+          >
+            Submit
+          </Button>
+        </form>
+      </Box>
     </ThemeProvider>
   );
-}
+};
 
 export default IncidentReportForm;

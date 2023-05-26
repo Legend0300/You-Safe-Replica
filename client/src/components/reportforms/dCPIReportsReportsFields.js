@@ -1,48 +1,50 @@
-import { useState, useEffect } from "react";
-import { useLocation, useParams , Outlet , useOutletContext } from "react-router-dom";
-import { Link, useNavigate  } from "react-router-dom";
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { 
-  TextField, 
-  Radio, 
-  RadioGroup, 
-  FormControlLabel, 
-  Select, 
+import { useState, useEffect } from 'react';
+import {
+  useLocation,
+  useParams,
+  Outlet,
+  useOutletContext,
+} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Select,
   MenuItem,
-  Button 
-} from "@material-ui/core";
-
-
-
+  Button,
+} from '@material-ui/core';
 
 function DCPIReportsForm() {
   const location = useLocation();
-  const [formCompliant, setFormCompliant] = useState("");
-  const [remarks, setRemarks] = useState("");
-  const [reportedStatus, setReportedStatus] = useState("");
+  const [formCompliant, setFormCompliant] = useState('');
+  const [remarks, setRemarks] = useState('');
+  const [reportedStatus, setReportedStatus] = useState('');
   const [managers, setManagers] = useState([]);
-  const [responsibility, setResponsibility] = useState("");
-  const navigate = useNavigate()
+  const [responsibility, setResponsibility] = useState('');
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
-  const formName = location.pathname.split("/").pop().replaceAll("%20", " ");
-  
+  const formName = location.pathname.split('/').pop().replaceAll('%20', ' ');
+
   useEffect(() => {
     const fetchQuestions = async () => {
-      const response = await fetch("http://localhost:4000/api/dca");
+      const response = await fetch('http://localhost:4000/api/dca');
       const data = await response.json();
-      
+
       const matchingDCA = data.find((dca) => dca.formName === formName);
       if (matchingDCA) {
         setQuestions(matchingDCA.questions);
       }
     };
-    
+
     fetchQuestions();
   }, [formName]);
-    
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -60,14 +62,13 @@ function DCPIReportsForm() {
 
   useEffect(() => {
     const fetchManagers = async () => {
-      console.log("fetching managers");
-      const response = await fetch("http://localhost:4000/api/areaManager");
+      console.log('fetching managers');
+      const response = await fetch('http://localhost:4000/api/areaManager');
       const data = await response.json();
       setManagers(data);
     };
     fetchManagers();
   }, []);
-
 
   const handleFormCompliantChange = (event) => {
     setFormCompliant(event.target.value);
@@ -86,9 +87,6 @@ function DCPIReportsForm() {
     setResponsibility(event.target.value);
   };
 
-
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -103,28 +101,28 @@ function DCPIReportsForm() {
     };
 
     try {
-      const response = await fetch("http://localhost:4000/api/dca", {
-        method: "POST",
+      const response = await fetch('http://localhost:4000/api/dca', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Data successfully submitted:", data);
+        console.log('Data successfully submitted:', data);
 
         // Reset form fields
-        setFormCompliant("");
-        setRemarks("");
-        setReportedStatus("");
-        setResponsibility("");
+        setFormCompliant('');
+        setRemarks('');
+        setReportedStatus('');
+        setResponsibility('');
       } else {
-        console.log("Error submitting form data:", response.status);
+        console.log('Error submitting form data:', response.status);
       }
     } catch (error) {
-      console.log("Error submitting form data:", error);
+      console.log('Error submitting form data:', error);
     }
 
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -132,81 +130,80 @@ function DCPIReportsForm() {
 
   // Existing code...
 
-
   const useStyles = makeStyles((theme) => ({
     formContainer: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      backgroundColor: "#fff",
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: '#fff',
       padding: theme.spacing(2),
       borderRadius: theme.spacing(1),
-      boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.1)",
+      boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.1)',
     },
     formInput: {
       marginBottom: theme.spacing(2),
     },
     formLabel: {
-      fontWeight: "bold",
+      fontWeight: 'bold',
       marginBottom: theme.spacing(1),
     },
     buttonGroup: {
-      display: "flex",
-      justifyContent: "space-between",
+      display: 'flex',
+      justifyContent: 'space-between',
       marginTop: theme.spacing(2),
-      width: "100%",
+      width: '100%',
     },
     button: {
       marginRight: theme.spacing(1),
     },
   }));
-  
-    const classes = useStyles();
-  
-    return (
-      <div className={classes.formContainer}>
-        <form onSubmit={handleSubmit}>
-          <h1>DCA Reports</h1>
-          <h1>{formName} CheckList</h1>
-  
-          <h1>Header: {Heading}</h1>
-          <h1>Question: {Question}</h1>
-  
-          <RadioGroup
-            aria-label="Suitability"
-            name="Suitability"
-            value={formCompliant}
-            onChange={handleFormCompliantChange}
-          >
-            <FormControlLabel
-              value="complaint"
-              control={<Radio />}
-              label="Complaint"
-            />
-            <FormControlLabel
-              value="no-complaint"
-              control={<Radio />}
-              label="No Complaint"
-            />
-          </RadioGroup>
-  
-          <TextField
-            className={classes.formInput}
-            label="Status"
-            variant="outlined"
-            name="Status"
-            onChange={handleReportedStatusChange}
+
+  const classes = useStyles();
+
+  return (
+    <div className={classes.formContainer}>
+      <form onSubmit={handleSubmit}>
+        <h1>DCA Reports</h1>
+        <h1>{formName} CheckList</h1>
+
+        <h1>Header: {Heading}</h1>
+        <h1>Question: {Question}</h1>
+
+        <RadioGroup
+          aria-label="Suitability"
+          name="Suitability"
+          value={formCompliant}
+          onChange={handleFormCompliantChange}
+        >
+          <FormControlLabel
+            value="complaint"
+            control={<Radio />}
+            label="Complaint"
           />
-  
-          <TextField
-            className={classes.formInput}
-            label="Action/Remarks"
-            variant="outlined"
-            name="remarks"
-            onChange={handleRemarksChange}
+          <FormControlLabel
+            value="no-complaint"
+            control={<Radio />}
+            label="No Complaint"
           />
-  
-  <div className={classes.formInput}>
+        </RadioGroup>
+
+        <TextField
+          className={classes.formInput}
+          label="Status"
+          variant="outlined"
+          name="Status"
+          onChange={handleReportedStatusChange}
+        />
+
+        <TextField
+          className={classes.formInput}
+          label="Action/Remarks"
+          variant="outlined"
+          name="remarks"
+          onChange={handleRemarksChange}
+        />
+
+        <div className={classes.formInput}>
           <label className={classes.formLabel} htmlFor="responsibility">
             Responsibility:
           </label>
@@ -217,43 +214,44 @@ function DCPIReportsForm() {
             variant="outlined"
           >
             <MenuItem value="">Select Manager</MenuItem>
-            {Array.isArray(managers) && managers.map((manager) => (
-              <MenuItem key={manager.id} value={manager.fullName}>
-                {manager.fullName}
-              </MenuItem>
-            ))}
+            {Array.isArray(managers) &&
+              managers.map((manager) => (
+                <MenuItem key={manager.id} value={manager.fullName}>
+                  {manager.fullName}
+                </MenuItem>
+              ))}
           </Select>
         </div>
-  
-          <div className={classes.buttonGroup}>
-            <Button
-              className={classes.button}
-              type="button"
-              onClick={handleBack}
-              disabled={currentQuestionIndex === 0}
-              variant="contained"
-              color="primary"
-            >
-              Back
-            </Button>
-            <Button
-              className={classes.button}
-              type="button"
-              onClick={handleNext}
-              disabled={currentQuestionIndex === questions.length - 1}
-  variant="contained"
-  color="primary"
-  >
-  Skip
-  </Button>
-  <Button type="submit" variant="contained" color="primary">
-  Next
-  </Button>
-  </div>
-  </form>
-  <Link to={`/newreport/dca`}>Back to base page</Link>
-  </div>
+
+        <div className={classes.buttonGroup}>
+          <Button
+            className={classes.button}
+            type="button"
+            onClick={handleBack}
+            disabled={currentQuestionIndex === 0}
+            variant="contained"
+            color="primary"
+          >
+            Back
+          </Button>
+          <Button
+            className={classes.button}
+            type="button"
+            onClick={handleNext}
+            disabled={currentQuestionIndex === questions.length - 1}
+            variant="contained"
+            color="primary"
+          >
+            Skip
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
+            Next
+          </Button>
+        </div>
+      </form>
+      <Link to={`/newreport/dca`}>Back to base page</Link>
+    </div>
   );
-  };
+}
 
 export default DCPIReportsForm;
