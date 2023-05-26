@@ -89,11 +89,10 @@ function DCPIReportsForm() {
 
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    console.log({
+    const formData = {
       formName,
       Heading,
       Question,
@@ -101,16 +100,37 @@ function DCPIReportsForm() {
       remarks,
       reportedStatus,
       responsibility,
-    });
+    };
 
-    //reset
-    setFormCompliant("");
-    setRemarks("");
-    setReportedStatus("");
-    setResponsibility("");
-    setReportedStatus("");
+    try {
+      const response = await fetch("http://localhost:4000/api/dca", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Data successfully submitted:", data);
+
+        // Reset form fields
+        setFormCompliant("");
+        setRemarks("");
+        setReportedStatus("");
+        setResponsibility("");
+      } else {
+        console.log("Error submitting form data:", response.status);
+      }
+    } catch (error) {
+      console.log("Error submitting form data:", error);
+    }
+
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
+
+  // Existing code...
 
 
   const useStyles = makeStyles((theme) => ({

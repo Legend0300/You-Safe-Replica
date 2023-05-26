@@ -86,30 +86,36 @@ const HazardReportingForm = () => {
     setPhoto(event.target.files[0]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // perform submission logic here, e.g. make API call to save data
-
-    console.log({
-      selectedDepartment,
-      selectedArea,
-      reportedStatus,
-      reportDate,
-      description,
-      photos,
-      responsibility,
-    });
-
-    // reset form
-    // setDepartments([]);
-    // setAreas([]);
-    // setReportedStatus('');
-    // setReportDate('');
-    // setDescription('');
-    // setPhotos('');
-    // setResponsibility('');
-    // setSelectedDepartment('');
-    // setSelectedArea('');
+    
+    try {
+      const response = await fetch('http://localhost:4000/api/hazardreport', {
+        method: 'POST',
+        body: {
+          department: selectedDepartment,
+          area: selectedArea,
+          reportedStatus,
+          endDate: reportDate,
+          description: description,
+          photos: photos,
+          responsibility: responsibility,
+          reportDate: Date.now()
+        },
+      });
+      const data = await response.json();
+      console.log(data); // Handle the response from the backend
+      // Reset form fields
+      setSelectedDepartment('');
+      setSelectedArea('');
+      setReportedStatus('');
+      setReportDate('');
+      setDescription('');
+      setPhotos('');
+      setResponsibility('');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const useStyles = makeStyles((theme) => ({

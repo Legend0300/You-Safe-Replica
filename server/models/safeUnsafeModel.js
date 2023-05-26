@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const safeUnsafeReportSchema = new mongoose.Schema({
-  site: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Site',
-    required: true,
-  },
   department: {
     type: String,
     required: true
@@ -31,9 +26,6 @@ const safeUnsafeReportSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  startDate: {
-    type: Date
-  },
   endDate: {
     type: Date,
     required: true,
@@ -41,6 +33,13 @@ const safeUnsafeReportSchema = new mongoose.Schema({
   type: {
     type: String,
     default: "safe unsafe report"
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  photos: {
+    type: String,
   },
 
 });
