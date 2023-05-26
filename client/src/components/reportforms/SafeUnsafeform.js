@@ -1,12 +1,12 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Select, MenuItem } from '@mui/material';
 import DepartmentField from '../common/DepartmentField';
 import AreaField from '../common/AreaField';
 import DateSelector from '../common/DateSelector';
 
+
 const NewSafeUnsafeActsForm = () => {
   const [actType, setActType] = useState('');
-  // const [department, setDepartment] = useState('');
-  // const [area, setArea] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
   const [description, setDescription] = useState('');
@@ -16,20 +16,55 @@ const NewSafeUnsafeActsForm = () => {
   const [responsibility, setResponsibility] = useState('');
   const [managers, setManagers] = useState([]);
 
-
   useEffect(() => {
     const fetchManagers = async () => {
-      console.log("fetching managers");
-      const response = await fetch("http://localhost:4000/api/areaManager");
+      console.log('fetching managers');
+      const response = await fetch('http://localhost:4000/api/areaManager');
       const data = await response.json();
       setManagers(data);
     };
     fetchManagers();
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add code to submit form data to backend API
+    
+    // Create a form data object
+
+    try {
+      const response = await fetch('http://localhost:4000/api/safeUnsafeReport', {
+        method: 'POST',
+        body: {
+          actType: actType,
+          department: selectedDepartment,
+          area: selectedArea,
+          description: description,
+          date: date,
+          time: time,
+          photos: photo,
+          responsibility: responsibility,
+          description: description,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create new safe/unsafe report');
+      }
+
+      // Reset the form fields after successful submission
+      setActType('');
+      setSelectedDepartment('');
+      setSelectedArea('');
+      setDescription('');
+      setDate('');
+      setTime('');
+      setPhoto(null);
+      setResponsibility('');
+
+      console.log('New safe/unsafe report created successfully');
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const handleSelectedDepartment = (selectedDepartment) => {
@@ -48,6 +83,10 @@ const NewSafeUnsafeActsForm = () => {
     setPhoto(event.target.files[0]);
   };
 
+  const handleResponsibilityChange = (event) => {
+    setResponsibility(event.target.value);
+  };
+
   return (
     <div>
       <h1>SafeUnsafeForm</h1>
@@ -63,9 +102,9 @@ const NewSafeUnsafeActsForm = () => {
           />
         </div>
         <DepartmentField onSelectDepartment={handleSelectedDepartment} />
-        
+
         <AreaField onSelectArea={handleSelectedArea} />
-        
+
         <div>
           <label>Description:</label>
           <textarea
@@ -74,7 +113,7 @@ const NewSafeUnsafeActsForm = () => {
             required
           />
         </div>
-        
+
         <DateSelector onDateChange={handleDateChange} />
 
         <div>
@@ -95,15 +134,24 @@ const NewSafeUnsafeActsForm = () => {
             required
           />
         </div>
-        <div>
-          <label>Responsibility:</label>
-          <input
-            type="text"
-            value={responsibility}
-            onChange={(e) => setResponsibility(e.target.value)}
-            required
-          />
-        </div>
+        <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
+            <InputLabel id="demo-simple-select-helper-label">
+              Responsibility
+            </InputLabel>
+            <Select
+              value={responsibility}
+              label="Responsibility"
+              onChange={handleResponsibilityChange}
+              variant="outlined"
+            >
+              <MenuItem value="">Select Manager</MenuItem>
+              {managers.map((manager) => (
+                <MenuItem key={manager.id} value={manager.fullName}>
+                  {manager.fullName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         <button type="submit">Submit</button>
       </form>
     </div>
