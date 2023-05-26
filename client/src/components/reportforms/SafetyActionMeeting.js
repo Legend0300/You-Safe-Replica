@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DepartmentField from "../common/DepartmentField";
 import AreaField from "../common/AreaField";
 import DateSelector from "../common/DateSelector";
 import { TextField, Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import { yellow, white } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 
 const NewSafeUnsafeActsFormtest = () => {
@@ -20,6 +23,22 @@ const NewSafeUnsafeActsFormtest = () => {
   const [topic, setTopic] = useState("");
   const [outline, setOutline] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [actions, setActions] = useState([]);
+  const [raisedBy, setRaisedBy] = useState("");
+  const [managers, setManagers] = useState([]);
+  const [responsible, setResponsible] = useState("");
+  const [popUpDate, setPopUpDate] = useState("");
+  const [status, setStatus] = useState("");
+  useEffect(() => {
+    const fetchManagers = async () => {
+      console.log('fetching managers');
+      const response = await fetch('http://localhost:4000/api/areaManager');
+      const data = await response.json();
+      setManagers(data);
+    };
+    fetchManagers();
+  }, []);
 
   const theme = createTheme({
     palette: {
@@ -42,6 +61,10 @@ const NewSafeUnsafeActsFormtest = () => {
 
   const handleDateChange = (date) => {
     setDate(date);
+  };
+
+  const handlePopUpDateChange = (PopUpDate) => {
+    setPopUpDate(PopUpDate);
   };
 
   const handleAddQuestion = () => {
@@ -74,6 +97,18 @@ const NewSafeUnsafeActsFormtest = () => {
     const newParticipants = [...participants];
     newParticipants.splice(participants.length - 1, 1);
     setParticipants(newParticipants);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleResponsibleChange = (event) => {
+    setResponsible(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -211,6 +246,81 @@ const NewSafeUnsafeActsFormtest = () => {
           <Button type="submit" variant="contained" sx={{ bgcolor: yellow[500], color: "black" }}>Submit</Button>
           </form>
       </Box>
+      // adding a pop up button for a form
+      <div>
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        Acc/Rec
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Actions and Recommendations</DialogTitle>
+        <DialogContent>
+          
+          <form onSubmit={handleSubmit}>
+          <Box>
+            <label htmlFor="actions">Actions:</label>
+            <TextField
+              id="actions"
+              multiline
+              rows={4}
+              value={actions}
+              onChange={(e) => setActions(e.target.value)}
+              required
+            />
+          </Box>
+          <Box>
+            <label htmlFor="raisedBy">Raised by:</label>
+            <TextField
+              type="text"
+              id="raisedBy"
+              value={raisedBy}
+              onChange={(e) => setRaisedBy(e.target.value)}
+              required
+            />
+          </Box>
+          <Box>
+            <label htmlFor="managers">Managers:</label>
+            <Select
+              value={responsible}
+              label="Responsible"
+              onChange={handleResponsibleChange}
+              variant="outlined"
+            >
+              <MenuItem value="Manager">Manager</MenuItem>
+              {managers.map((manager) => (
+                <MenuItem key={manager.id} value={manager.fullName}>
+                  {manager}
+                </MenuItem>
+              ))}
+            </Select>
+          </Box>
+          <Box>
+            <label htmlFor="date">Target Date:</label>
+            <DateSelector selectedDate={popUpDate} onDateChange={handlePopUpDateChange} />
+          </Box>
+          <Box>
+            <label htmlFor="status">Status:</label>
+            <Select
+              value={status}
+              label="Status"
+              onChange={(e) => setStatus(e.target.value)}
+              variant="outlined"
+            >
+              <MenuItem value="inProgress">IN PROGRESS</MenuItem>
+              <MenuItem value="pending">PENDING</MenuItem>
+              <MenuItem value="completed">COMPLETED</MenuItem>
+            </Select>
+          </Box>
+              
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+
     </ThemeProvider>
   );
 };
