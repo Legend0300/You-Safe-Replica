@@ -18,7 +18,7 @@ const incidentReportSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  userType: {
+  incidentType: {
     type: String,
     required: true
   },
@@ -26,10 +26,6 @@ const incidentReportSchema = new mongoose.Schema({
     type: String,
     enum: ['In Progress', 'Pending', 'Completed'],
     default: 'In Progress'
-  },
-  startDate: {
-    type: Date,
-    required: true
   },
   endDate: {
     type: Date,
