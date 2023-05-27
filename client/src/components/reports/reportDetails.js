@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import Modal from '@mui/material/Modal';
+import DateSelector from '../common/DateSelector';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Typography } from '@mui/material';
+import { spacing } from '@mui/system';
+import { makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@mui/material/InputAdornment';
+import {
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Button,
+} from '@material-ui/core';
+import Box from '@mui/material/Box';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Input from '@mui/material/Input';
 
-const ReportDetails = ({ report, setOpen }) => {
-  const handleClose = () => {
-    setOpen(false);
-    console.log('close', setOpen);
-  };
+const ReportDetails = ({ report, open, onOpenChange }) => {
   const [reports, setReport] = useState(null);
 
   // useEffect(() => {
@@ -13,125 +34,125 @@ const ReportDetails = ({ report, setOpen }) => {
 
   // setOpen = props
   console.log('props', reports);
+  console.log('report.area', report.area);
+  console.log('report.department', report.department);
+  console.log('report.responsibility', report.responsibility);
   //console.log('report', handleViewDetails);
 
-  if (report) {
-    return <button onClick={handleClose}>hello</button>;
-  }
+  const handleChange = () => {
+    onOpenChange(false);
+    console.log('change', onOpenChange);
+    console.log('change', open);
+  };
 
-  switch (reports) {
-    /* case "hazard report":
-      return(
-     <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-             <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          bgcolor: 'background.paper',
-          p: 1,
-        }}
-      >
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: 'flex', flexDirection: 'column' }}
+  const handleOpen = () => onOpenChange(true);
+  const handleClose = () => onOpenChange(false);
+
+  switch (report.type) {
+    case 'hazard report':
+      return (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          <Typography
-            variant="h3"
-            sx={{ marginBottom: 4, textAlign: 'center' }}
-          >
-            Hazard Reporting
-          </Typography>{' '}
-          <div
-            style={{
-              display: 'flex',
-              gap: '1rem',
-              marginBottom: '1rem',
-              flexDirection: 'column',
-            }}
-          >
-            <AreaField onSelectArea={handleSelectArea} />
-            <DepartmentField onSelectDepartment={handleSelectDepartment} />
-            <TextField
-              id="description"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              multiline
-              rows={4}
-              label="Description"
-              color="warning"
-              style={{ marginBottom: '1rem' }}
-            />
-          </div>
           <Box
             sx={{
               display: 'flex',
-              p: 1,
-              gap: '1rem',
-              marginBottom: '1rem',
-              justifyContent: 'space-around',
+              justifyContent: 'center',
               alignItems: 'center',
+              height: '100vh',
             }}
           >
-            <DateSelector
-              selectedDate={reportDate}
-              onDateChange={handleReportDateChange}
-            />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <TimePicker
-                label="Time"
-                value={value}
-                onChange={(newValue) => setValue(newValue)}
-                color="warning"
-              />
-            </LocalizationProvider>
-          </Box>
-
-         
-            <Input
-              type="file"
-              id="photos"
-              value={photos}
-              onChange={(event) => setPhotos(event.target.value)}
-              endAdornment={
-                <InputAdornment position="end">
-                  <CameraAltIcon sx={{ fontSize: 40 }} />
-                </InputAdornment>
-              }
-              label="Add photo"
-            />
-          
-          <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
-            <InputLabel id="demo-simple-select-helper-label">
-              Responsibility
-            </InputLabel>
-            <Select
-              value={responsibility}
-              label="Responsibility"
-              onChange={handleResponsibilityChange}
-              variant="outlined"
+            <Box
+              sx={{
+                backgroundColor: 'background.paper',
+                p: 4,
+                minWidth: 300,
+                maxWidth: 500,
+                borderRadius: 4,
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                
+              }}
             >
-              <MenuItem value="">Select Manager</MenuItem>
-              {managers.map((manager) => (
-                <MenuItem key={manager.id} value={manager.fullName}>
-                  {manager.fullName}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Button onClick={handleClose} variant="contained" color="primary">
-            Close
-          </Button>
-        </form>
-      </Box>
-      </Modal> 
-      )
-      break;*/
+              <Typography variant="h3" sx={{ marginBottom: 4 }}>
+                Hazard Reporting
+              </Typography>
+              <FormControl sx={{ marginBottom: '1rem' }}>
+                <InputLabel id="area-select-label">Area:</InputLabel>
+                <Select
+                  labelId="area-select-label"
+                  id="area-select"
+                  value={report.area}
+                  label="Area"
+                  disabled
+                >
+                  <MenuItem value={report.area}>{report.area}</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl sx={{ marginBottom: '1rem' }}>
+                <InputLabel id="department-select-label">
+                  Department:
+                </InputLabel>
+                <Select
+                  labelId="department-select-label"
+                  id="department-select"
+                  value={report.department}
+                  label="Department"
+                  disabled
+                >
+                  <MenuItem value={report.department}>
+                    {report.department}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <TextField
+                id="description"
+                value={report.description}
+                multiline
+                rows={4}
+                label="Description"
+                color="warning"
+                style={{ marginBottom: '1rem' }}
+                disabled
+              />
+
+              <FormControl sx={{ marginBottom: '1rem' }}>
+                <InputLabel id="responsibility-select-label">
+                  Responsibility
+                </InputLabel>
+                <Select
+                  labelId="responsibility-select-label"
+                  id="responsibility-select"
+                  value={report.responsibility}
+                  label="Responsibility"
+                  variant="outlined"
+                  disabled
+                >
+                  <MenuItem value={report.responsibility}>
+                    {report.responsibility}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <Button
+                onClick={handleChange}
+                variant="contained"
+                color="primary"
+              >
+                Close
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
+      );
+      break;
     case 'Tuesday':
       //  message = 'It\'s Tuesday, already into the week!';
       break;
