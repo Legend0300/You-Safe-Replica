@@ -288,7 +288,7 @@ const NewSafeUnsafeActsFormtest = () => {
               <MenuItem value="Manager">Manager</MenuItem>
               {managers.map((manager) => (
                 <MenuItem key={manager.id} value={manager.fullName}>
-                  {manager}
+                  {manager.fullName}
                 </MenuItem>
               ))}
             </Select>

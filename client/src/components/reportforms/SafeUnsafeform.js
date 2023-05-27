@@ -97,18 +97,20 @@ const NewSafeUnsafeActsForm = () => {
     const formData = {
       department: selectedDepartment,
       area: selectedArea,
-      acttype: acttype,
+      actType: acttype,
       reportedStatus: 'Pending',
-      endDate: reportDate,
+      endDate: reportDate, // Fix: Add endDate field with the value of reportDate
       description: description,
       photos: photos,
       responsibility: responsibility,
       reportDate: Date.now(),
     };
 
+    console.log(JSON.stringify(formData));
+
     try {
       const response = await fetch(
-        'http://localhost:4000/api/safeUnsafeReport',
+        'http://localhost:4000/api/safeunsafereport',
         {
           method: 'POST',
           headers: {

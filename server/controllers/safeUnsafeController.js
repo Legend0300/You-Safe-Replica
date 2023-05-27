@@ -37,38 +37,35 @@ const getSafeUnsafeReportById = async (req, res) => {
 
 // CREATE a new site
 const createNewSafeUnsafeReport = async (req, res) => {
-    const sites = await Site.findOne({siteName: req.body.siteName});
-    const department = await Department.findOne({department: req.body.department});
-    const area = await Area.findOne({name: req.body.area});
-
-    console.log(area._id);
-    console.log(area.name);
-
-    //const safeUnsafeReports = await SafeUnsafeReport.findOne(req.body.safeUnsafeName);
-
-
-    const safeUnsafeReport = new SafeUnsafeReport({
-        site: sites._id,
-        department: department._id,
-        area: area._id,
-        actType: req.body.actType,
-        userType: req.body.userType,
-        reportedStatus: req.body.reportedStatus,
-        reportDate: req.body.reportDate,
-        dueDate: req.body.dueDate,
-
-    });
-
-
     try {
-        const newSafeUnsafeReport = await safeUnsafeReport.save();
-        res.status(201).json(newSafeUnsafeReport);
+      const site = await Site.findOne({ siteName: req.body.siteName });
+      const department = await Department.findOne({ department: req.body.department });
+  
+      if (!department) {
+        return res.status(404).json({ message: 'Cannot find department' });
+      }
+  
+      const area = await Area.findOne({ name: req.body.area });
+  
+      const safeUnsafeReport = new SafeUnsafeReport({
+        department: department.department,
+        area: area.name, // handle the case when area is not found
+        actType: req.body.actType,
+        reportedStatus: req.body.reportedStatus,
+        reportDate: Date.now(),
+        endDate: req.body.endDate,
+        description: req.body.description,
+        photos: req.body.photos,
+        responsibility: req.body.responsibility,
+      });
+  
+      const newSafeUnsafeReport = await safeUnsafeReport.save();
+      res.status(201).json(newSafeUnsafeReport);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
     }
-
-    catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-}
+  };
+  
 
 
 // UPDATE a site
