@@ -29,7 +29,7 @@ import Input from '@mui/material/Input';
 const IncidentReportForm = () => {
   const [eventType, setEventType] = useState([]);
   const [eventSubType, setEventSubType] = useState([]);
-  const [incidentType, setIncidentType] = useState('');
+  const [incidentType, setIncidentType] = useState([]);
   const [action, setAction] = useState('');
   const [reason, setReason] = useState([]);
   const [reportedStatus, setReportedStatus] = useState('');
