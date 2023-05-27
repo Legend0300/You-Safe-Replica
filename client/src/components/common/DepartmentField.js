@@ -32,30 +32,41 @@ const DepartmentField = ({ onSelectDepartment }) => {
     console.log(selectedDepartmentData.department);
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <FormControl>
-        <InputLabel id="department-select-label">Department:</InputLabel>
-        <Select
+// ...
+
+return (
+  <ThemeProvider theme={theme}>
+    <FormControl>
+      <InputLabel id="department-select-label">Department:</InputLabel>
+      <Select
         style={{ width: '100%' }}
-          labelId="department-select-label"
-          id="department-select"
-          value={departments.department}
-          onChange={handleDepartmentChange}
-          label="Department"
-        >
-          <MenuItem value="null">
-            <em>Select a department</em>
-          </MenuItem>
-          {departments.map((department) => (
+        labelId="department-select-label"
+        id="department-select"
+        value={selectedDepartment.department}
+        onChange={handleDepartmentChange}
+        label="Department"
+      >
+        <MenuItem value="null">
+          <em>Select a department</em>
+        </MenuItem>
+        {departments.length > 0 ? (
+          departments.map((department) => (
             <MenuItem key={department._id} value={department._id}>
               {department.department}
             </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </ThemeProvider>
-  );
+          ))
+        ) : (
+          <MenuItem value="" disabled>
+            Loading departments...
+          </MenuItem>
+        )}
+      </Select>
+    </FormControl>
+  </ThemeProvider>
+);
+
+// ...
+
 };
 
 export default DepartmentField;
