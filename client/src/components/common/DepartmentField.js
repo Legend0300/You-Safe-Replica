@@ -37,9 +37,9 @@ const DepartmentField = ({ onSelectDepartment }) => {
 return (
   <ThemeProvider theme={theme}>
     <FormControl>
-      <InputLabel id="department-select-label">Department:</InputLabel>
+      <InputLabel id="department-select-label" >Department:</InputLabel>
       <Select
-        style={{ width: '100%' }}
+        style={{ minWidth: '200px', width: '350px'}}
         labelId="department-select-label"
         id="department-select"
         value={selectedDepartment.department}
