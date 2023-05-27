@@ -24,12 +24,16 @@ const NewSafeUnsafeActsFormtest = () => {
   const [outline, setOutline] = useState("");
   const [questions, setQuestions] = useState([]);
   const [open, setOpen] = useState(false);
-  const [actions, setActions] = useState([]);
+  const [actions, setActions] = useState("");
   const [raisedBy, setRaisedBy] = useState("");
   const [managers, setManagers] = useState([]);
   const [responsible, setResponsible] = useState("");
   const [popUpDate, setPopUpDate] = useState("");
   const [status, setStatus] = useState("");
+  const [popUpQuestions, setPopUpQuestions] = useState([]);
+  const [popUpQuestion, setPopUpQuestion] = useState("");
+
+
   useEffect(() => {
     const fetchManagers = async () => {
       console.log('fetching managers');
@@ -99,6 +103,26 @@ const NewSafeUnsafeActsFormtest = () => {
     setParticipants(newParticipants);
   };
 
+  const handlePopUpQuestionChange = (popUpQuestion) => {
+    setPopUpQuestion(popUpQuestion);
+  };
+
+  const handleAddPopUpQuestions = () => {
+    setPopUpQuestions([...popUpQuestions,popUpQuestion]);
+  };
+
+  const handlePopUpQuestionsChange = (index, value) => {
+    const newPopUpQuestions = [...popUpQuestions];
+    newPopUpQuestions[index] = value;
+    setPopUpQuestions(newPopUpQuestions);
+  };
+
+  const handleRemovePopUpQuestions = () => {
+    const newPopUpQuestions = [...popUpQuestions];
+    newPopUpQuestions.splice(popUpQuestions.length - 1, 1);
+    setPopUpQuestions(newPopUpQuestions);
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -110,6 +134,20 @@ const NewSafeUnsafeActsFormtest = () => {
   const handleResponsibleChange = (event) => {
     setResponsible(event.target.value);
   };
+
+  const handleStatusChange = (event) => {
+    setStatus(event.target.value);
+  };
+
+  const handleRaisedByChange = (event) => {
+    setRaisedBy(event.target.value);
+  };
+
+  const handleActionsChange = (event) => {
+    setActions(event.target.value);
+  };
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -125,6 +163,12 @@ const NewSafeUnsafeActsFormtest = () => {
       outline,
       questions,
     });
+  };
+
+  const handlePopUpSubmit = (event) => {
+    event.preventDefault();
+    // setOpen(fal\se);
+    // Add code to submit form data to backend API
   };
 
   return (
@@ -246,16 +290,29 @@ const NewSafeUnsafeActsFormtest = () => {
           <Button type="submit" variant="contained" sx={{ bgcolor: yellow[500], color: "black" }}>Submit</Button>
           </form>
       </Box>
-      // adding a pop up button for a form
+      {
+        // adding a pop up button for a form 
+      }
       <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="primary" onClick={handleClickOpen}> 
         Acc/Rec
       </Button>
+      //adding a list of read only pop up questions
+      <Box>
+        {popUpQuestions.map((popUpQuestion, index) => (
+          <div key={index}>
+            <div>
+            {index}   {popUpQuestion.actions}  {popUpQuestion.raisedBy}   {popUpQuestion.responsible}   {popUpQuestion.status}
+                </div>  
+          </div>
+        ))}
+      </Box>
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Actions and Recommendations</DialogTitle>
         <DialogContent>
           
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handlePopUpSubmit}>
           <Box>
             <label htmlFor="actions">Actions:</label>
             <TextField
@@ -263,7 +320,7 @@ const NewSafeUnsafeActsFormtest = () => {
               multiline
               rows={4}
               value={actions}
-              onChange={(e) => setActions(e.target.value)}
+              onChange={handleActionsChange}
               required
             />
           </Box>
@@ -273,7 +330,7 @@ const NewSafeUnsafeActsFormtest = () => {
               type="text"
               id="raisedBy"
               value={raisedBy}
-              onChange={(e) => setRaisedBy(e.target.value)}
+              onChange={handleRaisedByChange}
               required
             />
           </Box>
@@ -286,11 +343,17 @@ const NewSafeUnsafeActsFormtest = () => {
               variant="outlined"
             >
               <MenuItem value="Manager">Manager</MenuItem>
-              {managers.map((manager) => (
+              {managers.length > 0 ? (
+                
+              managers.map((manager) => (
                 <MenuItem key={manager.id} value={manager.fullName}>
                   {manager.fullName}
                 </MenuItem>
-              ))}
+              ))
+              ) : (
+                <MenuItem value="">No managers found</MenuItem>
+              )
+            }
             </Select>
           </Box>
           <Box>
@@ -302,7 +365,7 @@ const NewSafeUnsafeActsFormtest = () => {
             <Select
               value={status}
               label="Status"
-              onChange={(e) => setStatus(e.target.value)}
+              onChange={handleStatusChange}
               variant="outlined"
             >
               <MenuItem value="inProgress">IN PROGRESS</MenuItem>
@@ -310,6 +373,8 @@ const NewSafeUnsafeActsFormtest = () => {
               <MenuItem value="completed">COMPLETED</MenuItem>
             </Select>
           </Box>
+          //add a submit button
+          
               
           </form>
         </DialogContent>
@@ -317,6 +382,16 @@ const NewSafeUnsafeActsFormtest = () => {
           <Button onClick={handleClose} color="primary">
             Close
           </Button>
+          
+          <Button type="submit" onClick={()=>{
+            handleClose();
+            handleAddPopUpQuestions();
+            handlePopUpQuestionChange({actions,raisedBy,managers,responsible,popUpDate,status});
+          }
+             } variant="contained" sx={{ bgcolor: yellow[500], color: "black" }}>
+            Submit
+          </Button>
+          
         </DialogActions>
       </Dialog>
     </div>

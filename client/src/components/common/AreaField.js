@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// Create a custom MUI theme with yellow and white colors
 const theme = createTheme({
   palette: {
     primary: {
@@ -47,11 +46,17 @@ const AreaField = ({ onSelectArea }) => {
           <MenuItem value="">
             <em>Select an area</em>
           </MenuItem>
-          {areas.map((area) => (
-            <MenuItem key={area._id} value={area._id}>
-              {area.name}
+          {areas.length > 0 ? (
+            areas.map((area) => (
+              <MenuItem key={area._id} value={area._id}>
+                {area.name}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem value="" disabled>
+              Loading areas...
             </MenuItem>
-          ))}
+          )}
         </Select>
       </FormControl>
     </ThemeProvider>

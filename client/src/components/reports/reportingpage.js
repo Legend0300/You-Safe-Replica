@@ -48,6 +48,10 @@ const ReportingPage = () => {
     setOpen(true);
   };
 
+  const handleOpenChange =() => {
+    setOpen(false);
+  }
+
   console.log(reports);
   return (
     <ThemeProvider theme={theme}>
@@ -133,7 +137,7 @@ const ReportingPage = () => {
 
               <Button
                 variant="contained"
-                onClick={() => handleViewDetails(report, open)}
+                onClick={() => handleViewDetails(report)}
                 sx={{
                   width: '100%',
                   backgroundColor: 'transparent',
@@ -151,7 +155,7 @@ const ReportingPage = () => {
         </Stack>
 
         {selectedReport ? (
-          <ReportDetails report={selectedReport} setOpen={setOpen} />
+          <ReportDetails report={selectedReport} open={open} onOpenChange={handleOpenChange} />
         ) : (
           <Typography variant="body1" gutterBottom>
             Select a report to view details
