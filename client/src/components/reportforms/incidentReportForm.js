@@ -42,6 +42,7 @@ const IncidentReportForm = () => {
   const [managers, setManagers] = useState([]);
   const [photo, setPhoto] = useState(null);
 
+  
   const theme = createTheme({
     palette: {
       primary: {
@@ -52,6 +53,24 @@ const IncidentReportForm = () => {
       },
     },
   });
+  
+useEffect(() => {
+
+
+  setEventType(
+    ["Injury", "Near Miss", "Property Damage", "Environmental"]
+  )
+
+  setEventSubType(
+    ["SubInjury", "SubNear Miss", "SubProperty Damage", "SubEnvironmental"]
+  )
+
+  setIncidentType(
+    ["IIInjury", "IINear Miss", "IIProperty Damage", "IIEnvironmental"]
+  )
+}, [eventType, eventSubType, incidentType])
+
+
 
   useEffect(() => {
     const fetchManagers = async () => {
@@ -331,6 +350,12 @@ const IncidentReportForm = () => {
               onChange={handleIncidentTypeChange}
             >
               <option value="IncidentType">Select Incident</option>
+              {incidentType.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            
             </Select>
           </FormControl>
           <FormControl sx={{ mt: 3, mb: 3, display: 'flex' }}>
