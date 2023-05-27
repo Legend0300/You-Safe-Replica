@@ -235,19 +235,27 @@ content-type: application/json
 
 {
   "formName": "Conveyor Safety",
-  "status" : "Enabled",
-  "questions" : 
-  [
+  "type": "DCA",
+  "questions": [
     {
-    "Heading" : "Conveyor Safety",
-    "Question"  : "Is the conveyor belt in good condition?"
+      "Heading": "Conveyor Safety",
+      "Question": "Is the conveyor belt in good condition?",
+      "reportedStatus": "In Progress",
+      "endDate": "2023-05-27T00:00:00Z",
+      "responsibility": "John Doe",
+      "actionRemarks": "N/A"
     },
     {
-    "Heading" : "Conveyor Safety :p",
-    "Question"  : "Is the conveyor belt in good condition? 0w0"
+      "Heading": "Conveyor Safety :p",
+      "Question": "Is the conveyor belt in good condition? 0w0",
+      "reportedStatus": "In Progress",
+      "endDate": "2023-05-27T00:00:00Z",
+      "responsibility": "John Doe",
+      "actionRemarks": "N/A"
     }
-  ] 
+  ]
 }
+
 
 ###
 POST http://localhost:4000/api/dca
