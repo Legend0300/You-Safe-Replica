@@ -38,8 +38,9 @@
       type: String,
       required: true,
     },
-    photos: {
-      type: String,
+    imagesURL: {
+      type:[String],
+      default: ["https://cdn-icons-png.flaticon.com/512/6002/6002428.png"]
     },
 
   });

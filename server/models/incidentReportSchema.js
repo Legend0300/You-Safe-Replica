@@ -14,6 +14,10 @@ const incidentReportSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  imagesURL: {
+    type:[String],
+    default: ["https://cdn-icons-png.flaticon.com/512/6002/6002428.png"]
+  },
   eventSubType: {
     type: String,
     required: true
