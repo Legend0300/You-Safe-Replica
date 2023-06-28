@@ -26,6 +26,7 @@ function DateSelector({ selectedDate, onDateChange }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <DatePicker
+    style={{ minWidth: '50%'}}
       label="Date"
       value={value}
       onChange={handleDateChange}

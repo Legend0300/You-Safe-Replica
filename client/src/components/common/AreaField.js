@@ -36,7 +36,7 @@ const AreaField = ({ onSelectArea }) => {
       <FormControl>
         <InputLabel id="area-select-label">Area:</InputLabel>
         <Select
-          style={{ width: '100%' }}
+          style={{ minWidth: '200px', width: '350px'}}
           labelId="area-select-label"
           id="area-select"
           value={selectedArea}

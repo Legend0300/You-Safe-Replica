@@ -181,166 +181,180 @@ const NewSafeUnsafeActsFormtest = () => {
         height="100vh"
       >
         <Typography variant="h1">SafetyActionForm</Typography>
-        <form onSubmit={handleSubmit}>
-          <DepartmentField onSelectDepartment={handleSelectDepartment} />
-          <AreaField onSelectArea={handleSelectArea} />
-          <DateSelector selectedDate={date} onDateChange={handleDateChange} />
-          <Box>
-            <Typography>Time:</Typography>
-            <TextField
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              required
-            />
-          </Box>
-          <Box>
-            <label htmlFor="leader">Leader:</label>
-            <TextField
-              type="text"
-              id="leader"
-              value={leader}
-              onChange={(e) => setLeader(e.target.value)}
-              required
-            />
-          </Box>
-          <Box>
-            <Typography variant="h2">Participants</Typography>
-            {participants.map((participant, index) => (
-              <div key={index}>
-                <label htmlFor={`participant-${index}`}>Participant:</label>
-                <TextField
-                  id={`participant-${index}`}
-                  type="text"
-                  value={participant}
-                  onChange={(event) =>
-                    handleParticipantChange(index, event.target.value)
-                  }
+          <form onSubmit={handleSubmit}>
+            <div style={{width: '100%'}}>
+            <DepartmentField onSelectDepartment={handleSelectDepartment} />
+            </div>
+            <div style={{width: '100%'}}>
+            <AreaField onSelectArea={handleSelectArea} />
+            </div>
+            <div style={{width: '100%', display:'flex'}}>
+              <div style={{width: '54.649%'}}>
+            <DateSelector selectedDate={date} onDateChange={handleDateChange} fullWidth/>
+            </div>
+            <Box sx={{width: '40%'}}>
+              <TextField
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                
+                required
                 />
-              </div>
-            ))}
-          </Box>
-          <Box>
-            <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={() => handleAddParticipant()}>
-              Add Participant
-            </Button>
+            </Box>
+                </div>
+            <Box>
+              <TextField
+                type="text"
+                id="leader"
+                value={leader}
+                label="Leader"
+                style={{width: '89.41%'}}
+                onChange={(e) => setLeader(e.target.value)}
+                required
+              />
+            </Box>
+            <Box>
+              <Typography variant="h2">Participants</Typography>
+              {participants.map((participant, index) => (
+                <div key={index}>
+                  <label htmlFor={`participant-${index}`}>Participant:</label>
+                  <TextField
+                    id={`participant-${index}`}
+                    type="text"
+                    value={participant}
+                    onChange={(event) =>
+                      handleParticipantChange(index, event.target.value)
+                    }
+                  />
+                </div>
+              ))}
+            </Box>
+            <Box>
+              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={() => handleAddParticipant()}>
+                Add Participant
+              </Button>
 
-            <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={() => handleRemoveParticipant()}>
-              Remove Participant
-            </Button>
+              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={() => handleRemoveParticipant()}>
+                Remove Participant
+              </Button>
+            </Box>
+            <Box>
+              <label htmlFor="topic">Topic:</label>
+              <TextField
+                type="text"
+                id="topic"
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                required
+              />
+            </Box>
+            <Box>
+              <label htmlFor="outline">Outline of Facts:</label>
+              <TextField
+                id="outline"
+                multiline
+                rows={4}
+                value={outline}
+                onChange={(e) => setOutline(e.target.value)}
+                required
+              />
+            </Box>
+            <Box>
+              <Typography variant="h2">Questions</Typography>
+              {questions.map((question, index) => (
+                <div key={index}>
+                  <label htmlFor={`question-heading-${index}`}>
+                    Question Heading:
+                  </label>
+                  <TextField
+                    id={`question-heading-${index}`}
+                    type="text"
+                    value={question.heading}
+                    onChange={(event) =>
+                      handleQuestionChange(index, "heading", event.target.value)
+                    }
+                  />
+                  <br />
+                  <label htmlFor={`question-${index}`}>Question:</label>
+                  <TextField
+                    id={`question-${index}`}
+                    type="text"
+                    value={question.question}
+                    onChange={(event) =>
+                      handleQuestionChange(index, "question", event.target.value)
+                    }
+                  />
+                  <br />
+                </div>
+              ))}
+            </Box>
+            <Box>
+              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={handleAddQuestion}>
+                Add Question
+              </Button>
+              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={handleRemoveQuestion}>
+                Remove Question
+              </Button>
+            </Box>
+            <Button type="submit" variant="contained" sx={{ bgcolor: yellow[500], color: "black" }}>Submit</Button>
+            </form>
           </Box>
-          <Box>
-            <label htmlFor="topic">Topic:</label>
-            <TextField
-              type="text"
-              id="topic"
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              required
-            />
-          </Box>
-          <Box>
-            <label htmlFor="outline">Outline of Facts:</label>
-            <TextField
-              id="outline"
-              multiline
-              rows={4}
-              value={outline}
-              onChange={(e) => setOutline(e.target.value)}
-              required
-            />
-          </Box>
-          <Box>
-            <Typography variant="h2">Questions</Typography>
-            {questions.map((question, index) => (
-              <div key={index}>
-                <label htmlFor={`question-heading-${index}`}>
-                  Question Heading:
-                </label>
-                <TextField
-                  id={`question-heading-${index}`}
-                  type="text"
-                  value={question.heading}
-                  onChange={(event) =>
-                    handleQuestionChange(index, "heading", event.target.value)
-                  }
-                />
-                <br />
-                <label htmlFor={`question-${index}`}>Question:</label>
-                <TextField
-                  id={`question-${index}`}
-                  type="text"
-                  value={question.question}
-                  onChange={(event) =>
-                    handleQuestionChange(index, "question", event.target.value)
-                  }
-                />
-                <br />
-              </div>
-            ))}
-          </Box>
-          <Box>
-            <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={handleAddQuestion}>
-              Add Question
-            </Button>
-            <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={handleRemoveQuestion}>
-              Remove Question
-            </Button>
-          </Box>
-          <Button type="submit" variant="contained" sx={{ bgcolor: yellow[500], color: "black" }}>Submit</Button>
-          </form>
-      </Box>
-      {
-        // adding a pop up button for a form 
-      }
-      <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}> 
-        Acc/Rec
-      </Button>
-      //adding a list of read only pop up questions
-      <Box>
-        {popUpQuestions.map((popUpQuestion, index) => (
-          <div key={index}>
-            <div>
-            {index}   {popUpQuestion.actions}  {popUpQuestion.raisedBy}   {popUpQuestion.responsible}   {popUpQuestion.status}
-                </div>  
-          </div>
-        ))}
-      </Box>
-
+        {
+          // adding a pop up button for a form 
+        }
+        <div>
+          <div>
+        <Button variant="contained" sx={{background: 'white'}} onClick={handleClickOpen}> 
+          Actions and Recommendations
+        </Button>
+        <Box sx={{borderColor:'black' , width: '100%' }}>
+          {popUpQuestions.map((popUpQuestion, index) => (
+            <div key={index} style={{borderColor:'black' , width: '100%'}}>  
+              {index}   {popUpQuestion.actions}  {popUpQuestion.raisedBy}   {popUpQuestion.responsible}   {popUpQuestion.status}
+            </div>
+          ))}
+        </Box>
+      </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Actions and Recommendations</DialogTitle>
         <DialogContent>
           
-          <form onSubmit={handlePopUpSubmit}>
-          <Box>
-            <label htmlFor="actions">Actions:</label>
+          <form onSubmit={handlePopUpSubmit} style={{width: '100%'}}>
+          <Box sx={{width: '100%'}}>
             <TextField
               id="actions"
               multiline
               rows={4}
+              fullWidth
               value={actions}
               onChange={handleActionsChange}
               required
             />
           </Box>
+          <div>
           <Box>
-            <label htmlFor="raisedBy">Raised by:</label>
+            <div style={{width: '100%', marginTop: '6.25%' , marginBottom: '6.25%'}}>
+            <label htmlFor="raisedBy" style={{fontSize: 18 , fontWeight: 10,}}>Raised by:</label>
+            </div>
             <TextField
               type="text"
               id="raisedBy"
               value={raisedBy}
               onChange={handleRaisedByChange}
+              fullWidth
               required
             />
           </Box>
           <Box>
-            <label htmlFor="managers">Managers:</label>
+          <div style={{width: '100%', marginTop: '6.25%' , marginBottom: '6.25%'}}>
+            <label htmlFor="managers" style={{fontSize: 18 , fontWeight: 10}}>Managers:</label>
+            </div>
             <Select
               value={responsible}
               label="Responsible"
               onChange={handleResponsibleChange}
               variant="outlined"
+              fullWidth
             >
               <MenuItem value="Manager">Manager</MenuItem>
               {managers.length > 0 ? (
@@ -357,25 +371,28 @@ const NewSafeUnsafeActsFormtest = () => {
             </Select>
           </Box>
           <Box>
-            <label htmlFor="date">Target Date:</label>
-            <DateSelector selectedDate={popUpDate} onDateChange={handlePopUpDateChange} />
+          <div style={{width: '100%', marginTop: '6.25%' , marginBottom: '6.25%'}}>
+            <label htmlFor="date" style={{fontSize: 18 , fontWeight: 10}}>Target Date:</label>
+            </div>
+            <DateSelector selectedDate={popUpDate} onDateChange={handlePopUpDateChange} fullWidth />
           </Box>
           <Box>
-            <label htmlFor="status">Status:</label>
+          <div style={{width: '100%', marginTop: '6.25%' , marginBottom: '6.25%'}}>
+            <label htmlFor="status" style={{fontSize: 18 , fontWeight: 10}}>Status:</label>
+            </div>
             <Select
               value={status}
               label="Status"
               onChange={handleStatusChange}
               variant="outlined"
+              fullWidth
             >
               <MenuItem value="inProgress">IN PROGRESS</MenuItem>
               <MenuItem value="pending">PENDING</MenuItem>
               <MenuItem value="completed">COMPLETED</MenuItem>
             </Select>
           </Box>
-          //add a submit button
-          
-              
+          </div>    
           </form>
         </DialogContent>
         <DialogActions>
