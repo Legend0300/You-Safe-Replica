@@ -153,17 +153,122 @@ const ReportDetails = ({ report, open, onOpenChange }) => {
         </Modal>
       );
       break;
-    case 'Tuesday':
-      //  message = 'It\'s Tuesday, already into the week!';
+    case 'safe usafe report':
+      return (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100vh',
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: 'background.paper',
+                p: 4,
+                minWidth: 300,
+                maxWidth: 500,
+                borderRadius: 4,
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                
+              }}
+            >
+              <Typography variant="h3" sx={{ marginBottom: 4 }}>
+                Hazard Reporting
+              </Typography>
+              <FormControl sx={{ marginBottom: '1rem' }}>
+                <InputLabel id="area-select-label">Area:</InputLabel>
+                <Select
+                  labelId="area-select-label"
+                  id="area-select"
+                  value={report.area}
+                  label="Area"
+                  disabled
+                >
+                  <MenuItem value={report.area}>{report.area}</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl sx={{ marginBottom: '1rem' }}>
+                <InputLabel id="department-select-label">
+                  Department:
+                </InputLabel>
+                <Select
+                  labelId="department-select-label"
+                  id="department-select"
+                  value={report.department}
+                  label="Department"
+                  disabled
+                >
+                  <MenuItem value={report.department}>
+                    {report.department}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <TextField
+                id="description"
+                value={report.description}
+                multiline
+                rows={4}
+                label="Description"
+                color="warning"
+                style={{ marginBottom: '1rem' }}
+                disabled
+              />
+
+              <FormControl sx={{ marginBottom: '1rem' }}>
+                <InputLabel id="responsibility-select-label">
+                  Responsibility
+                </InputLabel>
+                <Select
+                  labelId="responsibility-select-label"
+                  id="responsibility-select"
+                  value={report.responsibility}
+                  label="Responsibility"
+                  variant="outlined"
+                  disabled
+                >
+                  <MenuItem value={report.responsibility}>
+                    {report.responsibility}
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <Button
+                onClick={handleChange}
+                variant="contained"
+                color="primary"
+              >
+                Close
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
+      );
       break;
-    case 'Wednesday':
+    case 'incident report':
+     
       //   message = 'It\'s Wednesday, halfway through the week!';
       break;
-    case 'Thursday':
+    case 'DCA':
       //    message = 'It\'s Thursday, almost there!';
       break;
-    case 'Friday':
+    case 'PI':
       //     message = 'It\'s Friday, weekend is near!';
+      break;
+    case 'safety action meeting':
+      //    message = 'It\'s Saturday, go out and have some fun!';
       break;
     default:
     //    message = 'It\'s the weekend, time to relax!';

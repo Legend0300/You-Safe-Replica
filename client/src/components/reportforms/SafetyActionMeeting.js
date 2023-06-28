@@ -5,7 +5,7 @@ import DateSelector from "../common/DateSelector";
 import { TextField, Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
-import { yellow } from "@mui/material/colors";
+import { yellow, white } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -294,18 +294,20 @@ const NewSafeUnsafeActsFormtest = () => {
         // adding a pop up button for a form 
       }
       <div>
-        <div>
-      <Button variant="contained" sx={{background: 'white'}} onClick={handleClickOpen}> 
-        Actions and Recommendations
+      <Button variant="contained" color="primary" onClick={handleClickOpen}> 
+        Acc/Rec
       </Button>
-        <Box sx={{borderColor:'black' , width: '100%' }}>
-          {popUpQuestions.map((popUpQuestion, index) => (
-            <div key={index} style={{borderColor:'black' , width: '100%'}}>  
-              {index}   {popUpQuestion.actions}  {popUpQuestion.raisedBy}   {popUpQuestion.responsible}   {popUpQuestion.status}
-            </div>
-          ))}
-        </Box>
-      </div>
+      //adding a list of read only pop up questions
+      <Box>
+        {popUpQuestions.map((popUpQuestion, index) => (
+          <div key={index}>
+            <div>
+            {index}   {popUpQuestion.actions}  {popUpQuestion.raisedBy}   {popUpQuestion.responsible}   {popUpQuestion.status}
+                </div>  
+          </div>
+        ))}
+      </Box>
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Actions and Recommendations</DialogTitle>
         <DialogContent>
