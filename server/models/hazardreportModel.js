@@ -28,8 +28,9 @@
       type: String,
       required: true
     },
-    photos: {
-      type: String,
+    imagesURL: {
+      type:[String],
+      default: ["https://cdn-icons-png.flaticon.com/512/6002/6002428.png"]
     },
     responsibility: {
       type: String,
@@ -45,3 +46,4 @@
   const HazardReport = mongoose.models.HazardReport || mongoose.model('HazardReport', hazardReportSchema);
 
   module.exports = HazardReport;
+  
