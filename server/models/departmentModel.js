@@ -12,8 +12,8 @@ const departmentSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Enalbed', 'Disabled'],
-    default: 'Enalbed'
+    enum: ['Enabled', 'Disabled'],
+    default: 'Enabled'
   }
 });
 
