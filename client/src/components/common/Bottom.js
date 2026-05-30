@@ -10,21 +10,19 @@ export default function SimpleBottomNavigation() {
   return (
     <Box sx={{ width: '100%', display: { xs: 'block', md: 'none' } }}>
       <BottomNavigation showLabels sx={{display:'flex', justifyContent: 'space-evenly', justifyItems: 'center'}}>
-        <Link to="/reports">
-          <BottomNavigationAction
-            showLabel="true"
-            label="My Reportings"
-            icon={<CalendarMonthIcon />}
-          />
-        </Link>
+        <BottomNavigationAction
+          component={Link}
+          to="/reports"
+          label="My Reportings"
+          icon={<CalendarMonthIcon />}
+        />
 
-        <Link to="/home">
-          <BottomNavigationAction
-            showLabel="true"
-            label="My Profile"
-            icon={<PersonIcon />}
-          />
-        </Link>
+        <BottomNavigationAction
+          component={Link}
+          to="/home"
+          label="My Profile"
+          icon={<PersonIcon />}
+        />
       </BottomNavigation>
     </Box>
   );

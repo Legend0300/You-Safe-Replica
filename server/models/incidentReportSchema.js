@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("../lib/mongoose");
 
 // Define Incident Report Schema
 const incidentReportSchema = new mongoose.Schema({

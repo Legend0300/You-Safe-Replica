@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose } = require("../lib/mongoose");
 const dotenv = require('dotenv').config();
 
 const connect = async () => {

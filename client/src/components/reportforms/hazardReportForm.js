@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import DepartmentField from '../common/DepartmentField';
 import AreaField from '../common/AreaField';
 import DateSelector from '../common/DateSelector';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import appTheme from '../../theme';
+import FormLayout from '../common/FormLayout';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { Typography } from '@mui/material';
-import { spacing } from '@mui/system';
-import { makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import {
   TextField,
@@ -14,7 +14,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Button,
-} from '@material-ui/core';
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -37,17 +37,6 @@ const HazardReportingForm = () => {
   const [managers, setManagers] = useState([]);
   const [photo, setPhoto] = useState(null);
   const [time, setTime] = useState('');
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#ffb300', // Yellow color
-      },
-      background: {
-        default: '#ffffff', // White color
-      },
-    },
-  });
 
   useEffect(() => {
     const fetchManagers = async () => {
@@ -124,36 +113,6 @@ const HazardReportingForm = () => {
     }
   };
 
-  const useStyles = makeStyles((theme) => ({
-    formContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      padding: theme.spacing(2),
-      borderRadius: theme.spacing(1),
-      boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.1)',
-    },
-    formInput: {
-      marginBottom: theme.spacing(2),
-    },
-    formLabel: {
-      fontWeight: 'bold',
-      marginBottom: theme.spacing(1),
-    },
-    buttonGroup: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: theme.spacing(2),
-      width: '100%',
-    },
-    button: {
-      marginRight: theme.spacing(1),
-    },
-  }));
-
-  const classes = useStyles();
-
   const [value, setValue] = React.useState();
 
   const [age, setAge] = React.useState('');
@@ -163,23 +122,15 @@ const HazardReportingForm = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          bgcolor: 'background.paper',
-          p: 1,
-        }}
-      >
+    <ThemeProvider theme={appTheme}>
+      <FormLayout>
         <form
           onSubmit={handleSubmit}
           style={{ display: 'flex', flexDirection: 'column' }}
         >
           <Typography
-            variant="h3"
-            sx={{ marginBottom: 4, textAlign: 'center' }}
+            variant="h4"
+            sx={{ mb: 1, textAlign: 'center' }}
           >
             Hazard Reporting
           </Typography>{' '}
@@ -254,17 +205,17 @@ const HazardReportingForm = () => {
             >
               <MenuItem value="">Select Manager</MenuItem>
               {managers.map((manager) => (
-                <MenuItem key={manager.id} value={manager.fullName}>
+                <MenuItem key={manager._id} value={manager.fullName}>
                   {manager.fullName}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="secondary" size="large" sx={{ mt: 1 }}>
             Submit
           </Button>
         </form>
-      </Box>
+      </FormLayout>
     </ThemeProvider>
   );
 };

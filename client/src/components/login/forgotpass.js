@@ -15,29 +15,35 @@ function ForgotPassword() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [variant, setVariant] = useState('contained');
-  const [token, setToken] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setVariant('outlined');
-    setLoading(true);
+    setError('');
+
     if (!username) {
       setError('Please enter a username');
-      setUsername('');
-      setLoading(false);
-      setVariant('contained');
       return;
     }
-    else if (!username.includes('@')) {
-        setError('Please enter a valid email address');
-        setUsername('');
-        setLoading(false);
-        setVariant('contained');
-        return;
-        }
+    if (!username.includes('@')) {
+      setError('Please enter a valid email address');
+      return;
+    }
 
-
-
+    setVariant('outlined');
+    setLoading(true);
+    try {
+      await fetch('http://localhost:4000/api/user/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: username }),
+      });
+    } catch (err) {
+      // network errors are non-fatal for this demo flow
+    } finally {
+      setLoading(false);
+      setVariant('contained');
+    }
+  };
 
   return (
     <Box
@@ -45,13 +51,13 @@ function ForgotPassword() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        minHeight: '100vh',
+        p: 2,
       }}
     >
-      <Card sx={{ maxWidth: 300 }}>
-        <CardMedia sx={{ height: 260, backgroundSize: 'contain' }} image={HealthSafety} title="U Safe" />
+      <Card elevation={6} sx={{ minWidth: 320, maxWidth: 360, borderRadius: 3, overflow: 'hidden' }}>
+        <CardMedia sx={{ height: 220, backgroundSize: 'contain' }} image={HealthSafety} title="U Safe" />
         <CardContent sx={{ mt: 1 }}>
-          {' '}
           <Box
             component={'form'}
             display="flex"
@@ -61,36 +67,39 @@ function ForgotPassword() {
             noValidate
             autoComplete="off"
             gap={2}
+            onSubmit={handleSubmit}
           >
-            <Typography variant="body1" textAlign="center" gutterBottom  >
-        Enter your email address and we'll send you a link to reset your password.
-      </Typography>
+            <Typography variant="h6" textAlign="center">
+              Reset your password
+            </Typography>
+            <Typography variant="body2" color="text.secondary" textAlign="center">
+              Enter your email address and we'll send you a link to reset your password.
+            </Typography>
             <TextField
-              id="outlined-basic"
-              label="email"
+              label="Email"
               variant="standard"
               autoComplete="off"
               error={Boolean(error)}
               helperText={error}
               required
+              fullWidth
               value={username}
               type="email"
               color="warning"
               onChange={(event) => setUsername(event.target.value)}
             />
-            <CardActions
-              sx={{ display: 'flex', justifyContent: 'center', mt: 2, flexDirection: 'column' }}
-            >
+            <CardActions sx={{ display: 'flex', justifyContent: 'center', mt: 1, flexDirection: 'column', width: '100%' }}>
               <Button
                 type="submit"
                 variant={variant}
                 size="medium"
                 color="warning"
-                onClick={handleSubmit}
-                sx={{px:2 , py:1}}
+                fullWidth
+                sx={{ px: 2, py: 1 }}
               >
-                {loading ? <CircularProgress color="warning" size={15} sx={{p:1}} /> : 'Reset Password'}
+                {loading ? <CircularProgress color="warning" size={15} sx={{ p: 1 }} /> : 'Reset Password'}
               </Button>
+              <Button href="/login" sx={{ mt: 1 }}>Back to login</Button>
             </CardActions>
           </Box>
         </CardContent>
@@ -98,8 +107,5 @@ function ForgotPassword() {
     </Box>
   );
 }
-}
 
 export default ForgotPassword;
-
-

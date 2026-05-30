@@ -1,304 +1,103 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Modal from '@mui/material/Modal';
-import DateSelector from '../common/DateSelector';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Typography } from '@mui/material';
-import { spacing } from '@mui/system';
-import { makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@mui/material/InputAdornment';
-import {
-  TextField,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  Button,
-} from '@material-ui/core';
 import Box from '@mui/material/Box';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Input from '@mui/material/Input';
+import { Typography, Chip, Divider, Button, Stack, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+
+const STATUS_COLOR = {
+  'In Progress': 'warning',
+  Pending: 'default',
+  Completed: 'success',
+  Enabled: 'info',
+  Disabled: 'default',
+  reported: 'success',
+};
+
+const Field = ({ label, value }) =>
+  value ? (
+    <Box>
+      <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>
+        {label}
+      </Typography>
+      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+        {value}
+      </Typography>
+    </Box>
+  ) : null;
 
 const ReportDetails = ({ report, open, onOpenChange }) => {
-  const [reports, setReport] = useState(null);
-
-  // useEffect(() => {
-  //    setReport(props.report);
-  //  }, [props.report]);
-
-  // setOpen = props
-  console.log('props', reports);
-  console.log('report.area', report.area);
-  console.log('report.department', report.department);
-  console.log('report.responsibility', report.responsibility);
-  //console.log('report', handleViewDetails);
-
-  const handleChange = () => {
-    onOpenChange(false);
-    console.log('change', onOpenChange);
-    console.log('change', open);
-  };
-
-  const handleOpen = () => onOpenChange(true);
-  const handleClose = () => onOpenChange(false);
-
-  switch (report.type) {
-    case 'hazard report':
-      return (
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '100vh',
-            }}
-          >
-            <Box
-              sx={{
-                backgroundColor: 'background.paper',
-                p: 4,
-                minWidth: 300,
-                maxWidth: 500,
-                borderRadius: 4,
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                
-              }}
-            >
-              <Typography variant="h3" sx={{ marginBottom: 4 }}>
-                Hazard Reporting
-              </Typography>
-              <FormControl sx={{ marginBottom: '1rem' }}>
-                <InputLabel id="area-select-label">Area:</InputLabel>
-                <Select
-                  labelId="area-select-label"
-                  id="area-select"
-                  value={report.area}
-                  label="Area"
-                  disabled
-                >
-                  <MenuItem value={report.area}>{report.area}</MenuItem>
-                </Select>
-              </FormControl>
-
-              <FormControl sx={{ marginBottom: '1rem' }}>
-                <InputLabel id="department-select-label">
-                  Department:
-                </InputLabel>
-                <Select
-                  labelId="department-select-label"
-                  id="department-select"
-                  value={report.department}
-                  label="Department"
-                  disabled
-                >
-                  <MenuItem value={report.department}>
-                    {report.department}
-                  </MenuItem>
-                </Select>
-              </FormControl>
-
-              <TextField
-                id="description"
-                value={report.description}
-                multiline
-                rows={4}
-                label="Description"
-                color="warning"
-                style={{ marginBottom: '1rem' }}
-                disabled
-              />
-
-              <FormControl sx={{ marginBottom: '1rem' }}>
-                <InputLabel id="responsibility-select-label">
-                  Responsibility
-                </InputLabel>
-                <Select
-                  labelId="responsibility-select-label"
-                  id="responsibility-select"
-                  value={report.responsibility}
-                  label="Responsibility"
-                  variant="outlined"
-                  disabled
-                >
-                  <MenuItem value={report.responsibility}>
-                    {report.responsibility}
-                  </MenuItem>
-                </Select>
-              </FormControl>
-
-              <Button
-                onClick={handleChange}
-                variant="contained"
-                color="primary"
-              >
-                Close
-              </Button>
-            </Box>
-          </Box>
-        </Modal>
-      );
-      break;
-    case 'safe usafe report':
-      return (
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '100vh',
-            }}
-          >
-            <Box
-              sx={{
-                backgroundColor: 'background.paper',
-                p: 4,
-                minWidth: 300,
-                maxWidth: 500,
-                borderRadius: 4,
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                
-              }}
-            >
-              <Typography variant="h3" sx={{ marginBottom: 4 }}>
-                Hazard Reporting
-              </Typography>
-              <FormControl sx={{ marginBottom: '1rem' }}>
-                <InputLabel id="area-select-label">Area:</InputLabel>
-                <Select
-                  labelId="area-select-label"
-                  id="area-select"
-                  value={report.area}
-                  label="Area"
-                  disabled
-                >
-                  <MenuItem value={report.area}>{report.area}</MenuItem>
-                </Select>
-              </FormControl>
-
-              <FormControl sx={{ marginBottom: '1rem' }}>
-                <InputLabel id="department-select-label">
-                  Department:
-                </InputLabel>
-                <Select
-                  labelId="department-select-label"
-                  id="department-select"
-                  value={report.department}
-                  label="Department"
-                  disabled
-                >
-                  <MenuItem value={report.department}>
-                    {report.department}
-                  </MenuItem>
-                </Select>
-              </FormControl>
-
-              <TextField
-                id="description"
-                value={report.description}
-                multiline
-                rows={4}
-                label="Description"
-                color="warning"
-                style={{ marginBottom: '1rem' }}
-                disabled
-              />
-
-              <FormControl sx={{ marginBottom: '1rem' }}>
-                <InputLabel id="responsibility-select-label">
-                  Responsibility
-                </InputLabel>
-                <Select
-                  labelId="responsibility-select-label"
-                  id="responsibility-select"
-                  value={report.responsibility}
-                  label="Responsibility"
-                  variant="outlined"
-                  disabled
-                >
-                  <MenuItem value={report.responsibility}>
-                    {report.responsibility}
-                  </MenuItem>
-                </Select>
-              </FormControl>
-
-              <Button
-                onClick={handleChange}
-                variant="contained"
-                color="primary"
-              >
-                Close
-              </Button>
-            </Box>
-          </Box>
-        </Modal>
-      );
-      break;
-    case 'incident report':
-     
-      //   message = 'It\'s Wednesday, halfway through the week!';
-      break;
-    case 'DCA':
-      //    message = 'It\'s Thursday, almost there!';
-      break;
-    case 'PI':
-      //     message = 'It\'s Friday, weekend is near!';
-      break;
-    case 'safety action meeting':
-      //    message = 'It\'s Saturday, go out and have some fun!';
-      break;
-    default:
-    //    message = 'It\'s the weekend, time to relax!';
-  }
+  if (!report) return null;
+  const close = () => onOpenChange(false);
+  const status = report.status || report.reportedStatus;
+  const title = report.formName || report.type || 'Report';
+  const photo = (report.imagesURL && report.imagesURL[0]) || report.img;
 
   return (
-    <div>
-      <h1>Report Details</h1>
-      <p>Department: {report.department ? report.department : 'NA'}</p>
-      <p>Area: {report.area || 'NA'}</p>
-      <p>Description: {report.description || 'NA'}</p>
-      <p>Date: {report.endDate || 'NA'}</p>
-      <div>
-        <h3>Photos</h3>
-        <ul>
-          {/* {report.photos.map(photo => (
-            <li key={photo.id}>
-              <img src={photo.url} alt="Report Photo" />
-            </li>
-          ))} */}
-          <li>
-            <img
-              src="https://cdn.pixabay.com/photo/2014/06/03/19/38/road-sign-361514_960_720.png"
-              alt="Report Photo"
-              width="40%"
-            />
-          </li>
-        </ul>
-      </div>
-    </div>
+    <Modal open={open} onClose={close}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', p: 2 }}>
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            borderRadius: 4,
+            width: '100%',
+            maxWidth: 460,
+            overflow: 'hidden',
+            boxShadow: 24,
+          }}
+        >
+          {/* header */}
+          <Box sx={{ bgcolor: 'primary.main', color: '#fff', px: 3, py: 2.5, position: 'relative' }}>
+            <Typography variant="overline" sx={{ color: 'secondary.main', fontWeight: 700, letterSpacing: 1.5 }}>
+              {report.type || 'Report'}
+            </Typography>
+            <Typography variant="h5" sx={{ color: '#fff' }}>{title}</Typography>
+            <IconButton onClick={close} sx={{ position: 'absolute', top: 10, right: 10, color: 'rgba(255,255,255,0.8)' }}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          {/* body */}
+          <Box sx={{ p: 3 }}>
+            {status && (
+              <Chip label={status} color={STATUS_COLOR[status] || 'default'} size="small" sx={{ fontWeight: 600, mb: 2 }} />
+            )}
+            <Stack spacing={2}>
+              <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                <Field label="Department" value={report.department} />
+                <Field label="Area" value={report.area} />
+              </Box>
+              <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                <Field label="Responsibility" value={report.responsibility} />
+                <Field label="Due Date" value={report.endDate} />
+              </Box>
+              <Field label="Act Type" value={report.actType} />
+              <Field label="Leader" value={report.leader} />
+              <Field label="Topic" value={report.topic} />
+              <Field label="Description" value={report.description} />
+              <Field label="Action Remarks" value={report.actionRemarks} />
+              <Field label="Outline of Facts" value={report.outlineOfFacts} />
+            </Stack>
+
+            {photo && (
+              <>
+                <Divider sx={{ my: 2.5 }} />
+                <Typography variant="subtitle2" sx={{ mb: 1 }}>Attachment</Typography>
+                <Box
+                  component="img"
+                  src={photo}
+                  alt="Report attachment"
+                  sx={{ width: 120, height: 120, objectFit: 'contain', borderRadius: 2, bgcolor: '#f4f6f8', p: 1 }}
+                />
+              </>
+            )}
+
+            <Button onClick={close} fullWidth variant="contained" color="primary" sx={{ mt: 3 }}>
+              Close
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Modal>
   );
 };
 

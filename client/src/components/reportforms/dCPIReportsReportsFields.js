@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   TextField,
   Radio,
@@ -16,7 +15,10 @@ import {
   Select,
   MenuItem,
   Button,
-} from '@material-ui/core';
+  Box,
+  Typography,
+} from '@mui/material';
+import FormLayout from '../common/FormLayout';
 
 function DCPIReportsForm() {
   const location = useLocation();
@@ -128,129 +130,64 @@ function DCPIReportsForm() {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
-  // Existing code...
-
-  const useStyles = makeStyles((theme) => ({
-    formContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      padding: theme.spacing(2),
-      borderRadius: theme.spacing(1),
-      boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.1)',
-    },
-    formInput: {
-      marginBottom: theme.spacing(2),
-    },
-    formLabel: {
-      fontWeight: 'bold',
-      marginBottom: theme.spacing(1),
-    },
-    buttonGroup: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginTop: theme.spacing(2),
-      width: '100%',
-    },
-    button: {
-      marginRight: theme.spacing(1),
-    },
-  }));
-
-  const classes = useStyles();
-
   return (
-    <div className={classes.formContainer}>
-      <form onSubmit={handleSubmit}>
-        <h1>DCA Reports</h1>
-        <h1>{formName} CheckList</h1>
-
-        <h1>Header: {Heading}</h1>
-        <h1>Question: {Question}</h1>
+    <FormLayout>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Box>
+          <Typography variant="overline" sx={{ color: 'secondary.dark', fontWeight: 700, letterSpacing: 2 }}>
+            Deep Compliance Audit
+          </Typography>
+          <Typography variant="h4">{formName || 'Checklist'}</Typography>
+        </Box>
+        <Box sx={{ bgcolor: 'rgba(255,183,3,0.10)', borderRadius: 2, p: 2 }}>
+          <Typography variant="subtitle2" color="text.secondary">{Heading}</Typography>
+          <Typography variant="h6">{Question}</Typography>
+        </Box>
 
         <RadioGroup
           aria-label="Suitability"
           name="Suitability"
           value={formCompliant}
           onChange={handleFormCompliantChange}
+          row
         >
-          <FormControlLabel
-            value="complaint"
-            control={<Radio />}
-            label="Complaint"
-          />
-          <FormControlLabel
-            value="no-complaint"
-            control={<Radio />}
-            label="No Complaint"
-          />
+          <FormControlLabel value="complaint" control={<Radio />} label="Compliant" />
+          <FormControlLabel value="no-complaint" control={<Radio />} label="No Compliant" />
         </RadioGroup>
 
-        <TextField
-          className={classes.formInput}
-          label="Status"
+        <TextField label="Status" variant="outlined" name="Status" onChange={handleReportedStatusChange} />
+        <TextField label="Action/Remarks" variant="outlined" name="remarks" multiline minRows={2} onChange={handleRemarksChange} />
+
+        <Select
+          name="responsibility"
+          value={responsibility}
+          onChange={handleResponsibilityChange}
           variant="outlined"
-          name="Status"
-          onChange={handleReportedStatusChange}
-        />
+          displayEmpty
+        >
+          <MenuItem value="">Select Manager</MenuItem>
+          {Array.isArray(managers) &&
+            managers.map((manager) => (
+              <MenuItem key={manager._id} value={manager.fullName}>
+                {manager.fullName}
+              </MenuItem>
+            ))}
+        </Select>
 
-        <TextField
-          className={classes.formInput}
-          label="Action/Remarks"
-          variant="outlined"
-          name="remarks"
-          onChange={handleRemarksChange}
-        />
-
-        <div className={classes.formInput}>
-          <label className={classes.formLabel} htmlFor="responsibility">
-            Responsibility:
-          </label>
-          <Select
-            name="responsibility"
-            value={responsibility}
-            onChange={handleResponsibilityChange}
-            variant="outlined"
-          >
-            <MenuItem value="">Select Manager</MenuItem>
-            {Array.isArray(managers) &&
-              managers.map((manager) => (
-                <MenuItem key={manager.id} value={manager.fullName}>
-                  {manager.fullName}
-                </MenuItem>
-              ))}
-          </Select>
-        </div>
-
-        <div className={classes.buttonGroup}>
-          <Button
-            className={classes.button}
-            type="button"
-            onClick={handleBack}
-            disabled={currentQuestionIndex === 0}
-            variant="contained"
-            color="primary"
-          >
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+          <Button type="button" onClick={handleBack} disabled={currentQuestionIndex === 0} variant="outlined">
             Back
           </Button>
-          <Button
-            className={classes.button}
-            type="button"
-            onClick={handleNext}
-            disabled={currentQuestionIndex === questions.length - 1}
-            variant="contained"
-            color="primary"
-          >
+          <Button type="button" onClick={handleNext} disabled={currentQuestionIndex === questions.length - 1} variant="outlined">
             Skip
           </Button>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="secondary" sx={{ ml: 'auto' }}>
             Next
           </Button>
-        </div>
+        </Box>
+        <Link to={`/newreport/dca`} style={{ color: '#52606D' }}>Back to base page</Link>
       </form>
-      <Link to={`/newreport/dca`}>Back to base page</Link>
-    </div>
+    </FormLayout>
   );
 }
 

@@ -7,8 +7,9 @@ import { Link  } from "react-router-dom";
 import { useLocation, useParams , Outlet , useOutletContext } from "react-router-dom";
 import { FormControl, RadioGroup, Radio, TextField, Select, MenuItem, Button, Typography, FormControlLabel } from '@mui/material';
 import { Box } from '@mui/system';
-import { yellow, white , black } from '@mui/material/colors';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import appTheme from '../../theme';
+import FormLayout from '../common/FormLayout';
 
 
 
@@ -135,24 +136,21 @@ function PIReportsForm() {
 
   };
 
-  const theme = createTheme({
-  
-      primary: yellow[500],
-      background: {
-        default: "ffffff",
-      },
-  });
-
   return (
-    <ThemeProvider theme={theme}>
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <form onSubmit={handleSubmit}>
-          <Typography variant="h3">DCA Reports</Typography>
-          <Typography variant="h3">{formName} CheckList</Typography>
-  
-          <Typography variant="h3">Header: {Heading}</Typography>
-          <Typography variant="h3">Question: {Question}</Typography>
-  
+    <ThemeProvider theme={appTheme}>
+      <FormLayout>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <Box>
+            <Typography variant="overline" sx={{ color: 'secondary.dark', fontWeight: 700, letterSpacing: 2 }}>
+              Planned Inspection
+            </Typography>
+            <Typography variant="h4">{formName || 'Checklist'}</Typography>
+          </Box>
+          <Box sx={{ bgcolor: 'rgba(255,183,3,0.10)', borderRadius: 2, p: 2 }}>
+            <Typography variant="subtitle2" color="text.secondary">{Heading}</Typography>
+            <Typography variant="h6">{Question}</Typography>
+          </Box>
+
           <FormControl component="fieldset">
             <RadioGroup
               name="Suitability"
@@ -193,35 +191,37 @@ function PIReportsForm() {
                 <em>Select Manager</em>
               </MenuItem>
               {managers.map((manager) => (
-                <MenuItem key={manager.id} value={manager.name}>
-                  {manager.name}
+                <MenuItem key={manager._id} value={manager.fullName}>
+                  {manager.fullName}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-  
-          <Button style={{background: "#ffc107" , color: "black"}} type="submit" variant="contained" >
-            Submit
-          </Button>
-          <Button
-            type="button"
-            onClick={handleBack}
-            disabled={currentQuestionIndex === 0}
-            variant="outlined"
-          >
-            Back
-          </Button>
-          <Button
-            type="button"
-            onClick={handleNext}
-            disabled={currentQuestionIndex === questions.length - 1}
-            variant="outlined"
-          >
-            Skip
-          </Button>
+
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+            <Button
+              type="button"
+              onClick={handleBack}
+              disabled={currentQuestionIndex === 0}
+              variant="outlined"
+            >
+              Back
+            </Button>
+            <Button
+              type="button"
+              onClick={handleNext}
+              disabled={currentQuestionIndex === questions.length - 1}
+              variant="outlined"
+            >
+              Skip
+            </Button>
+            <Button type="submit" variant="contained" color="secondary" sx={{ ml: 'auto' }}>
+              Submit
+            </Button>
+          </Box>
+          <Link to="/newreport/planned-inspection" style={{ color: '#52606D' }}>Back to base page</Link>
         </form>
-        <Link to="/newreport/planned-inspection">Back to base page</Link>
-      </Box>
+      </FormLayout>
     </ThemeProvider>
   );
 }

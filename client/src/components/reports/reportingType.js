@@ -1,92 +1,73 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Container, Typography, List, ListItem, ListItemButton, ListItemText, ListItemIcon, Paper, Box } from '@mui/material';
 import Nav from '../common/Nav';
-import Divider from '@mui/material/Divider';
 import SimpleBottomNavigation from '../common/Bottom';
-import { Box } from '@mui/system';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-  },
-  link: {
-    color: '#000000de',
-    display: 'flex',
-    width: '100%',
-    textDecoration: 'none',
-    justifyContent: 'space-between',
-    aligntems: 'center',
-  },
-}));
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
+import HealthAndSafetyOutlinedIcon from '@mui/icons-material/HealthAndSafetyOutlined';
+import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
+import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
+import ChecklistRtlOutlinedIcon from '@mui/icons-material/ChecklistRtlOutlined';
+import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
 
-const ChecklistMap = ({ checklist }) => {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Typography variant="h6" component="label" htmlFor="form-name">
-        Form Name:
-      </Typography>
-      <List>
-        {checklist.map((checklist) => (
-          <ListItem key={checklist.id}>
-            <Link
-              to={`/checklist/${checklist.formName}`}
-              className={classes.link}
-            >
-              <ListItemText primary={checklist.formName} />
-            </Link>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
-};
+const reportingTypes = [
+  { name: 'Safe/Unsafe Acts', path: '/safeusafereport', icon: <HealthAndSafetyOutlinedIcon />, desc: 'Log safe or unsafe behaviours observed on site' },
+  { name: 'Hazard Reporting', path: '/hazardreport', icon: <WarningAmberOutlinedIcon />, desc: 'Flag a hazard before it causes harm' },
+  { name: 'Incident Reporting', path: '/incidentreport', icon: <ReportProblemOutlinedIcon />, desc: 'Record an incident or near-miss event' },
+  { name: 'Deep Compliance Reporting', path: '/dca', icon: <FactCheckOutlinedIcon />, desc: 'Run a deep compliance audit checklist' },
+  { name: 'Planned Inspection', path: '/planned-inspection', icon: <ChecklistRtlOutlinedIcon />, desc: 'Complete a scheduled planned inspection' },
+  { name: 'Safety Action Meeting (SAM)', path: '/safetyactionmeeting', icon: <Groups2OutlinedIcon />, desc: 'Document a safety action meeting' },
+];
 
 const ReportingTypePage = () => {
-  const reportingTypes = [
-    { name: 'Safe/Unsafe Acts', path: '/safeusafereport' },
-    { name: 'Hazard Reporting', path: '/hazardreport' },
-    { name: 'Incident Reporting', path: '/incidentreport' },
-    { name: 'Deep Compliance Reporting', path: '/dca' },
-    { name: 'Planned Inspection', path: '/planned-inspection' },
-    { name: 'Safety Action Meeting (SAM)', path: '/safetyactionmeeting' },
-  ];
-  const classes = useStyles();
-
   return (
-    <div>
-      <SelectPage reportingTypes={reportingTypes} />
-    </div>
-  );
-};
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Nav />
+      <Container maxWidth="sm" sx={{ flex: 1, py: { xs: 3, md: 5 } }}>
+        <Typography variant="overline" sx={{ color: 'secondary.dark', fontWeight: 700, letterSpacing: 2 }}>
+          New Report
+        </Typography>
+        <Typography variant="h4" sx={{ mb: 0.5 }}>
+          Select Reporting Type
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          Choose the type of safety report you want to submit.
+        </Typography>
 
-const SelectPage = ({ reportingTypes }) => {
-  const classes = useStyles();
-
-  return (
-    <Box sx={{height: '100vh',display:'flex', flexDirection:'column', justifyContent: 'space-between'}}>
-      <Box sx={{ height: '100%' }}>
-        <Nav />
-        <Typography variant="h4">Select Reporting Type</Typography>
-        <List disablePadding>
-          {reportingTypes.map((type) => (
-            <div>
-              <ListItem key={type.name}>
-                <Link to={`/newreport${type.path}`} className={classes.link}>
-                  <ListItemText primary={type.name} />{' '}
-                  <ArrowForwardIosIcon fontSize="medium" />
-                </Link>
+        <Paper elevation={0} sx={{ overflow: 'hidden', border: '1px solid', borderColor: 'divider' }}>
+          <List disablePadding>
+            {reportingTypes.map((type, i) => (
+              <ListItem
+                key={type.name}
+                disablePadding
+                divider={i < reportingTypes.length - 1}
+                secondaryAction={<ArrowForwardIosIcon fontSize="small" sx={{ color: 'text.secondary' }} />}
+              >
+                <ListItemButton
+                  component={Link}
+                  to={`/newreport${type.path}`}
+                  sx={{
+                    py: 1.75,
+                    borderLeft: '4px solid transparent',
+                    transition: 'all .15s ease',
+                    '&:hover': { bgcolor: 'rgba(255,183,3,0.10)', borderLeftColor: 'secondary.main' },
+                  }}
+                >
+                  <ListItemIcon sx={{ color: 'primary.main', minWidth: 44 }}>{type.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={type.name}
+                    secondary={type.desc}
+                    primaryTypographyProps={{ fontWeight: 600 }}
+                  />
+                </ListItemButton>
               </ListItem>
-              <Divider />
-            </div>
-          ))}
-        </List>
-      </Box>
+            ))}
+          </List>
+        </Paper>
+      </Container>
       <SimpleBottomNavigation />
-    </Box >
+    </Box>
   );
 };
 

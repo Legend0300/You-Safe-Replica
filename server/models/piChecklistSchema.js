@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("../lib/mongoose");
 
 const PIListSchema = new mongoose.Schema({
   header:{

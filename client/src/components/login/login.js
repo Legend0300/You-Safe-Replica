@@ -57,7 +57,7 @@ function Login() {
     }
   };
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('usertoken');
     if (token) {
       // Perform actions when token is present
       console.log('Token found:', token);
@@ -79,7 +79,7 @@ function Login() {
         height: '100vh',
       }}
     >
-      <Card sx={{ minWidth: 300 }}>
+      <Card elevation={6} sx={{ minWidth: 320, borderRadius: 3, overflow: 'hidden' }}>
         <CardMedia
           sx={{ height: 260, backgroundSize: 'contain' }}
           image={HealthSafety}

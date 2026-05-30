@@ -1,185 +1,167 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReportDetails from './reportDetails';
-import { Box, Typography, Button, Grid } from '@mui/material';
+import {
+  Box, Container, Typography, Button, Chip, Avatar, Stack, Fab, Paper,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Stack from '@mui/material/Stack';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { createTheme } from '@mui/material/styles';
+import EventOutlinedIcon from '@mui/icons-material/EventOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
+import HealthAndSafetyOutlinedIcon from '@mui/icons-material/HealthAndSafetyOutlined';
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
+import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
+import ChecklistRtlOutlinedIcon from '@mui/icons-material/ChecklistRtlOutlined';
+import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import Nav from '../common/Nav';
 
-const theme = createTheme({
-  typography: {
-    subtitle1: {
-      fontSize: '16px',
-      lineHeight: '1.5',
-    },
-  },
-});
+const STATUS_COLOR = {
+  'In Progress': 'warning',
+  Pending: 'default',
+  Completed: 'success',
+  Enabled: 'info',
+  Disabled: 'default',
+  reported: 'success',
+};
+
+const typeMeta = (type = '') => {
+  const t = type.toLowerCase();
+  if (t.includes('hazard')) return { icon: <WarningAmberOutlinedIcon />, color: '#E0A100' };
+  if (t.includes('safe')) return { icon: <HealthAndSafetyOutlinedIcon />, color: '#2E9E5B' };
+  if (t.includes('incident')) return { icon: <ReportProblemOutlinedIcon />, color: '#D64545' };
+  if (t === 'dca') return { icon: <FactCheckOutlinedIcon />, color: '#3B7DD8' };
+  if (t === 'pi') return { icon: <ChecklistRtlOutlinedIcon />, color: '#7A5AF8' };
+  if (t.includes('meeting')) return { icon: <Groups2OutlinedIcon />, color: '#1B232B' };
+  return { icon: <DescriptionOutlinedIcon />, color: '#52606D' };
+};
+
+const MetaRow = ({ icon, children }) => (
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
+    {React.cloneElement(icon, { sx: { fontSize: 18 } })}
+    <Typography variant="body2" noWrap>{children}</Typography>
+  </Box>
+);
 
 const ReportingPage = () => {
   const [reports, setReports] = useState([]);
   const [selectedReport, setSelectedReport] = useState(null);
+  const [open, setOpen] = useState(false);
 
-  // Fetch reports from API
   useEffect(() => {
     const fetchReports = async () => {
-      const response = await fetch('http://localhost:4000/api/reports');
-      const data = await response.json();
-      setReports(data);
+      try {
+        const response = await fetch('http://localhost:4000/api/reports');
+        const data = await response.json();
+        setReports(Array.isArray(data) ? data : []);
+      } catch (e) {
+        setReports([]);
+      }
     };
-
     fetchReports();
   }, []);
-
-  const submittedReports = reports.filter(
-    (report) => report.reportedStatus === 'reported'
-  );
-  const emptyString = '';
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const handleViewDetails = (report) => {
     setSelectedReport(report);
     setOpen(true);
   };
 
-  const handleOpenChange =() => {
-    setOpen(false);
-  }
-
-  console.log(reports);
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        minHeight="100vh"
-      >
-        <Typography variant="h4" component="h4" gutterBottom>
-          My Reporting
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Nav />
+      <Container maxWidth="lg" sx={{ flex: 1, py: { xs: 3, md: 5 } }}>
+        <Typography variant="overline" sx={{ color: 'secondary.dark', fontWeight: 700, letterSpacing: 2 }}>
+          Safety Reports
         </Typography>
-        <CardMedia
-          style={{
-            marginTop: '2%',
-            marginBottom: '2%',
-            backgroundColor: 'transparent',
-          }}
-        >
-          <Typography variant="h6" component="h6" gutterBottom>
-            Submitted Reports {reports.length}
-          </Typography>
-          <Typography variant="h6" component="h6" gutterBottom>
-            Offline Reports 0
-          </Typography>
-        </CardMedia>
-        <Stack
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            spacing: 2,
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignContent: 'space-around',
-            alignItems: 'center',
-          }}
-        >
-          {reports.map((report) => (
-            <Card
-              key={report._id}
-              sx={{
-                display: 'flex',
-                maxWidth: 450,
-                maxHeight: 400,
-                flexWrap: 'wrap',
-                marginBottom: 3,
-              }}
-            >
-              <Box sx={{ display: 'flex', width: 450, height: 150 }}>
-                <CardMedia
-                  component="img"
-                  sx={{ width: 150, height: 150 }}
-                  image={
-                    'https://ichef.bbci.co.uk/news/976/cpsprodpb/F1F2/production/_118283916_b19c5a1f-162b-410b-8169-f58f0d153752.jpg' ||
-                    report.img
-                  }
-                  alt="Live from space album cover"
-                />
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: 300,
-                  }}
-                >
-                  <CardContent sx={{ flex: '1 0 auto', padding: '15px 30px' }}>
-                    <Typography variant="subtitle1" color="text.secondary">
-                      Status: {report.status || 'N/A'}
-                    </Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
-                      Assigned To: {report.responsibility || ''}
-                    </Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
-                      Type: {report.type}
-                    </Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
-                      Due Date: {report.endDate || 'N/A'}
-                    </Typography>
-                  </CardContent>
-                </Box>
-              </Box>
+        <Typography variant="h4" sx={{ mb: 2 }}>My Reporting</Typography>
 
-              <Button
-                variant="contained"
-                onClick={() => handleViewDetails(report)}
-                sx={{
-                  width: '100%',
-                  backgroundColor: 'transparent',
-                  color: '#ffb300',
-                  transition: 'background-color 0.3s ease',
-                  '&:hover': {
-                    backgroundColor: 'rgb(233, 226, 164)',
-                  },
-                }}
-              >
-                View Details
-              </Button>
-            </Card>
-          ))}
+        <Stack direction="row" spacing={1.5} sx={{ mb: 4 }}>
+          <Chip label={`Submitted ${reports.length}`} color="primary" sx={{ fontWeight: 600 }} />
+          <Chip label="Offline 0" variant="outlined" sx={{ fontWeight: 600 }} />
         </Stack>
 
-        {selectedReport ? (
-          <ReportDetails report={selectedReport} open={open} onOpenChange={handleOpenChange} />
+        {reports.length === 0 ? (
+          <Paper elevation={0} sx={{ p: 6, textAlign: 'center', border: '1px dashed', borderColor: 'divider' }}>
+            <DescriptionOutlinedIcon sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }} />
+            <Typography variant="h6">No reports yet</Typography>
+            <Typography variant="body2" color="text.secondary">Tap the + button to create your first report.</Typography>
+          </Paper>
         ) : (
-          <Typography variant="body1" gutterBottom>
-            Select a report to view details
-          </Typography>
-        )}
-
-        <Link to="/newreport">
-          <AddIcon
+          <Box
             sx={{
-              position: 'fixed',
-              bottom: '20px',
-              right: '20px',
-              zIndex: '9999',
-              backgroundColor: '#ffb300',
-              color: 'white',
-              borderRadius: '100%',
-              fontSize: '32px',
-              width: '48px',
-              height: '48px',
+              display: 'grid',
+              gap: 2.5,
+              gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
             }}
-          />
-        </Link>
-      </Box>
-    </ThemeProvider>
+          >
+            {reports.map((report, index) => {
+              const meta = typeMeta(report.type);
+              const status = report.status || report.reportedStatus;
+              return (
+                <Paper
+                  key={report._id || index}
+                  elevation={0}
+                  sx={{
+                    overflow: 'hidden',
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'transform .18s ease, box-shadow .18s ease',
+                    '&:hover': { transform: 'translateY(-4px)', boxShadow: '0 14px 32px rgba(27,35,43,0.14)' },
+                  }}
+                >
+                  <Box sx={{ p: 2.5, flex: 1, display: 'flex', flexDirection: 'column', gap: 1.25 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                      <Avatar variant="rounded" sx={{ bgcolor: `${meta.color}1A`, color: meta.color, width: 44, height: 44 }}>
+                        {meta.icon}
+                      </Avatar>
+                      {status && (
+                        <Chip label={status} size="small" color={STATUS_COLOR[status] || 'default'} sx={{ fontWeight: 600 }} />
+                      )}
+                    </Box>
+                    <Typography variant="h6" sx={{ lineHeight: 1.2 }}>
+                      {report.formName || report.type}
+                    </Typography>
+                    <Stack spacing={0.75} sx={{ mt: 0.5 }}>
+                      <MetaRow icon={<PersonOutlineIcon />}>{report.responsibility || 'Unassigned'}</MetaRow>
+                      <MetaRow icon={<EventOutlinedIcon />}>Due {report.endDate || 'N/A'}</MetaRow>
+                      {(report.department || report.area) && (
+                        <MetaRow icon={<PlaceOutlinedIcon />}>
+                          {[report.department, report.area].filter(Boolean).join(' · ')}
+                        </MetaRow>
+                      )}
+                    </Stack>
+                    <Button
+                      onClick={() => handleViewDetails(report)}
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      sx={{ mt: 'auto', alignSelf: 'flex-start' }}
+                    >
+                      View Details
+                    </Button>
+                  </Box>
+                </Paper>
+              );
+            })}
+          </Box>
+        )}
+      </Container>
+
+      <ReportDetails report={selectedReport} open={open} onOpenChange={setOpen} />
+
+      <Fab
+        color="secondary"
+        component={Link}
+        to="/newreport"
+        aria-label="New report"
+        sx={{ position: 'fixed', bottom: 28, right: 28, color: 'primary.main' }}
+      >
+        <AddIcon />
+      </Fab>
+    </Box>
   );
 };
 

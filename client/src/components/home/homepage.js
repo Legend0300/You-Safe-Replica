@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import jwt_decode from 'jwt-decode';
 import {
   makeStyles,
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
 } from '@material-ui/core/styles';
 import {
@@ -24,7 +24,7 @@ import {
 
 import Nav from '../common/Nav';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#000000', // Black color for buttons
@@ -37,16 +37,15 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '350px',
-    margin: '0 auto',
-    // padding: '1rem',
-    //  // Set yellow background color
+    maxWidth: '380px',
+    margin: '2.5rem auto',
+    padding: '0 1rem',
   },
   listItem: {
     marginBottom: '0.5rem',
   },
   emp: {
-    background: '#ffc107',
+    background: '#FFB703',
   },
 }));
 
@@ -76,7 +75,7 @@ const HomePage = () => {
     getUser();
   }, []);
 
-  const url = ""
+  const url = user.picture || ""
 
 
   useStyles();
@@ -85,7 +84,7 @@ const HomePage = () => {
     <ThemeProvider theme={theme}>
       <Nav />
       <div className={classes.root}>
-        <Card>
+        <Card elevation={3} sx={{ borderRadius: 4, overflow: 'hidden' }}>
           <CardHeader
             avatar={
               <Avatar
@@ -105,7 +104,7 @@ const HomePage = () => {
               display: 'flex',
               alignItems: 'center',
               flexDirection: 'column',
-              background: '#ffc107',
+              background: '#FFB703',
               paddingBottom: 0,
             }}
           />

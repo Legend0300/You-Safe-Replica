@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet , useNavigate, Navigate } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from './theme';
 import './App.css';
 import HazardReportForm from './components/reportforms/hazardReportForm';
 import ReportingTypePage from './components/reports/reportingType';
@@ -17,7 +20,9 @@ import ForgotPassword from './components/login/forgotpass';
 
 function App() {
   return (
-    <div className="app">
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="app">
       <Router>
           <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
@@ -37,7 +42,8 @@ function App() {
           <Route path='/*' element={<div>404 not found!</div>} />
         </Routes>
       </Router>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

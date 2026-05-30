@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import DepartmentField from "../common/DepartmentField";
 import AreaField from "../common/AreaField";
 import DateSelector from "../common/DateSelector";
-import { TextField, Button, Typography } from "@mui/material";
+import { TextField, Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { Box } from "@mui/system";
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
-import { yellow, white } from "@mui/material/colors";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { yellow } from "@mui/material/colors";
+import { ThemeProvider } from "@mui/material/styles";
+import appTheme from "../../theme";
+import FormLayout from "../common/FormLayout";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -43,17 +44,6 @@ const NewSafeUnsafeActsFormtest = () => {
     };
     fetchManagers();
   }, []);
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: yellow[500],
-      },
-      background: {
-        default: "white",
-      },
-    },
-  });
 
   const handleSelectDepartment = (selectedDepartment) => {
     setSelectedDepartment(selectedDepartment);
@@ -172,15 +162,9 @@ const NewSafeUnsafeActsFormtest = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        height="100vh"
-      >
-        <Typography variant="h1">SafetyActionForm</Typography>
+    <ThemeProvider theme={appTheme}>
+      <FormLayout maxWidth="md">
+        <Typography variant="h4" sx={{ mb: 2, textAlign: 'center' }}>Safety Action Meeting</Typography>
           <form onSubmit={handleSubmit}>
             <div style={{width: '100%'}}>
             <DepartmentField onSelectDepartment={handleSelectDepartment} />
@@ -214,7 +198,7 @@ const NewSafeUnsafeActsFormtest = () => {
               />
             </Box>
             <Box>
-              <Typography variant="h2">Participants</Typography>
+              <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>Participants</Typography>
               {participants.map((participant, index) => (
                 <div key={index}>
                   <label htmlFor={`participant-${index}`}>Participant:</label>
@@ -230,11 +214,11 @@ const NewSafeUnsafeActsFormtest = () => {
               ))}
             </Box>
             <Box>
-              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={() => handleAddParticipant()}>
+              <Button variant="contained" color="secondary" type="button" onClick={() => handleAddParticipant()}>
                 Add Participant
               </Button>
 
-              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={() => handleRemoveParticipant()}>
+              <Button variant="contained" color="secondary" type="button" onClick={() => handleRemoveParticipant()}>
                 Remove Participant
               </Button>
             </Box>
@@ -260,7 +244,7 @@ const NewSafeUnsafeActsFormtest = () => {
               />
             </Box>
             <Box>
-              <Typography variant="h2">Questions</Typography>
+              <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>Questions</Typography>
               {questions.map((question, index) => (
                 <div key={index}>
                   <label htmlFor={`question-heading-${index}`}>
@@ -289,22 +273,21 @@ const NewSafeUnsafeActsFormtest = () => {
               ))}
             </Box>
             <Box>
-              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={handleAddQuestion}>
+              <Button variant="contained" color="secondary" type="button" onClick={handleAddQuestion}>
                 Add Question
               </Button>
-              <Button variant="contained" sx={{ bgcolor: yellow[500], color: "black" }} type="button" onClick={handleRemoveQuestion}>
+              <Button variant="contained" color="secondary" type="button" onClick={handleRemoveQuestion}>
                 Remove Question
               </Button>
             </Box>
-            <Button type="submit" variant="contained" sx={{ bgcolor: yellow[500], color: "black" }}>Submit</Button>
+            <Button type="submit" variant="contained" color="secondary">Submit</Button>
             </form>
-          </Box>
         {
-          // adding a pop up button for a form 
+          // adding a pop up button for a form
         }
         <div>
           <div>
-        <Button variant="contained" sx={{background: 'white'}} onClick={handleClickOpen}> 
+        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
           Actions and Recommendations
         </Button>
         <Box sx={{borderColor:'black' , width: '100%' }}>
@@ -360,7 +343,7 @@ const NewSafeUnsafeActsFormtest = () => {
               {managers.length > 0 ? (
                 
               managers.map((manager) => (
-                <MenuItem key={manager.id} value={manager.fullName}>
+                <MenuItem key={manager._id} value={manager.fullName}>
                   {manager.fullName}
                 </MenuItem>
               ))
@@ -405,14 +388,14 @@ const NewSafeUnsafeActsFormtest = () => {
             handleAddPopUpQuestions();
             handlePopUpQuestionChange({actions,raisedBy,managers,responsible,popUpDate,status});
           }
-             } variant="contained" sx={{ bgcolor: yellow[500], color: "black" }}>
+             } variant="contained" color="secondary">
             Submit
           </Button>
           
         </DialogActions>
       </Dialog>
     </div>
-
+      </FormLayout>
     </ThemeProvider>
   );
 };

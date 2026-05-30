@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("../lib/mongoose");
 
 const areaModel = new mongoose.Schema({
   name: {
